@@ -1,0 +1,23 @@
+/* Главный контейнер на весь экран */
+.sign-up-page {
+  display: flex;
+  width: 100vw;            /* Использовали viewport-ширину */
+  height: 100vh;           /* Использовали viewport-высоту */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.left-half, 
+.right-half {
+  flex: 1;
+  height: 100vh;           
+}
+
+
+.right-half {
+  display: flex;
+  justify-content: center; /* Центрирует форму горизонтально внутри правой части */
+  align-items: center;     /* Центрирует форму вертикально внутри правой части */
+  background-color: #ffffff;
+}
