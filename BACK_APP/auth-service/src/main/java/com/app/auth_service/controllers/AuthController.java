@@ -1,8 +1,8 @@
 package com.app.auth_service.controllers;
 
-import com.app.auth_service.dto.requests.SignInRequest;
-import com.app.auth_service.dto.requests.SignUpRequest;
-import com.app.auth_service.dto.responses.AuthResponse;
+import com.app.auth_service.dtos.requests.SignInRequest;
+import com.app.auth_service.dtos.requests.SignUpRequest;
+import com.app.auth_service.dtos.responses.AuthResponse;
 import com.app.auth_service.exceptions.IncorrectPasswordException;
 import com.app.auth_service.exceptions.UserNotFoundException;
 import com.app.auth_service.services.AuthService;

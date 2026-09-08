@@ -1,9 +1,9 @@
 package com.app.auth_service.services;
 
-import com.app.auth_service.dto.mappers.UserMapper;
-import com.app.auth_service.dto.requests.SignInRequest;
-import com.app.auth_service.dto.requests.SignUpRequest;
-import com.app.auth_service.dto.responses.AuthResponse;
+import com.app.auth_service.mappers.UserMapper;
+import com.app.auth_service.dtos.requests.SignInRequest;
+import com.app.auth_service.dtos.requests.SignUpRequest;
+import com.app.auth_service.dtos.responses.AuthResponse;
 import com.app.auth_service.entities.Country;
 import com.app.auth_service.entities.User;
 import com.app.auth_service.exceptions.IncorrectPasswordException;
@@ -12,7 +12,6 @@ import com.app.auth_service.repositories.CountryRepository;
 import com.app.auth_service.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +25,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final CountryRepository countryRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
     @Transactional
     public AuthResponse signUp(SignUpRequest request){
@@ -33,9 +33,9 @@ public class AuthService {
         Optional<Country> countryOpt = countryRepository.findById(countryId);
 
         if (countryOpt.isPresent()){
-            User user = UserMapper.mapRequestToEntity(countryOpt.get(), request, passwordEncoder);
-            user = userRepository.save(user);
-            return UserMapper.mapUserToResponse(user);
+            User user = userMapper.fromSignUpRequestToEntity(request, countryOpt.get(), passwordEncoder);
+            userRepository.save(user);
+            return new AuthResponse("Success, you have signed up!");
         }
 
         return new AuthResponse("invalid country");
@@ -52,7 +52,7 @@ public class AuthService {
             throw new IncorrectPasswordException();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponse("Success, you have signed in"));
+        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponse("Welcome back!"));
     }
 
     private Optional<User> findUserByUniqueField(String uniqueField){

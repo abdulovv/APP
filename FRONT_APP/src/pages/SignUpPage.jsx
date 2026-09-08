@@ -12,7 +12,7 @@ function SignUpPage() {
 
   async function handleSubmit(formData) {
     try {
-      const response = await fetch('http://localhost:8080/api/auth/sign-up', {
+      const response = await fetch('http://localhost:8081/api/auth/sign-up', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ function SignUpPage() {
           text: data.message || "Registration successful!",
         })
         setTimeout(() => {
-          navigate('/home', { replace: true })
+          navigate('/profile', { replace: true })
         }, 2000)
       } else {
         setNotice({  

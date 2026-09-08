@@ -1,4 +1,4 @@
-package com.app.nutrition_service.dto.mappers;
+package com.app.nutrition_service.mappers;
 
 import com.app.nutrition_service.dto.CategoryDTO;
 import com.app.nutrition_service.entities.Category;

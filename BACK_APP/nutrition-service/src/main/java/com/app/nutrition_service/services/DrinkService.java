@@ -1,7 +1,7 @@
 package com.app.nutrition_service.services;
 
 import com.app.nutrition_service.dto.DrinkDTO;
-import com.app.nutrition_service.dto.mappers.DrinkMapper;
+import com.app.nutrition_service.mappers.DrinkMapper;
 import com.app.nutrition_service.entities.Drink;
 import com.app.nutrition_service.exceptions.DrinkNotFoundException;
 import com.app.nutrition_service.exceptions.DrinksNotFoundException;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor

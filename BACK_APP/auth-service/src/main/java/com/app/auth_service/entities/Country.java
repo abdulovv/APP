@@ -25,5 +25,8 @@ public class Country {
     private String currencySymbol;
     @Column(name = "exchange_rate")
     private Float exchangeRate;
-
+    @Column(name = "min_phone_length")
+    private Integer minPhoneLength;
+    @Column(name = "max_phone_length")
+    private Integer maxPhoneLength;
 }

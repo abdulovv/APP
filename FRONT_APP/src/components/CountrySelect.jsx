@@ -33,7 +33,16 @@ const CountrySelect = ({ value, onChange }) => {
 
     const selectedCountryObject = countries.find(c => c.name === value);
     const selectValue = selectedCountryObject 
-        ? JSON.stringify({ id: selectedCountryObject.id, name: selectedCountryObject.name, code: selectedCountryObject.phoneCode }) 
+        ? JSON.stringify({
+            id: selectedCountryObject.id,
+            name: selectedCountryObject.name,
+            code: selectedCountryObject.phoneCode,
+            // ВАЖНО: minPhoneLength/maxPhoneLength — предполагаемые имена полей
+            // из CountryResponse (по аналогии с phoneCode). Если бэкенд отдаёт
+            // их иначе (например, minPhoneNumberLength), поправьте здесь.
+            minLength: selectedCountryObject.minPhoneLength,
+            maxLength: selectedCountryObject.maxPhoneLength,
+        })
         : "";
 
     return (
@@ -42,7 +51,16 @@ const CountrySelect = ({ value, onChange }) => {
             <select name="country" className="selectField" value={selectValue} onChange={onChange} required>
                 <option value="" disabled>Select your country</option>
                 {countries.map((country) => (
-                    <option key={country.id} value={JSON.stringify({ id: country.id, name: country.name, code: country.phoneCode })}>
+                    <option
+                        key={country.id}
+                        value={JSON.stringify({
+                            id: country.id,
+                            name: country.name,
+                            code: country.phoneCode,
+                            minLength: country.minPhoneLength,
+                            maxLength: country.maxPhoneLength,
+                        })}
+                    >
                         {country.name} ({country.phoneCode})
                     </option>
                 ))}

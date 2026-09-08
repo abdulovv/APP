@@ -1,6 +1,6 @@
 const fetchCountries = async () => {
     try {
-        const response = await fetch('http://localhost:8080/api/countries/all', {
+        const response = await fetch('http://localhost:8081/api/countries/all', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

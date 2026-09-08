@@ -1,7 +1,7 @@
 package com.app.nutrition_service.services;
 
 import com.app.nutrition_service.dto.FoodDTO;
-import com.app.nutrition_service.dto.mappers.FoodMapper;
+import com.app.nutrition_service.mappers.FoodMapper;
 import com.app.nutrition_service.entities.Food;
 import com.app.nutrition_service.exceptions.FoodNotFoundException;
 import com.app.nutrition_service.repositories.FoodRepository;

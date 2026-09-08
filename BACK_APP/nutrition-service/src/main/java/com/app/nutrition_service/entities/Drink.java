@@ -2,8 +2,6 @@ package com.app.nutrition_service.entities;
 
 import java.math.BigDecimal;
 
-import com.app.nutrition_service.dto.DrinkDTO;
-import com.app.nutrition_service.dto.mappers.CategoryMapper;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

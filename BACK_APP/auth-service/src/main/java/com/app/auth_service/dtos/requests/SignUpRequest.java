@@ -1,4 +1,4 @@
-package com.app.auth_service.dto.requests;
+package com.app.auth_service.dtos.requests;
 
 import jakarta.validation.constraints.*;
 
@@ -34,4 +34,15 @@ public record SignUpRequest(
         @NotNull
         Long countryId
 
-) {}
+) {
+    public SignUpRequest {
+        firstname = capitalize(firstname);
+        lastname = capitalize(lastname);
+        email = email != null ? email.toLowerCase() : null;
+    }
+
+    private static String capitalize(String value) {
+        if (value == null || value.isBlank()) return value;
+        return value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
+    }
+}

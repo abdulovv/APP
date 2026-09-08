@@ -9,6 +9,14 @@ const SignUpForm = ({ onSubmit }) => {
     const [step, setStep] = useState(1);
     const [error, setError] = useState("");
     const [currentCountryCode, setCurrentCountryCode] = useState("");
+    // Ограничения длины номера (кол-во цифр ПОСЛЕ кода) для выбранной страны.
+    // Приходят из CountrySelect вместе с id/name/code при выборе страны.
+    // max по умолчанию — DEFAULT_MAX_PHONE_DIGITS ниже (страховка, если бэкенд
+    // ещё не прислал персональный max_phone_length для страны).
+    const DEFAULT_MAX_PHONE_DIGITS = 15; // E.164: национальный номер физически не длиннее ~15 цифр
+    const DEFAULT_MIN_PHONE_DIGITS = 4;  // грубая страховка, чтобы совсем короткий "номер" не проходил вообще без проверки
+
+    const [phoneLengthLimits, setPhoneLengthLimits] = useState({ min: DEFAULT_MIN_PHONE_DIGITS, max: DEFAULT_MAX_PHONE_DIGITS });
     const [formData, setFormData] = useState({
         firstname: "",
         lastname: "",
@@ -28,7 +36,17 @@ const SignUpForm = ({ onSubmit }) => {
         if (name === "country") {
             try {
                 const countryData = JSON.parse(value);
-                setCurrentCountryCode(countryData.code); 
+                setCurrentCountryCode(countryData.code);
+
+                const parsedMin = Number(countryData.minLength);
+                const parsedMax = Number(countryData.maxLength);
+                setPhoneLengthLimits({
+                    min: Number.isFinite(parsedMin) && parsedMin > 0 ? parsedMin : DEFAULT_MIN_PHONE_DIGITS,
+                    // Если бэкенд не прислал валидный min/max для страны — не снимаем
+                    // ограничение полностью, а откатываемся на общий потолок/пол.
+                    max: Number.isFinite(parsedMax) && parsedMax > 0 ? parsedMax : DEFAULT_MAX_PHONE_DIGITS,
+                });
+
                 setFormData(prev => ({
                     ...prev,
                     country: countryData.name,
@@ -37,6 +55,7 @@ const SignUpForm = ({ onSubmit }) => {
                 }));
             } catch (error) {
                 setCurrentCountryCode("");
+                setPhoneLengthLimits({ min: DEFAULT_MIN_PHONE_DIGITS, max: DEFAULT_MAX_PHONE_DIGITS });
                 setFormData(prev => ({ ...prev, country: "", countryId: "", phone: "" }));
             }
             return;
@@ -48,12 +67,16 @@ const SignUpForm = ({ onSubmit }) => {
             if (!onlyLettersRegex.test(value)) return;
         }
 
-        // 3. В ТЕЛЕФОНЕ — ЗАЩИТА КОДА И ТОЛЬКО ЦИФРЫ
+        // 3. В ТЕЛЕФОНЕ — ЗАЩИТА КОДА, ТОЛЬКО ЦИФРЫ И МАКСИМАЛЬНАЯ ДЛИНА
         if (name === "phone") {
             if (currentCountryCode && !value.startsWith(currentCountryCode)) return;
             const userEnteredPart = value.slice(currentCountryCode.length);
             const onlyDigitsRegex = /^\d*$/;
             if (!onlyDigitsRegex.test(userEnteredPart)) return;
+
+            // Как только цифр после кода страны становится больше максимума —
+            // дальнейшие символы просто не попадают в стейт, инпут "перестаёт вводить".
+            if (phoneLengthLimits.max && userEnteredPart.length > phoneLengthLimits.max) return;
         }
 
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -85,6 +108,15 @@ const SignUpForm = ({ onSubmit }) => {
                 return;
             }
         }
+
+        if (step === 2) {
+            const userEnteredPart = formData.phone.slice(currentCountryCode.length);
+            if (phoneLengthLimits.min && userEnteredPart.length < phoneLengthLimits.min) {
+                setError(`Phone number for ${formData.country} must be at least ${phoneLengthLimits.min} digits long.`);
+                return;
+            }
+        }
+
         setStep(prev => prev + 1);
     };
 
@@ -145,7 +177,16 @@ const SignUpForm = ({ onSubmit }) => {
                 <>
                     <CountrySelect value={formData.country} onChange={handleChange} />
                     <InputField label="Email" type="email" name="email" value={formData.email} onChange={handleChange} placeholder="example@gmail.com" required />
-                    <InputField label="Phone" type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Enter your phone" required />
+                    <InputField
+                        label="Phone"
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        placeholder="Enter your phone"
+                        maxLength={currentCountryCode.length + phoneLengthLimits.max}
+                        required
+                    />
                     <div className="formLinks">
                         <Link to="/sign-in">Sign In</Link>
                         <a href="https://google.com" target="_blank" rel="noreferrer">Forgot password ?</a>

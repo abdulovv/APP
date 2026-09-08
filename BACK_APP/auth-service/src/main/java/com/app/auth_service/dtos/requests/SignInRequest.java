@@ -1,4 +1,4 @@
-package com.app.auth_service.dto.requests;
+package com.app.auth_service.dtos.requests;
 
 public record SignInRequest(
         String uniqueField,

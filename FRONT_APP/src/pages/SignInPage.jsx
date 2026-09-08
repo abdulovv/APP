@@ -23,33 +23,41 @@ function SignInPage() {
 
     const form = new FormData(event.target)
 
-    const response = await fetch('http://localhost:8080/api/auth/sign-in', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        uniqueField: form.get('uniqueField'),
-        password: form.get('password'),
-      }),
-    })
-
-    const data = await response.json()
-    setIsLoading(false)
-
-    if (response.status === 200) {
-      setNotice({ 
-        type: 'success',
-        text: data.message,
+    try {
+      const response = await fetch('http://localhost:8081/api/auth/sign-in', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uniqueField: form.get('uniqueField'),
+          password: form.get('password'),
+        }),
       })
-      setTimeout(() => {
-        navigate('/home', { replace: true })
-      }, 2000)
-    } else {
-      setNotice({  
-        type: 'error',
-        text: data.message,
-      })
+
+      const data = await response.json()
+
+      if (response.status === 200) {
+        setNotice({ 
+          type: 'success',
+          text: data.message,
+        })
+        setTimeout(() => {
+          navigate('/profile', { replace: true })
+        }, 2000)
+      } else {
+        setNotice({  
+          type: 'error',
+          text: data.message,
+        })
+      }
+    } catch (error) {
+      // Раньше эта ветка отсутствовала: при недоступном сервере промис зависал
+      // необработанным, а кнопка навсегда оставалась в состоянии "Signing In...".
+      console.error('Network error:', error)
+      setNotice({ type: 'error', text: 'Server is unreachable' })
+    } finally {
+      setIsLoading(false)
     }
   }
 
