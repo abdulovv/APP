@@ -5,12 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryDTO {
-    private Long id;
+public class NutrientValueDTO {
+    private Long nutrientId;
     private String name;
-    private String type;
+    private String unit;
+    private BigDecimal value;
 }

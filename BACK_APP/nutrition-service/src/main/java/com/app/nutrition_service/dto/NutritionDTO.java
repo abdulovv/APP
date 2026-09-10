@@ -1,24 +1,23 @@
 package com.app.nutrition_service.dto;
 
-import com.app.nutrition_service.entities.Drink;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DrinkDTO {
+public class NutritionDTO {
     private Long id;
     private String name;
+    private String portionName;
+    private BigDecimal portionWeight;
     private CategoryDTO category;
-    private BigDecimal calories;
-    private BigDecimal protein;
-    private BigDecimal carbohydrates;
-    private BigDecimal fat;
-    private String servingUnit;
+    private List<NutrientValueDTO> nutrients = new ArrayList<>();
 }

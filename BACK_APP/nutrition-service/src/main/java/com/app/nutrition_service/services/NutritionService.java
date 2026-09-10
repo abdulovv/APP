@@ -1,14 +1,19 @@
 package com.app.nutrition_service.services;
 
-import com.app.nutrition_service.dto.CategoryDTO;
-import com.app.nutrition_service.dto.DrinkDTO;
-import com.app.nutrition_service.dto.FoodDTO;
-import com.app.nutrition_service.exceptions.DrinkNotFoundException;
-import com.app.nutrition_service.exceptions.DrinksNotFoundException;
-import com.app.nutrition_service.exceptions.FoodNotFoundException;
+import com.app.nutrition_service.dto.NutritionDTO;
+import com.app.nutrition_service.entities.Nutrition;
+import com.app.nutrition_service.exceptions.*;
+import com.app.nutrition_service.mappers.NutritionMapper;
+import com.app.nutrition_service.repositories.NutritionRepository;
+import com.app.nutrition_service.services.subservices.DrinkService;
+import com.app.nutrition_service.services.subservices.FoodService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -18,52 +23,54 @@ public class NutritionService {
     private final FoodService foodService;
     private final DrinkService drinkService;
     private final CategoryService categoryService;
+    private final NutritionRepository nutritionRepository;
+    private final NutritionMapper nutritionMapper;
 
     // ==================== DRINK ====================
-    public ResponseEntity<List<DrinkDTO>> getAllDrinks() throws DrinksNotFoundException {
+    public ResponseEntity<List<NutritionDTO>> getAllDrinks() throws DrinksNotFoundException {
         return drinkService.getAllDrinks();
     }
 
-    public DrinkDTO getDrinkById(Long id) throws DrinkNotFoundException {
-        return drinkService.getDrinkById(id);
-    }
-
-    public List<DrinkDTO> getDrinkByCategoryName(String categoryName) throws DrinksNotFoundException {
+    public List<NutritionDTO> getDrinksByCategoryName(String categoryName) throws DrinksNotFoundException {
         return drinkService.getDrinksByCategoryName(categoryName);
     }
 
-    public DrinkDTO createDrink(DrinkDTO dto) {
+    public NutritionDTO createDrink(NutritionDTO dto) throws NoNutrientsException {
         return drinkService.createDrink(dto);
     }
 
-    public DrinkDTO updateDrink(Long id, DrinkDTO dto) throws DrinkNotFoundException {
-        return drinkService.updateDrink(id, dto);
-    }
-
-    public void deleteDrink(Long id) {
-        drinkService.deleteDrink(id);
-    }
-
     // ==================== FOOD ====================
-    public List<FoodDTO> getAllFoods() {
+    public List<NutritionDTO> getAllFoods() {
         return foodService.getAllFoods();
     }
 
-    public FoodDTO getFoodById(Long id) throws FoodNotFoundException {
-        return foodService.getFoodById(id);
+    public List<NutritionDTO> getFoodByCategoryName(String categoryName) throws FoodNotFoundException {
+        return foodService.getFoodsByCategoryName(categoryName);
     }
 
-    public FoodDTO createFood(FoodDTO dto) {
+    public NutritionDTO createFood(NutritionDTO dto) throws NoNutrientsException {
         return foodService.createFood(dto);
     }
 
-    public FoodDTO updateFood(Long id, FoodDTO dto) throws FoodNotFoundException {
-        return foodService.updateFood(id, dto);
+    // ==================== GENERAL ====================
+    @Transactional(rollbackOn = NutritionNotFoundException.class)
+    public NutritionDTO updateNutrition(Long id, NutritionDTO nutritionDTO) throws NutritionNotFoundException {
+        if (nutritionRepository.existsById(id)){
+            Nutrition updatedNutrition = nutritionMapper.toEntity(nutritionDTO);
+            nutritionRepository.save(updatedNutrition);
+        }else {
+            throw new NutritionNotFoundException();
+        }
+
+        return nutritionDTO;
     }
 
-    public void deleteFood(Long id) throws FoodNotFoundException {
-        foodService.deleteFood(id);
+    @Transactional(rollbackOn = NutritionNotFoundException.class)
+    public NutritionDTO deleteNutrition(Long id) throws NutritionNotFoundException {
+        Nutrition nutrition = nutritionRepository.findById(id)
+                .orElseThrow(NutritionNotFoundException::new);
+        nutritionRepository.delete(nutrition);
+
+        return nutritionMapper.toDto(nutrition);
     }
-
-
 }

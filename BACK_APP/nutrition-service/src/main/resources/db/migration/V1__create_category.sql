@@ -1,0 +1,36 @@
+CREATE TABLE category (
+    id   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(10) NOT NULL CHECK (type IN ('FOOD', 'DRINK'))
+);
+
+INSERT INTO category (name, type) VALUES
+('Фрукты', 'FOOD'),
+('Овощи', 'FOOD'),
+('Молочные продукты', 'FOOD'),
+('Мясо и птица', 'FOOD'),
+('Рыба и морепродукты', 'FOOD'),
+('Крупы и зерновые', 'FOOD'),
+('Бобовые', 'FOOD'),
+('Орехи и семена', 'FOOD'),
+('Хлебобулочные изделия', 'FOOD'),
+('Кондитерские изделия', 'FOOD'),
+('Напитки', 'DRINK'),
+('Вода', 'DRINK'),
+('Масла и жиры', 'FOOD'),
+('Яйца', 'FOOD'),
+('Грибы', 'FOOD'),
+('Специи и приправы', 'FOOD'),
+('Консервы', 'FOOD'),
+('Соусы', 'FOOD'),
+('Замороженные продукты', 'FOOD'),
+('Снеки', 'FOOD'),
+('Мороженое', 'FOOD'),
+('Готовые блюда', 'FOOD'),
+('Детское питание', 'FOOD'),
+('Спортивное питание', 'FOOD'),
+('Алкогольные напитки', 'DRINK'),
+('Чай и кофе', 'DRINK'),
+('Соки', 'DRINK'),
+('Сухофрукты', 'FOOD'),
+('Ягоды', 'FOOD');
