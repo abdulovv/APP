@@ -12,6 +12,8 @@
     <modules>
         <module>auth-service</module>
         <module>nutrition-service</module>
+        <module>diary-service</module>
+        <module>api-gateway</module>
     </modules>
 
     <properties>
