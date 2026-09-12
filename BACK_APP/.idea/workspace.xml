@@ -5,14 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e11a2b66-7719-4e3f-ae63-34a46b39d969" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/GatewayRouteConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/GatewayRouteConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/GatewayRouteConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diary-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nutrition-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,6 +41,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.auth-service.executor": "Run",
+    "Application.diary-service.executor": "Run",
+    "Application.eureka.executor": "Run",
     "Application.gateway.executor": "Run",
     "Application.nutrition-service.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
@@ -51,10 +56,44 @@
     "project.structure.side.proportion": "0.2"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.gateway">
+  <component name="RunManager" selected="Application.diary-service">
     <configuration name="auth-service" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.app.auth_service.AuthServiceApplication" />
       <module name="auth-service" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="diary-service" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.app.diary_service.DiaryServiceApplication" />
+      <module name="diary-service" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="eureka" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.app.eureka_server.EurekaServerApplication" />
+      <module name="eureka-server" />
       <extension name="net.ashald.envfile">
         <option name="IS_ENABLED" value="false" />
         <option name="IS_SUBST" value="false" />
@@ -105,12 +144,16 @@
     </configuration>
     <configuration name="app" type="CompoundRunConfigurationType">
       <toRun name="auth-service" type="Application" />
+      <toRun name="diary-service" type="Application" />
+      <toRun name="eureka" type="Application" />
       <toRun name="gateway" type="Application" />
       <toRun name="nutrition-service" type="Application" />
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Application.gateway" />
+      <item itemvalue="Application.eureka" />
+      <item itemvalue="Application.diary-service" />
       <item itemvalue="Application.auth-service" />
       <item itemvalue="Application.nutrition-service" />
       <item itemvalue="Compound.app" />

@@ -14,15 +14,15 @@ public class GatewayRouteConfig {
 
                 .route("auth-service-route", r -> r
                         .path("/api/auth/**")
-                        .uri("http://localhost:8081"))
+                        .uri("lb://auth-service"))
 
                 .route("nutrition-service-route", r -> r
                         .path("/api/nutrition/**")
-                        .uri("http://localhost:8082"))
+                        .uri("lb://nutrition-service"))
 
                 .route("diary-service-route", r -> r
                         .path("/api/diary/**")
-                        .uri("http://localhost:8083"))
+                        .uri("lb://diary-service"))
                 .build();
     }
 }
