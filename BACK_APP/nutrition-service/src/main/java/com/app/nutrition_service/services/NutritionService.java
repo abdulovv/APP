@@ -73,4 +73,13 @@ public class NutritionService {
 
         return nutritionMapper.toDto(nutrition);
     }
+
+    public List<NutritionDTO> getAllNutrition() throws NutritionNotFoundException {
+        List<Nutrition> allNutrition = nutritionRepository.findAll();
+        if (allNutrition.isEmpty()){
+            throw new NutritionNotFoundException();
+        }
+
+        return allNutrition.stream().map(nutritionMapper::toDto).toList();
+    }
 }

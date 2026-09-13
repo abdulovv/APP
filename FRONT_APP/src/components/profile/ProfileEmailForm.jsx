@@ -1,38 +1,34 @@
-import { useState } from "react"
+import { forwardRef, useImperativeHandle, useState } from "react"
 import { updateEmail } from "../../api/ProfileApi.jsx"
 
-const ProfileEmailForm = ({ email, onSaved, onNotify }) => {
+const ProfileEmailForm = forwardRef(({ email, onSaved, onNotify }, ref) => {
     const [value, setValue] = useState(email)
-    const [isSaving, setIsSaving] = useState(false)
 
     const handleChange = (e) => setValue(e.target.value)
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    useImperativeHandle(ref, () => ({
+        save: async () => {
+            // Простая проверка формата почты на клиенте — сервер всё равно
+            // должен провалидировать её ещё раз, это только для UX.
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            if (!emailRegex.test(value)) {
+                onNotify({ type: "warning", text: "Введите корректный email." })
+                throw new Error("validation")
+            }
 
-        // Простая проверка формата почты на клиенте — сервер всё равно
-        // должен провалидировать её ещё раз, это только для UX.
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailRegex.test(value)) {
-            onNotify({ type: "warning", text: "Введите корректный email." })
-            return
-        }
-
-        setIsSaving(true)
-        try {
-            const data = await updateEmail({ email: value })
-            onNotify({ type: "success", text: data.message || "Email обновлён." })
-            onSaved(value)
-        } catch (error) {
-            onNotify({ type: "error", text: error.message })
-        } finally {
-            setIsSaving(false)
-        }
-    }
+            try {
+                const data = await updateEmail({ email: value })
+                onSaved(value)
+                return data.message || "Email обновлён."
+            } catch (error) {
+                onNotify({ type: "error", text: error.message })
+                throw error
+            }
+        },
+    }))
 
     return (
-        <form className="profileForm" onSubmit={handleSubmit}>
-            
+        <div className="profileForm">
             <div className="profileFormRow">
                 <label className="inputWrapper">
                     <span className="inputLabel">Email</span>
@@ -47,12 +43,8 @@ const ProfileEmailForm = ({ email, onSaved, onNotify }) => {
                     />
                 </label>
             </div>
-
-            <button className="submitBtn" type="submit" disabled={isSaving}>
-                {isSaving ? "Saving..." : "Save"}
-            </button>
-        </form>
+        </div>
     )
-}
+})
 
 export default ProfileEmailForm

@@ -1,50 +1,51 @@
-import { useState } from "react"
+import { forwardRef, useImperativeHandle, useState } from "react"
 import { updatePassword } from "../../api/ProfileApi.jsx"
 
 const EMPTY_FORM = { currentPassword: "", newPassword: "", confirmNewPassword: "" }
 
 // Пароль, в отличие от имени/почты/телефона, не хранится в стейте ProfilePage —
 // после успешной смены просто очищаем поля формы, поэтому onSaved сюда не передаём.
-const ProfilePasswordForm = ({ onNotify }) => {
+// Если поля пустые — save() ничего не делает и не мешает сохранению остальных форм.
+const ProfilePasswordForm = forwardRef(({ onNotify }, ref) => {
     const [values, setValues] = useState(EMPTY_FORM)
-    const [isSaving, setIsSaving] = useState(false)
 
     const handleChange = (e) => {
         const { name, value } = e.target
         setValues(prev => ({ ...prev, [name]: value }))
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    useImperativeHandle(ref, () => ({
+        save: async () => {
+            const { currentPassword, newPassword, confirmNewPassword } = values
 
-        if (values.newPassword.length < 8) {
-            onNotify({ type: "warning", text: "Новый пароль должен быть не короче 8 символов." })
-            return
-        }
+            // Пользователь не трогал поля пароля — просто пропускаем эту форму.
+            if (!currentPassword && !newPassword && !confirmNewPassword) {
+                return null
+            }
 
-        if (values.newPassword !== values.confirmNewPassword) {
-            onNotify({ type: "warning", text: "Новые пароли не совпадают." })
-            return
-        }
+            if (newPassword.length < 8) {
+                onNotify({ type: "warning", text: "Новый пароль должен быть не короче 8 символов." })
+                throw new Error("validation")
+            }
 
-        setIsSaving(true)
-        try {
-            const data = await updatePassword({
-                currentPassword: values.currentPassword,
-                newPassword: values.newPassword,
-            })
-            onNotify({ type: "success", text: data.message || "Пароль обновлён." })
-            setValues(EMPTY_FORM) // Чистим поля — не оставляем пароли в форме после сабмита
-        } catch (error) {
-            onNotify({ type: "error", text: error.message })
-        } finally {
-            setIsSaving(false)
-        }
-    }
+            if (newPassword !== confirmNewPassword) {
+                onNotify({ type: "warning", text: "Новые пароли не совпадают." })
+                throw new Error("validation")
+            }
+
+            try {
+                const data = await updatePassword({ currentPassword, newPassword })
+                setValues(EMPTY_FORM) // Чистим поля — не оставляем пароли в форме после сабмита
+                return data.message || "Пароль обновлён."
+            } catch (error) {
+                onNotify({ type: "error", text: error.message })
+                throw error
+            }
+        },
+    }))
 
     return (
-        <form className="profileForm" onSubmit={handleSubmit}>
-            
+        <div className="profileForm">
             <div className="profileFormRow">
                 <label className="inputWrapper">
                     <span className="inputLabel">Current Password</span>
@@ -55,7 +56,6 @@ const ProfilePasswordForm = ({ onNotify }) => {
                         value={values.currentPassword}
                         onChange={handleChange}
                         placeholder="Enter your current password"
-                        required
                     />
                 </label>
 
@@ -68,7 +68,6 @@ const ProfilePasswordForm = ({ onNotify }) => {
                         value={values.newPassword}
                         onChange={handleChange}
                         placeholder="Enter new password"
-                        required
                     />
                 </label>
 
@@ -81,16 +80,11 @@ const ProfilePasswordForm = ({ onNotify }) => {
                         value={values.confirmNewPassword}
                         onChange={handleChange}
                         placeholder="Confirm new password"
-                        required
                     />
                 </label>
             </div>
-
-            <button className="submitBtn" type="submit" disabled={isSaving}>
-                {isSaving ? "Saving..." : "Save"}
-            </button>
-        </form>
+        </div>
     )
-}
+})
 
 export default ProfilePasswordForm

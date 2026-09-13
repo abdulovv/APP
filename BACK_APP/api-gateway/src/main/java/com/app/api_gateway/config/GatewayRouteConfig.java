@@ -14,6 +14,8 @@ public class GatewayRouteConfig {
 
                 .route("auth-service-route", r -> r
                         .path("/api/auth/**")
+                        .or().path("/api/countries/**")
+                        .or().path("/api/users/**")
                         .uri("lb://auth-service"))
 
                 .route("nutrition-service-route", r -> r

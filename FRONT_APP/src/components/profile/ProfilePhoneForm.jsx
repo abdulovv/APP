@@ -1,9 +1,8 @@
-import { useState } from "react"
+import { forwardRef, useImperativeHandle, useState } from "react"
 import { updatePhone } from "../../api/ProfileApi.jsx"
 
-const ProfilePhoneForm = ({ phoneNumber, onSaved, onNotify }) => {
+const ProfilePhoneForm = forwardRef(({ phoneNumber, onSaved, onNotify }, ref) => {
     const [value, setValue] = useState(phoneNumber)
-    const [isSaving, setIsSaving] = useState(false)
 
     const handleChange = (e) => {
         const newValue = e.target.value
@@ -13,29 +12,26 @@ const ProfilePhoneForm = ({ phoneNumber, onSaved, onNotify }) => {
         setValue(newValue)
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    useImperativeHandle(ref, () => ({
+        save: async () => {
+            if (value.replace(/\D/g, "").length < 5) {
+                onNotify({ type: "warning", text: "Введите корректный номер телефона." })
+                throw new Error("validation")
+            }
 
-        if (value.replace(/\D/g, "").length < 5) {
-            onNotify({ type: "warning", text: "Введите корректный номер телефона." })
-            return
-        }
-
-        setIsSaving(true)
-        try {
-            const data = await updatePhone({ phoneNumber: value })
-            onNotify({ type: "success", text: data.message || "Телефон обновлён." })
-            onSaved(value)
-        } catch (error) {
-            onNotify({ type: "error", text: error.message })
-        } finally {
-            setIsSaving(false)
-        }
-    }
+            try {
+                const data = await updatePhone({ phoneNumber: value })
+                onSaved(value)
+                return data.message || "Телефон обновлён."
+            } catch (error) {
+                onNotify({ type: "error", text: error.message })
+                throw error
+            }
+        },
+    }))
 
     return (
-        <form className="profileForm" onSubmit={handleSubmit}>
-            
+        <div className="profileForm">
             <div className="profileFormRow">
                 <label className="inputWrapper">
                     <span className="inputLabel">Phone</span>
@@ -50,12 +46,8 @@ const ProfilePhoneForm = ({ phoneNumber, onSaved, onNotify }) => {
                     />
                 </label>
             </div>
-
-            <button className="submitBtn" type="submit" disabled={isSaving}>
-                {isSaving ? "Saving..." : "Save"}
-            </button>
-        </form>
+        </div>
     )
-}
+})
 
 export default ProfilePhoneForm

@@ -48,6 +48,11 @@ public class NutritionController {
     }
 
     // ==================== GENERAL ====================
+    @GetMapping("/all")
+    public List<NutritionDTO> getAllNutrition() throws NutritionNotFoundException {
+        return nutritionService.getAllNutrition();
+    }
+
     @PutMapping("/update/{id}")
     public NutritionDTO updateNutrition(
             @PathVariable(name = "id") Long id,

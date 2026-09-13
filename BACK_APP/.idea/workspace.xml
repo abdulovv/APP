@@ -5,23 +5,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e11a2b66-7719-4e3f-ae63-34a46b39d969" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/entities/BodyWeightLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/entities/Diary.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/entities/MealType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/entities/Note.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/entities/NoteContent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/diary-service/src/main/resources/db/migrations/V1__createtable_diaries.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/diary-service/src/main/resources/db/migrations/V2__createtable_body_weight_logs.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/diary-service/src/main/resources/db/migrations/V3__createtable_notes.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/diary-service/src/main/resources/db/migrations/V4_createtable_notes_content.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/CorsConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/GatewayRouteConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/GatewayRouteConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diary-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/diary-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/controllers/NutritionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/controllers/NutritionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/NutritionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/NutritionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -38,25 +55,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.auth-service.executor": "Run",
-    "Application.diary-service.executor": "Run",
-    "Application.eureka.executor": "Run",
-    "Application.gateway.executor": "Run",
-    "Application.nutrition-service.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.auth-service.executor&quot;: &quot;Run&quot;,
+    &quot;Application.diary-service.executor&quot;: &quot;Run&quot;,
+    &quot;Application.eureka.executor&quot;: &quot;Run&quot;,
+    &quot;Application.gateway.executor&quot;: &quot;Run&quot;,
+    &quot;Application.nutrition-service.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Application.diary-service">
+}</component>
+  <component name="RunManager" selected="Application.nutrition-service">
     <configuration name="auth-service" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.app.auth_service.AuthServiceApplication" />
       <module name="auth-service" />

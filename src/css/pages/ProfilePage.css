@@ -1,0 +1,60 @@
+/* Страница на весь экран, форма по центру — та же схема, что на SignIn/SignUp */
+.profile-page {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px 16px;
+  box-sizing: border-box;
+
+  justify-content: center;
+  align-items: flex-start;
+
+  background-color: #f7f7f7;
+}
+
+.profileLoading {
+  font-size: 20px;
+  color: #333;
+  margin-top: 100px;
+}
+
+/* Общая карточка профиля — те же скругления/тень/рамка, что у signInForm/signUpForm */
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  padding: 40px;
+
+  border: 2px solid orange;
+  border-radius: 12px;
+
+  background-color: #f0f2f5;
+
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
+
+  width: 100%;
+  max-width: 480px;
+  box-sizing: border-box;
+}
+
+.profileTitle {
+  color: orange;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: 0.4px;
+
+  margin: 0 0 10px 0;
+
+  font-size: 33.333px;
+  text-align: center;
+  font-weight: 600;
+
+  text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.10);
+}
+
+.profileDivider {
+  border: none;
+  border-top: 1.5px solid rgba(255, 165, 0, 0.35);
+  margin: 4px 0;
+}

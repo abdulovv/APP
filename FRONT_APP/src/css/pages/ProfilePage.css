@@ -1,31 +1,58 @@
-/* Страница на весь экран, форма по центру — та же схема, что на SignIn/SignUp */
+/* Страница на весь экран, разделена на две колонки: слева дневник (шире),
+   справа профиль. Именно в таком порядке идут и div'ы в разметке —
+   .left-half / .right-half — так что менять местами теперь можно прямо в JSX.
+   Скролла на самой странице нет вообще (ни по одной оси) — высота жёстко
+   зафиксирована в 100vh, лишнее прячем через overflow: hidden. */
 .profile-page {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   margin: 0;
-  padding: 40px 16px;
+  padding: 0;
   box-sizing: border-box;
-
-  justify-content: center;
-  align-items: flex-start;
+  overflow: hidden;
 
   background-color: #f7f7f7;
+}
+
+/* Левая половина — дневник, окно по центру, скролл только внутри окна */
+.left-half {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Правая половина — профиль, строго по центру, без скролла */
+.right-half {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .profileLoading {
   font-size: 20px;
   color: #333;
-  margin-top: 100px;
+  margin: auto;
 }
 
-/* Общая карточка профиля — те же скругления/тень/рамка, что у signInForm/signUpForm */
+/* Общая карточка профиля — те же скругления/тень/рамка, что у signInForm/signUpForm.
+   Форма стала шире и ниже (поля выстраиваются в ряд, отступы завязаны на vh),
+   поэтому она сама помещается по высоте и скролл ей больше не нужен. */
 .profileCard {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: clamp(8px, 1.6vh, 16px);
 
-  padding: 40px;
+  padding: clamp(20px, 3.5vh, 40px) clamp(20px, 3vw, 40px);
 
   border: 2px solid orange;
   border-radius: 12px;
@@ -35,8 +62,10 @@
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
 
   width: 100%;
-  max-width: 480px;
+  max-width: 440px;
+  max-height: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .profileTitle {
@@ -56,5 +85,11 @@
 .profileDivider {
   border: none;
   border-top: 1.5px solid rgba(255, 165, 0, 0.35);
-  margin: 4px 0;
+  margin: 0;
 }
+
+/* ===================== DIARY (тестовое окно, см. Diary.css) ===================== */
+/* Всё, что относится к дневнику, вынесено в отдельный файл
+   src/css/components/diary/Diary.css — чтобы одним движением убрать
+   тестовый блок, достаточно удалить импорт этого css и <DiaryPlaceholder />
+   из ProfilePage.jsx, ничего другого трогать не придётся. */
