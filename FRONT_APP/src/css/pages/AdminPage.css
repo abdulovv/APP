@@ -1,0 +1,6 @@
+/* В .appContent дети центрируются через margin: auto — здесь прижимаем страницу к верху */
+.appContent > .adminPage {
+    align-self: flex-start;
+    width: 100%;
+    margin: 0;
+}

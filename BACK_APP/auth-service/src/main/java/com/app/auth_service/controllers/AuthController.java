@@ -3,6 +3,8 @@ package com.app.auth_service.controllers;
 import com.app.auth_service.dtos.requests.SignInRequest;
 import com.app.auth_service.dtos.requests.SignUpRequest;
 import com.app.auth_service.dtos.responses.AuthResponse;
+import com.app.auth_service.entities.Role;
+import com.app.auth_service.entities.User;
 import com.app.auth_service.services.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -31,11 +33,14 @@ public class AuthController {
             @Valid @RequestBody SignInRequest request,
             HttpServletRequest httpServletRequest
     ) {
-        Long id = authService.authenticate(request).getId();
+        User user = authService.authenticate(request);
+        Long id = user.getId();
+        Role role = user.getRole();
         HttpSession session = httpServletRequest.getSession(false);
         if (session != null) session.invalidate();
         session = httpServletRequest.getSession(true);
         session.setAttribute("userId", id);
+        session.setAttribute("role", role.name());
         return ResponseEntity.ok(new AuthResponse("Welcome back!"));
     }
 

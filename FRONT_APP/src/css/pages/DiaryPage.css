@@ -15,10 +15,10 @@
 
 .mealSection {
     padding: 14px 16px;
-    border: 1.5px solid rgba(255, 165, 0, 0.35);
+    border: 1.5px solid var(--divider);
     border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    background-color: var(--surface);
+    box-shadow: var(--shadow);
 }
 
 .mealTitle {

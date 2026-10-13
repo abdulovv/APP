@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
 import { getCurrentUser, updateEmail, updateName, updatePassword, updatePhone } from '../api/profileApi.js'
 import { useNotice } from '../hooks/useNotice.js'
 import Notification from '../components/Notification.jsx'
@@ -41,6 +42,7 @@ function ProfilePage() {
     const [isEditing, setIsEditing] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
     const [notice, showNotice] = useNotice()
+    const { setCurrentUser } = useOutletContext()
 
     useEffect(() => {
         document.title = 'Profile'
@@ -99,6 +101,7 @@ function ProfilePage() {
                 phoneNumber: form.phoneNumber,
             }
             setUser(updatedUser)
+            setCurrentUser(updatedUser) // чтобы новое имя сразу появилось в навбаре
             setForm(toForm(updatedUser))
             setIsEditing(false)
             showNotice('success', 'Profile updated.')

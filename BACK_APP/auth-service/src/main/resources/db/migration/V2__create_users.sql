@@ -8,6 +8,7 @@ CREATE TABLE users (
     birth_date   DATE         NOT NULL,
     country_id   BIGINT       NOT NULL,
     is_premium   BOOLEAN      NOT NULL DEFAULT FALSE,
+    role         VARCHAR(10)  NOT NULL DEFAULT 'USER' CHECK (role IN ('USER', 'ADMIN')),
     CONSTRAINT fk_users_country
         FOREIGN KEY (country_id) REFERENCES countries (id)
 );

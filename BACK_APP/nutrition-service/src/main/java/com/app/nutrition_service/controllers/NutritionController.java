@@ -22,6 +22,10 @@ public class NutritionController {
     private final CategoryService categoryService;
     private final NutrientService nutrientService;
 
+    private static boolean isAdmin(String role){
+        return "ADMIN".equals(role);
+    }
+
     // ==================== DRINKS ====================
     @GetMapping("/drinks")
     public ResponseEntity<List<NutritionDTO>> getAllDrinks() {
@@ -34,7 +38,13 @@ public class NutritionController {
     }
 
     @PostMapping("/drinks")
-    public ResponseEntity<NutritionDTO> createDrink(@RequestBody NutritionDTO dto) {
+    public ResponseEntity<NutritionDTO> createDrink(
+            @RequestBody NutritionDTO dto,
+            @RequestHeader("X-User-Role") String role
+    ){
+        if (!isAdmin(role)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(nutritionService.createDrink(dto));
     }
 
@@ -50,7 +60,13 @@ public class NutritionController {
     }
 
     @PostMapping("/foods")
-    public ResponseEntity<NutritionDTO> createFood(@RequestBody NutritionDTO dto) {
+    public ResponseEntity<NutritionDTO> createFood(
+            @RequestBody NutritionDTO dto,
+            @RequestHeader("X-User-Role") String role
+    ) {
+        if (!isAdmin(role)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(nutritionService.createFood(dto));
     }
 
@@ -87,14 +103,26 @@ public class NutritionController {
     @PutMapping("/{id}")
     public ResponseEntity<NutritionDTO> updateNutrition(
             @PathVariable("id") Long id,
-            @RequestBody NutritionDTO nutritionDTO
+            @RequestBody NutritionDTO nutritionDTO,
+            @RequestHeader("X-User-Role") String role
     ) {
+        if (!isAdmin(role)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return ResponseEntity.ok(nutritionService.updateNutrition(id, nutritionDTO));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNutrition(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteNutrition(
+            @PathVariable("id") Long id,
+            @RequestHeader("X-User-Role") String role
+    ) {
+        if (!isAdmin(role)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         nutritionService.deleteNutrition(id);
         return ResponseEntity.noContent().build();
     }
+
+
 }

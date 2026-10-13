@@ -16,7 +16,7 @@
     font-size: 26px;
     font-weight: 600;
     text-align: center;
-    -webkit-text-stroke: 0.4px black;
+    -webkit-text-stroke: 0.4px var(--title-stroke);
 }
 
 .navbarLink {
@@ -45,7 +45,43 @@
     font-weight: bold;
 }
 
-.navbarSignOut {
+.navbarDivider {
+    width: 100%;
+    margin: 4px 0;
+    border: none;
+    border-top: 1.5px solid var(--divider);
+}
+
+/* Всё, что прижато к низу: тема, выход, имя */
+.navbarBottom {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     margin-top: auto;
+}
+
+.navbarMuted {
     color: var(--text-muted);
+}
+
+.navbarUser {
+    padding: 12px 16px 0;
+    border-top: 1.5px solid var(--divider);
+    font-size: 17px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.navbarUserName {
+    color: var(--text);
+}
+
+.navbarUserPlan {
+    color: var(--text-muted);
+}
+
+.navbarUserPlan.premium {
+    color: var(--accent);
+    font-weight: 600;
 }

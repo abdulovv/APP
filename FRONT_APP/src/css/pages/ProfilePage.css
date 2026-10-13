@@ -22,7 +22,7 @@
     width: 100%;
     margin: 4px 0;
     border: none;
-    border-top: 1.5px solid rgba(255, 165, 0, 0.35);
+    border-top: 1.5px solid var(--divider);
 }
 
 .profileActions {

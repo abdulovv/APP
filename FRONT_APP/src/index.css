@@ -1,6 +1,6 @@
 :root {
-    --accent: orange;
-    --accent-dark: rgb(231, 153, 8);
+    --accent: #f28c00;
+    --accent-dark: #d97706;
     --accent-light: rgb(254, 184, 54);
     --accent-soft: rgba(255, 165, 0, 0.15);
     --card-bg: #f0f2f5;
@@ -9,9 +9,40 @@
     --text-muted: #888;
     --shadow: 0 5px 15px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
+    --surface: #fff;
+    --auth-bg: #fff;
+    --divider: rgba(255, 165, 0, 0.35);
+    --title-stroke: black;
+    --input-border: #ccc;
+    --input-disabled-bg: #e9e9e9;
+    --input-disabled-border: #ddd;
+    --input-disabled-text: #777;
 
+    color-scheme: light;
     font-family: 'Times New Roman', Times, serif;
     color: var(--text);
+}
+
+/* Тёмная тема: переопределяем только переменные, все стили берут цвета из них */
+:root[data-theme='dark'] {
+    --accent-soft: rgba(255, 165, 0, 0.18);
+    --card-bg: #1f2023;
+    --page-bg: #141517;
+    --text: #e4e4e6;
+    --text-muted: #9a9ba0;
+    --shadow: 0 5px 15px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.55), 0 5px 15px rgba(0, 0, 0, 0.35);
+    --surface: #2a2b2f;
+    --auth-bg: #141517;
+    --divider: rgba(255, 165, 0, 0.3);
+    --title-stroke: rgba(0, 0, 0, 0.6);
+    --input-border: #45474d;
+    --input-disabled-bg: #232427;
+    --input-disabled-border: #33353a;
+    --input-disabled-text: #7d7e83;
+
+    /* тёмные системные элементы: выпадающие списки, скроллбары, автозаполнение */
+    color-scheme: dark;
 }
 
 *,
@@ -29,6 +60,7 @@ body,
 
 body {
     background-color: var(--page-bg);
+    transition: background-color 0.2s, color 0.2s;
 }
 
 .card {
@@ -50,7 +82,7 @@ body {
     font-size: 33px;
     font-weight: 600;
     text-align: center;
-    -webkit-text-stroke: 0.4px black;
+    -webkit-text-stroke: 0.4px var(--title-stroke);
     text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -68,9 +100,9 @@ body {
 .fieldInput {
     width: 100%;
     padding: 12px 16px;
-    border: 1.5px solid #ccc;
+    border: 1.5px solid var(--input-border);
     border-radius: 8px;
-    background-color: #fff;
+    background-color: var(--surface);
     font: inherit;
     font-size: 14px;
     color: var(--text);
@@ -89,9 +121,9 @@ body {
 }
 
 .fieldInput:disabled {
-    border-color: #ddd;
-    background-color: #e9e9e9;
-    color: #777;
+    border-color: var(--input-disabled-border);
+    background-color: var(--input-disabled-bg);
+    color: var(--input-disabled-text);
     box-shadow: none;
     cursor: not-allowed;
 }
@@ -122,7 +154,7 @@ body {
 }
 
 .btnSecondary {
-    background-color: #fff;
+    background-color: var(--surface);
     color: var(--accent-dark);
 }
 

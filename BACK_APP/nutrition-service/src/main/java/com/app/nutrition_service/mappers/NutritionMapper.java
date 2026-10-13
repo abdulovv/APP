@@ -18,10 +18,12 @@ public interface NutritionMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "category", ignore = true)
     @Mapping(target = "nutrients", ignore = true)
+    @Mapping(target = "isActive", ignore = true)
     Nutrition toEntity(NutritionDTO dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "category", ignore = true)
     @Mapping(target = "nutrients", ignore = true)
+    @Mapping(target = "isActive", ignore = true)
     void updateEntity(NutritionDTO dto, @MappingTarget Nutrition entity);
 }

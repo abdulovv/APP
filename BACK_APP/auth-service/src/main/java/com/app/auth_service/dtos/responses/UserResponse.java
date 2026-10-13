@@ -9,6 +9,8 @@ public record UserResponse(
         String email,
         String phoneNumber,
         LocalDate birthDate,
-        String countryName
+        String countryName,
+        String role,
+        Boolean premium
 ) {
 }

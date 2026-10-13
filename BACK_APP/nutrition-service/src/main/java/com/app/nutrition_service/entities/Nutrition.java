@@ -28,6 +28,10 @@ public class Nutrition {
     @Column(name = "portion_weight")
     private BigDecimal portionWeight;
 
+    @Builder.Default
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = true;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "category_id",

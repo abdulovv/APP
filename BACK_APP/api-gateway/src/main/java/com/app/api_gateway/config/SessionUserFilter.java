@@ -34,12 +34,14 @@ public class SessionUserFilter implements GlobalFilter, Ordered {
                     exchange.getRequest()
                             .mutate()
                             .headers(headers -> headers.remove("X-User-Id"))
+                            .headers(headers -> headers.remove("X-User-Role"))
                             .build()
             ).build());
         }
 
-        return exchange.getSession().flatMap(session -> { // сюда попадает каждый запрос
+        return exchange.getSession().flatMap(session -> {
             Long userId = session.getAttribute("userId");
+            String role = session.getAttribute("role");
             if (userId == null) {
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                 return exchange.getResponse().setComplete();
@@ -50,6 +52,10 @@ public class SessionUserFilter implements GlobalFilter, Ordered {
                     .headers(headers -> {
                         headers.remove("X-User-Id");
                         headers.set("X-User-Id", userId.toString());
+                    })
+                    .headers( headers -> {
+                        headers.remove("X-User-Role");
+                        headers.set("X-User-Role", role);
                     })
                     .build();
 
