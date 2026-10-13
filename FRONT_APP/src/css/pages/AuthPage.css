@@ -1,0 +1,61 @@
+.authPage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+    background-color: #fff;
+}
+
+.authMain {
+    display: flex;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.authForm {
+    max-width: 380px;
+    margin: auto;
+}
+
+.authLinks a {
+    color: var(--accent);
+    font-size: 14.5px;
+    text-decoration: none;
+}
+
+.authLinks a:hover {
+    color: var(--accent-light);
+    text-decoration: underline;
+}
+
+.authButtons {
+    display: flex;
+    gap: 12px;
+}
+
+.authButtons .btn {
+    flex: 1;
+}
+
+.selectField {
+    padding-right: 40px;
+    appearance: none;
+    cursor: pointer;
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+        linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+    background-position:
+        calc(100% - 18px) 50%,
+        calc(100% - 12px) 50%;
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 800px) {
+    .authPage {
+        grid-template-columns: 1fr;
+    }
+
+    .authSide {
+        display: none;
+    }
+}

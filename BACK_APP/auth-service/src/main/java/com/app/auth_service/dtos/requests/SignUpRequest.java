@@ -1,6 +1,11 @@
 package com.app.auth_service.dtos.requests;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -15,16 +20,15 @@ public record SignUpRequest(
 
         @NotBlank
         @Email
-        @Size(max = 50)
+        @Size(max = 254)
         String email,
 
         @NotBlank
-        @Size(min = 7, max = 15)
         @Pattern(regexp = "^\\+\\d{7,15}$")
         String phoneNumber,
 
         @NotBlank
-        @Size(min = 5, max = 10)
+        @Size(min = 8, max = 64)
         String password,
 
         @NotNull
@@ -33,16 +37,10 @@ public record SignUpRequest(
 
         @NotNull
         Long countryId
-
 ) {
     public SignUpRequest {
-        firstname = capitalize(firstname);
-        lastname = capitalize(lastname);
-        email = email != null ? email.toLowerCase() : null;
-    }
-
-    private static String capitalize(String value) {
-        if (value == null || value.isBlank()) return value;
-        return value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
+        firstname = NameFormatter.capitalize(firstname);
+        lastname = NameFormatter.capitalize(lastname);
+        email = email != null ? email.trim().toLowerCase() : null;
     }
 }

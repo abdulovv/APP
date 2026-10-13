@@ -18,18 +18,24 @@ public class Nutrition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
+
+    @Column(name = "name", nullable = false)
     private String name;
+
     @Column(name = "portion_name")
     private String portionName;
+
     @Column(name = "portion_weight")
     private BigDecimal portionWeight;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "category_id",
             foreignKey = @ForeignKey(name = "fk_nutrition_category")
     )
     private Category category;
-    @OneToMany(mappedBy = "nutrition", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+    @Builder.Default
+    @OneToMany(mappedBy = "nutrition", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<NutritionNutrient> nutrients = new ArrayList<>();
 }

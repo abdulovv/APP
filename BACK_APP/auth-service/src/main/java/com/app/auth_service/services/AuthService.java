@@ -1,26 +1,24 @@
 package com.app.auth_service.services;
 
-import com.app.auth_service.mappers.UserMapper;
 import com.app.auth_service.dtos.requests.SignInRequest;
 import com.app.auth_service.dtos.requests.SignUpRequest;
 import com.app.auth_service.dtos.responses.AuthResponse;
 import com.app.auth_service.entities.Country;
 import com.app.auth_service.entities.User;
-import com.app.auth_service.exceptions.IncorrectPasswordException;
-import com.app.auth_service.exceptions.UserNotFoundException;
+import com.app.auth_service.exceptions.CountryNotAvailableException;
+import com.app.auth_service.exceptions.CountryNotFoundException;
+import com.app.auth_service.exceptions.InvalidCredentialsException;
+import com.app.auth_service.exceptions.UserAlreadyExistsException;
+import com.app.auth_service.mappers.UserMapper;
 import com.app.auth_service.repositories.CountryRepository;
 import com.app.auth_service.repositories.UserRepository;
-import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
     private final CountryRepository countryRepository;
@@ -28,39 +26,38 @@ public class AuthService {
     private final UserMapper userMapper;
 
     @Transactional
-    public AuthResponse signUp(SignUpRequest request){
-        Long countryId = request.countryId();
-        Optional<Country> countryOpt = countryRepository.findById(countryId);
-
-        if (countryOpt.isPresent()){
-            User user = userMapper.fromSignUpRequestToEntity(request, countryOpt.get(), passwordEncoder);
-            userRepository.save(user);
-            return new AuthResponse("Success, you have signed up!");
+    public AuthResponse signUp(SignUpRequest request) {
+        if (userRepository.existsByEmail(request.email())) {
+            throw new UserAlreadyExistsException("Email is already registered");
+        }
+        if (userRepository.existsByPhoneNumber(request.phoneNumber())) {
+            throw new UserAlreadyExistsException("Phone number is already registered");
         }
 
-        return new AuthResponse("invalid country");
+        Country country = countryRepository.findById(request.countryId())
+                .orElseThrow(CountryNotFoundException::new);
+        if (!Boolean.TRUE.equals(country.getAvailability())) {
+            throw new CountryNotAvailableException();
+        }
+
+        String encodedPassword = passwordEncoder.encode(request.password());
+        userRepository.save(userMapper.toEntity(request, country, encodedPassword));
+
+        return new AuthResponse("Success, you have signed up!");
     }
 
-    public ResponseEntity<AuthResponse> signIn(SignInRequest request) throws UserNotFoundException, IncorrectPasswordException {
-        String emailOrNumber = request.uniqueField();
-        String rawPassword = request.password();
-        Optional<User> userOpt = findUserByUniqueField(emailOrNumber);
+    @Transactional(readOnly = true)
+    public User authenticate(SignInRequest request) {
+        String login = request.uniqueField().trim();
 
-        User user = userOpt.orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByEmail(login.toLowerCase())
+                .or(() -> userRepository.findByPhoneNumber(login))
+                .orElseThrow(InvalidCredentialsException::new);
 
-        if (!passwordEncoder.matches(rawPassword, user.getPassword())){
-            throw new IncorrectPasswordException();
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+            throw new InvalidCredentialsException();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponse("Welcome back!"));
-    }
-
-    private Optional<User> findUserByUniqueField(String uniqueField){
-        Optional<User> userOptional = userRepository.findByEmail(uniqueField);
-        if (userOptional.isEmpty()){
-            userOptional = userRepository.findByPhoneNumber(uniqueField);
-        }
-
-        return userOptional;
+        return user;
     }
 }

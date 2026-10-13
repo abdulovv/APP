@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,7 +21,7 @@ public class Diary {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false, unique = true)
     private Long userId;
 
     @Column(name = "height", precision = 5, scale = 2)
@@ -27,4 +29,12 @@ public class Diary {
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MealLog> mealLogs = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BodyWeightLog> bodyWeightLogs = new ArrayList<>();
 }

@@ -1,167 +1,162 @@
-import { useEffect, useRef, useState } from "react"
-import Notification from "../components/Notification.jsx"
-import ProfileNameForm from "../components/profile/ProfileNameForm.jsx"
-import ProfileEmailForm from "../components/profile/ProfileEmailForm.jsx"
-import ProfilePhoneForm from "../components/profile/ProfilePhoneForm.jsx"
-import ProfilePasswordForm from "../components/profile/ProfilePasswordForm.jsx"
-// ВРЕМЕННО: тестовая заглушка дневника, см. DiaryPlaceholder.jsx — как убрать, написано там.
-import DiaryPlaceholder from "../components/diary/DiaryPlaceholder.jsx"
-import { fetchCurrentUser } from "../api/ProfileApi.jsx"
-import "../css/pages/ProfilePage.css"
-import "../css/components/profile/ProfileForm.css"
-import "../css/components/diary/Diary.css"
+import { useEffect, useState } from 'react'
+import { getCurrentUser, updateEmail, updateName, updatePassword, updatePhone } from '../api/profileApi.js'
+import { useNotice } from '../hooks/useNotice.js'
+import Notification from '../components/Notification.jsx'
+import InputField from '../components/InputField.jsx'
+import '../css/pages/ProfilePage.css'
+
+const MIN_PASSWORD_LENGTH = 8
+
+const toForm = (user) => ({
+    firstname: user.firstname ?? '',
+    lastname: user.lastname ?? '',
+    email: user.email ?? '',
+    phoneNumber: user.phoneNumber ?? '',
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+})
+
+function validate(form) {
+    if (!form.firstname.trim() || !form.lastname.trim()) return 'First and last name are required.'
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) return 'Enter a valid email.'
+    if (form.phoneNumber.replace(/\D/g, '').length < 5) return 'Enter a valid phone number.'
+
+    const isChangingPassword = form.currentPassword || form.newPassword || form.confirmPassword
+    if (isChangingPassword) {
+        if (!form.currentPassword) return 'Enter your current password.'
+        if (form.newPassword.length < MIN_PASSWORD_LENGTH) {
+            return `New password must be at least ${MIN_PASSWORD_LENGTH} characters long.`
+        }
+        if (form.newPassword !== form.confirmPassword) return 'New passwords do not match.'
+    }
+
+    return ''
+}
 
 function ProfilePage() {
-    useEffect(() => {
-        document.title = "Profile"
-    }, [])
-
-    // Данные пользователя — единый источник правды для всех форм ниже.
-    // Каждая форма получает свой кусочек (name/email/phone) и сообщает
-    // об успешном сохранении через onSaved, чтобы этот стейт обновился.
     const [user, setUser] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
-    const [notice, setNotice] = useState(null)
+    const [form, setForm] = useState(null)
+    const [loadError, setLoadError] = useState('')
+    const [isEditing, setIsEditing] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
-
-    // Формы больше не сохраняют себя сами — у каждой есть save() через ref,
-    // и общая кнопка ниже дергает их все разом.
-    const nameFormRef = useRef(null)
-    const emailFormRef = useRef(null)
-    const phoneFormRef = useRef(null)
-    const passwordFormRef = useRef(null)
+    const [notice, showNotice] = useNotice()
 
     useEffect(() => {
-        const loadUser = async () => {
-            setIsLoading(true)
-            try {
-                const data = await fetchCurrentUser()
+        document.title = 'Profile'
+        getCurrentUser()
+            .then((data) => {
                 setUser(data)
-            } catch (error) {
-                setNotice({ type: "error", text: error.message })
-            } finally {
-                setIsLoading(false)
-            }
-        }
-        loadUser()
+                setForm(toForm(data))
+            })
+            .catch((error) => setLoadError(error.message))
     }, [])
 
-    const handleSaveAll = async () => {
+    const handleChange = (e) => {
+        const { name, value } = e.target
+
+        if ((name === 'firstname' || name === 'lastname') && !/^[a-zA-Zа-яА-ЯёЁ\s-]*$/.test(value)) return
+        if (name === 'phoneNumber' && !/^\+?\d*$/.test(value)) return
+
+        setForm((prev) => ({ ...prev, [name]: value }))
+    }
+
+    const handleEditClick = () => {
+        if (isEditing) setForm(toForm(user))
+        setIsEditing(!isEditing)
+    }
+
+    const handleSave = async (e) => {
+        e.preventDefault()
+
+        const error = validate(form)
+        if (error) {
+            showNotice('warning', error)
+            return
+        }
+
+        const requests = []
+        if (form.firstname !== user.firstname || form.lastname !== user.lastname) {
+            requests.push(updateName(form.firstname, form.lastname))
+        }
+        if (form.email !== user.email) requests.push(updateEmail(form.email))
+        if (form.phoneNumber !== user.phoneNumber) requests.push(updatePhone(form.phoneNumber))
+        if (form.newPassword) requests.push(updatePassword(form.currentPassword, form.newPassword))
+
+        if (requests.length === 0) {
+            setIsEditing(false)
+            return
+        }
+
         setIsSaving(true)
         try {
-            const results = await Promise.allSettled([
-                nameFormRef.current?.save(),
-                emailFormRef.current?.save(),
-                phoneFormRef.current?.save(),
-                passwordFormRef.current?.save(),
-            ])
-
-            // Уведомление о конкретной ошибке/предупреждении уже показала
-            // соответствующая форма через onNotify — тут просто не даём
-            // общему success затереть его.
-            const hasRejected = results.some(r => r.status === "rejected")
-            if (!hasRejected) {
-                setNotice({ type: "success", text: "Профиль обновлён." })
+            await Promise.all(requests)
+            const updatedUser = {
+                ...user,
+                firstname: form.firstname,
+                lastname: form.lastname,
+                email: form.email,
+                phoneNumber: form.phoneNumber,
             }
+            setUser(updatedUser)
+            setForm(toForm(updatedUser))
+            setIsEditing(false)
+            showNotice('success', 'Profile updated.')
+        } catch (error) {
+            showNotice('error', error.message)
         } finally {
             setIsSaving(false)
         }
     }
 
-    if (isLoading) {
+    if (loadError) {
         return (
-            <main className="profile-page">
-                <div className="left-half">
-                    <DiaryPlaceholder />
-                </div>
-                <div className="right-half">
-                    <p className="profileLoading">Loading profile...</p>
-                </div>
-            </main>
+            <div className="card profileCard">
+                <h1 className="cardTitle">Profile</h1>
+                <p className="profileMessage">{loadError}</p>
+            </div>
         )
     }
 
-    // Если профиль не загрузился (например, сессия истекла) — форм не показываем,
-    // просто выводим уведомление, оно уже отрисовано ниже через notice.
-    if (!user) {
-        return (
-            <main className="profile-page">
-                {notice && (
-                    <Notification
-                        type={notice.type}
-                        text={notice.text}
-                        onClose={() => setNotice(null)}
-                    />
-                )}
-                <div className="left-half">
-                    <DiaryPlaceholder />
-                </div>
-                <div className="right-half" />
-            </main>
-        )
+    if (!form) {
+        return <p className="profileMessage">Loading profile...</p>
     }
 
     return (
-        <main className="profile-page">
-            {notice && (
-                <Notification
-                    type={notice.type}
-                    text={notice.text}
-                    onClose={() => setNotice(null)}
-                />
-            )}
+        <form className="card profileCard" onSubmit={handleSave}>
+            <Notification notice={notice} />
+            <h1 className="cardTitle">Profile</h1>
 
-            <div className="left-half">
-                <DiaryPlaceholder />
-            </div>
-
-            <div className="right-half">
-                <div className="profileCard">
-                    <p className="profileTitle">Profile</p>
-
-                    <ProfileNameForm
-                        ref={nameFormRef}
-                        firstname={user.firstname}
-                        lastname={user.lastname}
-                        onSaved={({ firstname, lastname }) =>
-                            setUser(prev => ({ ...prev, firstname, lastname }))
-                        }
-                        onNotify={setNotice}
-                    />
-
-                    <hr className="profileDivider" />
-
-                    <ProfileEmailForm
-                        ref={emailFormRef}
-                        email={user.email}
-                        onSaved={(email) => setUser(prev => ({ ...prev, email }))}
-                        onNotify={setNotice}
-                    />
-
-                    <hr className="profileDivider" />
-
-                    <ProfilePhoneForm
-                        ref={phoneFormRef}
-                        phoneNumber={user.phoneNumber}
-                        onSaved={(phoneNumber) => setUser(prev => ({ ...prev, phoneNumber }))}
-                        onNotify={setNotice}
-                    />
-
-                    <hr className="profileDivider" />
-
-                    <ProfilePasswordForm ref={passwordFormRef} onNotify={setNotice} />
-
-                    <button
-                        type="button"
-                        className="profileSaveBtn"
-                        onClick={handleSaveAll}
-                        disabled={isSaving}
-                    >
-                        {isSaving ? "Saving..." : "Save"}
-                    </button>
+            <fieldset className="profileFields" disabled={!isEditing || isSaving}>
+                <div className="profileRow">
+                    <InputField label="First Name" name="firstname" value={form.firstname} onChange={handleChange} required />
+                    <InputField label="Last Name" name="lastname" value={form.lastname} onChange={handleChange} required />
                 </div>
+
+                <InputField label="Email" type="email" name="email" value={form.email} onChange={handleChange} required />
+                <InputField label="Phone" type="tel" name="phoneNumber" value={form.phoneNumber} onChange={handleChange} required />
+
+                {isEditing && (
+                    <>
+                        <hr className="profileDivider" />
+                        <InputField label="Current Password" type="password" name="currentPassword" value={form.currentPassword} onChange={handleChange} />
+                        <div className="profileRow">
+                            <InputField label="New Password" type="password" name="newPassword" value={form.newPassword} onChange={handleChange} />
+                            <InputField label="Confirm Password" type="password" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} />
+                        </div>
+                    </>
+                )}
+            </fieldset>
+
+            <div className="profileActions">
+                <button className="btn" type="submit" disabled={!isEditing || isSaving}>
+                    {isSaving ? 'Saving...' : 'Save'}
+                </button>
+                <button className="btn btnSecondary" type="button" onClick={handleEditClick} disabled={isSaving}>
+                    {isEditing ? 'Cancel' : 'Edit'}
+                </button>
             </div>
-        </main>
+        </form>
     )
 }
 

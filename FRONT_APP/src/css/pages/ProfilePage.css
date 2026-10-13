@@ -1,95 +1,39 @@
-/* Страница на весь экран, разделена на две колонки: слева дневник (шире),
-   справа профиль. Именно в таком порядке идут и div'ы в разметке —
-   .left-half / .right-half — так что менять местами теперь можно прямо в JSX.
-   Скролла на самой странице нет вообще (ни по одной оси) — высота жёстко
-   зафиксирована в 100vh, лишнее прячем через overflow: hidden. */
-.profile-page {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  overflow: hidden;
-
-  background-color: #f7f7f7;
-}
-
-/* Левая половина — дневник, окно по центру, скролл только внутри окна */
-.left-half {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 16px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-/* Правая половина — профиль, строго по центру, без скролла */
-.right-half {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 16px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.profileLoading {
-  font-size: 20px;
-  color: #333;
-  margin: auto;
-}
-
-/* Общая карточка профиля — те же скругления/тень/рамка, что у signInForm/signUpForm.
-   Форма стала шире и ниже (поля выстраиваются в ряд, отступы завязаны на vh),
-   поэтому она сама помещается по высоте и скролл ей больше не нужен. */
 .profileCard {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(8px, 1.6vh, 16px);
-
-  padding: clamp(20px, 3.5vh, 40px) clamp(20px, 3vw, 40px);
-
-  border: 2px solid orange;
-  border-radius: 12px;
-
-  background-color: #f0f2f5;
-
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
-
-  width: 100%;
-  max-width: 440px;
-  max-height: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
+    max-width: 520px;
 }
 
-.profileTitle {
-  color: orange;
-  -webkit-text-stroke-color: black;
-  -webkit-text-stroke-width: 0.4px;
+.profileFields {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
 
-  margin: 0 0 10px 0;
-
-  font-size: 33.333px;
-  text-align: center;
-  font-weight: 600;
-
-  text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.10);
+.profileRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
 }
 
 .profileDivider {
-  border: none;
-  border-top: 1.5px solid rgba(255, 165, 0, 0.35);
-  margin: 0;
+    width: 100%;
+    margin: 4px 0;
+    border: none;
+    border-top: 1.5px solid rgba(255, 165, 0, 0.35);
 }
 
-/* ===================== DIARY (тестовое окно, см. Diary.css) ===================== */
-/* Всё, что относится к дневнику, вынесено в отдельный файл
-   src/css/components/diary/Diary.css — чтобы одним движением убрать
-   тестовый блок, достаточно удалить импорт этого css и <DiaryPlaceholder />
-   из ProfilePage.jsx, ничего другого трогать не придётся. */
+.profileActions {
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.profileMessage {
+    margin: 0;
+    font-size: 18px;
+    text-align: center;
+}

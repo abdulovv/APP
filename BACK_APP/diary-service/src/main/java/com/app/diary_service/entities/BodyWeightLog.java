@@ -19,7 +19,7 @@ public class BodyWeightLog {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "diary_id", nullable = false)
     private Diary diary;
 

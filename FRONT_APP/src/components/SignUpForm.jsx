@@ -1,219 +1,168 @@
-import { useState } from "react"
-import { Link } from "react-router-dom" 
-import InputField from "./InputField"
-import CountrySelect from "./CountrySelect.jsx"
-import "../css/components/SignUpForm.css"
-import Notification from "./Notification.jsx"
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import InputField from './InputField.jsx'
+import CountrySelect from './CountrySelect.jsx'
 
-const SignUpForm = ({ onSubmit }) => {
-    const [step, setStep] = useState(1);
-    const [error, setError] = useState("");
-    const [currentCountryCode, setCurrentCountryCode] = useState("");
-    // Ограничения длины номера (кол-во цифр ПОСЛЕ кода) для выбранной страны.
-    // Приходят из CountrySelect вместе с id/name/code при выборе страны.
-    // max по умолчанию — DEFAULT_MAX_PHONE_DIGITS ниже (страховка, если бэкенд
-    // ещё не прислал персональный max_phone_length для страны).
-    const DEFAULT_MAX_PHONE_DIGITS = 15; 
-    const DEFAULT_MIN_PHONE_DIGITS = 4;  
+const MIN_AGE = 12
+const MAX_AGE = 100
+const MIN_PASSWORD_LENGTH = 8
 
-    const [phoneLengthLimits, setPhoneLengthLimits] = useState({ min: DEFAULT_MIN_PHONE_DIGITS, max: DEFAULT_MAX_PHONE_DIGITS });
-    const [formData, setFormData] = useState({
-        firstname: "",
-        lastname: "",
-        birthdate: "",
-        country: "",
-        countryId: "",
-        email: "",
-        phone: "",
-        password: "",
-        confirmPassword: ""
-    });
+const EMPTY_FORM = {
+    firstname: '',
+    lastname: '',
+    birthDate: '',
+    email: '',
+    phoneNumber: '',
+    password: '',
+    confirmPassword: '',
+}
+
+const currentYear = new Date().getFullYear()
+const minBirthDate = `${currentYear - MAX_AGE}-01-01`
+const maxBirthDate = `${currentYear - MIN_AGE}-12-31`
+
+function getAge(dateString) {
+    const birth = new Date(dateString)
+    const today = new Date()
+    let age = today.getFullYear() - birth.getFullYear()
+    const birthdayPassed =
+        today.getMonth() > birth.getMonth() ||
+        (today.getMonth() === birth.getMonth() && today.getDate() >= birth.getDate())
+    if (!birthdayPassed) age--
+    return age
+}
+
+function validateStep(step, form, country) {
+    if (step === 1) {
+        const age = getAge(form.birthDate)
+        if (age < MIN_AGE) return `You must be at least ${MIN_AGE} years old to register.`
+        if (age > MAX_AGE) return `Age cannot be more than ${MAX_AGE} years.`
+    }
+
+    if (step === 2) {
+        if (!country) return 'Select your country.'
+        const digits = form.phoneNumber.slice(country.phoneCode.length)
+        if (digits.length < country.minPhoneLength) {
+            return `Phone number for ${country.name} must have at least ${country.minPhoneLength} digits.`
+        }
+    }
+
+    if (step === 3) {
+        if (form.password.length < MIN_PASSWORD_LENGTH) {
+            return `Password must be at least ${MIN_PASSWORD_LENGTH} characters long.`
+        }
+        if (form.password !== form.confirmPassword) return 'Passwords do not match!'
+    }
+
+    return ''
+}
+
+function SignUpForm({ onSubmit, onError, isLoading }) {
+    const [step, setStep] = useState(1)
+    const [form, setForm] = useState(EMPTY_FORM)
+    const [country, setCountry] = useState(null)
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target
 
-        // 1. ВЫБОР СТРАНЫ
-        if (name === "country") {
-            try {
-                const countryData = JSON.parse(value);
-                setCurrentCountryCode(countryData.code);
-
-                const parsedMin = Number(countryData.minLength);
-                const parsedMax = Number(countryData.maxLength);
-                setPhoneLengthLimits({
-                    min: Number.isFinite(parsedMin) && parsedMin > 0 ? parsedMin : DEFAULT_MIN_PHONE_DIGITS,
-                    // Если бэкенд не прислал валидный min/max для страны — не снимаем
-                    // ограничение полностью, а откатываемся на общий потолок/пол.
-                    max: Number.isFinite(parsedMax) && parsedMax > 0 ? parsedMax : DEFAULT_MAX_PHONE_DIGITS,
-                });
-
-                setFormData(prev => ({
-                    ...prev,
-                    country: countryData.name,
-                    countryId: countryData.id,
-                    phone: countryData.code 
-                }));
-            } catch (error) {
-                setCurrentCountryCode("");
-                setPhoneLengthLimits({ min: DEFAULT_MIN_PHONE_DIGITS, max: DEFAULT_MAX_PHONE_DIGITS });
-                setFormData(prev => ({ ...prev, country: "", countryId: "", phone: "" }));
-            }
-            return;
+        if ((name === 'firstname' || name === 'lastname') && !/^[a-zA-Zа-яА-ЯёЁ\s-]*$/.test(value)) {
+            return
         }
 
-        // 2. В ИМЕНИ И ФАМИЛИИ — ТОЛЬКО БУКВЫ
-        if (name === "firstname" || name === "lastname") {
-            const onlyLettersRegex = /^[a-zA-Zа-яА-ЯёЁ\s-]*$/;
-            if (!onlyLettersRegex.test(value)) return;
+        if (name === 'phoneNumber') {
+            const digits = value.slice(country.phoneCode.length)
+            const isValid =
+                value.startsWith(country.phoneCode) &&
+                /^\d*$/.test(digits) &&
+                digits.length <= country.maxPhoneLength
+            if (!isValid) return
         }
 
-        // 3. В ТЕЛЕФОНЕ — ЗАЩИТА КОДА, ТОЛЬКО ЦИФРЫ И МАКСИМАЛЬНАЯ ДЛИНА
-        if (name === "phone") {
-            if (currentCountryCode && !value.startsWith(currentCountryCode)) return;
-            const userEnteredPart = value.slice(currentCountryCode.length);
-            const onlyDigitsRegex = /^\d*$/;
-            if (!onlyDigitsRegex.test(userEnteredPart)) return;
+        setForm((prev) => ({ ...prev, [name]: value }))
+    }
 
-            // Как только цифр после кода страны становится больше максимума —
-            // дальнейшие символы просто не попадают в стейт, инпут "перестаёт вводить".
-            if (phoneLengthLimits.max && userEnteredPart.length > phoneLengthLimits.max) return;
-        }
+    const handleCountryChange = (selected) => {
+        setCountry(selected)
+        setForm((prev) => ({ ...prev, phoneNumber: selected.phoneCode }))
+    }
 
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const nextStep = (e) => {
-        e.preventDefault(); 
-        if (step === 1) {
-            if (!formData.birthdate) {
-                setError("Please enter your Date of Birth.");
-                return;
-            }
-            
-            const birthDate = new Date(formData.birthdate);
-            const today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const monthDiff = today.getMonth() - birthDate.getMonth();
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-
-            if (age < 12) {
-                setError("You must be at least 12 years old to register.");
-                return;
-            }
-
-            if (age > 100) {
-                setError("Age cannot be more than 100 years.");
-                return;
-            }
-        }
-
-        if (step === 2) {
-            const userEnteredPart = formData.phone.slice(currentCountryCode.length);
-            if (phoneLengthLimits.min && userEnteredPart.length < phoneLengthLimits.min) {
-                setError(`Phone number for ${formData.country} must be at least ${phoneLengthLimits.min} digits long.`);
-                return;
-            }
-        }
-
-        setStep(prev => prev + 1);
-    };
-
-    const prevStep = (e) => {
-        e.preventDefault();
-        setStep(prev => prev - 1);
-    };
-    
     const handleSubmit = (e) => {
-        e.preventDefault();
-        setError("");
+        e.preventDefault()
 
-        if (formData.password !== formData.confirmPassword) {
-            setError("Passwords do not match!");
-            return;
+        const error = validateStep(step, form, country)
+        if (error) {
+            onError(error)
+            return
         }
-        
-        if (onSubmit) {
-            onSubmit(formData); 
-        }
-    };
 
-    // Ограничения для календаря на основе текущего 2026 года
-    const currentYear = new Date().getFullYear();
-    const maxDate = `${currentYear - 12}-12-31`; 
-    const minDate = `${currentYear - 100}-01-01`;
+        if (step < 3) {
+            setStep(step + 1)
+            return
+        }
+
+        onSubmit({
+            firstname: form.firstname,
+            lastname: form.lastname,
+            birthDate: form.birthDate,
+            email: form.email,
+            phoneNumber: form.phoneNumber,
+            password: form.password,
+            countryId: country.id,
+        })
+    }
 
     return (
-        <form className="signUpForm" onSubmit={step === 3 ? handleSubmit : nextStep}>
-            
-            {/* Скрытый инпут для корректной передачи ID страны */}
-            <input type="hidden" name="countryId" value={formData.countryId} />
-            
-            <div className="stepIndicator">Step {step} of 3</div>
-
-            {error && (
-                <Notification 
-                    type="warning" 
-                    text={error} 
-                    onClose={() => setError("")} 
-                />
-            )}  
+        <form className="card authForm" onSubmit={handleSubmit}>
+            <h1 className="cardTitle">Step {step} of 3</h1>
 
             {step === 1 && (
                 <>
-                    <InputField label="First Name" type="text" name="firstname" value={formData.firstname} onChange={handleChange} placeholder="Enter your first name" required />
-                    <InputField label="Last Name" type="text" name="lastname" value={formData.lastname} onChange={handleChange} placeholder="Enter your last name" required />
-                    <InputField label="Date of Birth" type="date" name="birthdate" value={formData.birthdate} onChange={handleChange} min={minDate} max={maxDate} required />
-                    <div className="formLinks">
-                        <Link to="/sign-in">Sign In</Link>
-                        <a href="https://google.com" target="_blank" rel="noreferrer">Forgot password ?</a>
-                    </div>
-                    <button className="submitBtn" type="submit">Next</button>
+                    <InputField label="First Name" name="firstname" value={form.firstname} onChange={handleChange} placeholder="Enter your first name" required />
+                    <InputField label="Last Name" name="lastname" value={form.lastname} onChange={handleChange} placeholder="Enter your last name" required />
+                    <InputField label="Date of Birth" type="date" name="birthDate" value={form.birthDate} onChange={handleChange} min={minBirthDate} max={maxBirthDate} required />
                 </>
             )}
 
             {step === 2 && (
                 <>
-                    <CountrySelect value={formData.country} onChange={handleChange} />
-                    <InputField label="Email" type="email" name="email" value={formData.email} onChange={handleChange} placeholder="example@gmail.com" required />
+                    <CountrySelect value={country?.id} onChange={handleCountryChange} />
+                    <InputField label="Email" type="email" name="email" value={form.email} onChange={handleChange} placeholder="example@gmail.com" required />
                     <InputField
                         label="Phone"
                         type="tel"
-                        name="phone"
-                        value={formData.phone}
+                        name="phoneNumber"
+                        value={form.phoneNumber}
                         onChange={handleChange}
-                        placeholder="Enter your phone"
-                        maxLength={currentCountryCode.length + phoneLengthLimits.max}
+                        placeholder={country ? 'Enter your phone' : 'Select a country first'}
+                        disabled={!country}
                         required
                     />
-                    <div className="formLinks">
-                        <Link to="/sign-in">Sign In</Link>
-                        <a href="https://google.com" target="_blank" rel="noreferrer">Forgot password ?</a>
-                    </div>
-                    <div className="formButtonsLine">
-                        <button className="backBtn" type="button" onClick={prevStep}>Back</button>
-                        <button className="submitBtn" type="submit">Next</button>
-                    </div>
                 </>
             )}
 
             {step === 3 && (
                 <>
-                    <InputField label="Password" type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Enter your password" required />
-                    <InputField label="Confirm Password" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="Confirm your password" required />
-                    <div className="formLinks">
-                        <Link to="/sign-in">Sign In</Link>
-                        <a href="https://google.com" target="_blank" rel="noreferrer">Forgot password ?</a>
-                    </div>
-                    <div className="formButtonsLine">
-                        <button className="backBtn" type="button" onClick={prevStep}>Back</button>
-                        <button className="submitBtn" type="submit">Register</button>
-                    </div>
+                    <InputField label="Password" type="password" name="password" value={form.password} onChange={handleChange} placeholder="Enter your password" required />
+                    <InputField label="Confirm Password" type="password" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} placeholder="Confirm your password" required />
                 </>
             )}
-        </form>
-    );
-};
 
-export default SignUpForm;
+            <div className="authLinks">
+                <Link to="/sign-in">Sign In</Link>
+            </div>
+
+            <div className="authButtons">
+                {step > 1 && (
+                    <button className="btn btnSecondary" type="button" onClick={() => setStep(step - 1)}>
+                        Back
+                    </button>
+                )}
+                <button className="btn" type="submit" disabled={isLoading}>
+                    {step < 3 ? 'Next' : 'Register'}
+                </button>
+            </div>
+        </form>
+    )
+}
+
+export default SignUpForm

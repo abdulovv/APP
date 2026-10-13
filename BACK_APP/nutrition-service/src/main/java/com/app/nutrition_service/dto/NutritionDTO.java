@@ -19,5 +19,7 @@ public class NutritionDTO {
     private String portionName;
     private BigDecimal portionWeight;
     private CategoryDTO category;
+
+    @Builder.Default
     private List<NutrientValueDTO> nutrients = new ArrayList<>();
 }

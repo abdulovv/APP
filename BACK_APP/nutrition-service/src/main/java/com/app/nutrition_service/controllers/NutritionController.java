@@ -1,68 +1,100 @@
 package com.app.nutrition_service.controllers;
 
+import com.app.nutrition_service.dto.CategoryDTO;
+import com.app.nutrition_service.dto.NutrientDTO;
 import com.app.nutrition_service.dto.NutritionDTO;
-import com.app.nutrition_service.exceptions.*;
+import com.app.nutrition_service.entities.CategoryType;
+import com.app.nutrition_service.services.CategoryService;
+import com.app.nutrition_service.services.NutrientService;
 import com.app.nutrition_service.services.NutritionService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/api/nutrition")
 public class NutritionController {
     private final NutritionService nutritionService;
+    private final CategoryService categoryService;
+    private final NutrientService nutrientService;
 
     // ==================== DRINKS ====================
-    @GetMapping("/drinks/all")
-    public ResponseEntity<List<NutritionDTO>> getAllDrinks() throws DrinksNotFoundException {
-        return nutritionService.getAllDrinks();
+    @GetMapping("/drinks")
+    public ResponseEntity<List<NutritionDTO>> getAllDrinks() {
+        return ResponseEntity.ok(nutritionService.getAllDrinks());
     }
 
     @GetMapping("/drinks/category/{categoryName}")
-    public List<NutritionDTO> getDrinksByCategoryName(@PathVariable("categoryName") String categoryName) throws DrinksNotFoundException {
-        return nutritionService.getDrinksByCategoryName(categoryName);
+    public ResponseEntity<List<NutritionDTO>> getDrinksByCategoryName(@PathVariable("categoryName") String categoryName) {
+        return ResponseEntity.ok(nutritionService.getDrinksByCategoryName(categoryName));
     }
 
     @PostMapping("/drinks")
-    public NutritionDTO createDrink(@RequestBody NutritionDTO dto) throws NoNutrientsException {
-        return nutritionService.createDrink(dto);
+    public ResponseEntity<NutritionDTO> createDrink(@RequestBody NutritionDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(nutritionService.createDrink(dto));
     }
 
     // ==================== FOOD ====================
-    @GetMapping("/foods/all")
-    public List<NutritionDTO> getAllFoods() {
-        return nutritionService.getAllFoods();
+    @GetMapping("/foods")
+    public ResponseEntity<List<NutritionDTO>> getAllFoods() {
+        return ResponseEntity.ok(nutritionService.getAllFoods());
     }
 
     @GetMapping("/foods/category/{categoryName}")
-    public List<NutritionDTO> getFoodsByCategoryName(@PathVariable("categoryName") String categoryName) throws FoodNotFoundException {
-        return nutritionService.getFoodByCategoryName(categoryName);
+    public ResponseEntity<List<NutritionDTO>> getFoodsByCategoryName(@PathVariable("categoryName") String categoryName) {
+        return ResponseEntity.ok(nutritionService.getFoodsByCategoryName(categoryName));
     }
 
     @PostMapping("/foods")
-    public NutritionDTO createFood(@RequestBody NutritionDTO dto) throws NoNutrientsException {
-        return nutritionService.createFood(dto);
+    public ResponseEntity<NutritionDTO> createFood(@RequestBody NutritionDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(nutritionService.createFood(dto));
+    }
+
+    // ==================== DICTIONARIES ====================
+    @GetMapping("/categories")
+    public ResponseEntity<List<CategoryDTO>> getCategories(@RequestParam(name = "type", required = false) CategoryType type) {
+        List<CategoryDTO> categories = type == null
+                ? categoryService.getAll()
+                : categoryService.getAllByType(type);
+        return ResponseEntity.ok(categories);
+    }
+
+    @GetMapping("/nutrients")
+    public ResponseEntity<List<NutrientDTO>> getNutrients() {
+        return ResponseEntity.ok(nutrientService.getAll());
     }
 
     // ==================== GENERAL ====================
-    @GetMapping("/all")
-    public List<NutritionDTO> getAllNutrition() throws NutritionNotFoundException {
-        return nutritionService.getAllNutrition();
+    @GetMapping
+    public ResponseEntity<List<NutritionDTO>> getAllNutrition() {
+        return ResponseEntity.ok(nutritionService.getAllNutrition());
     }
 
-    @PutMapping("/update/{id}")
-    public NutritionDTO updateNutrition(
-            @PathVariable(name = "id") Long id,
+    @GetMapping("/search")
+    public ResponseEntity<List<NutritionDTO>> searchNutrition(@RequestParam("query") String query) {
+        return ResponseEntity.ok(nutritionService.searchNutrition(query));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<NutritionDTO> getNutritionById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(nutritionService.getNutritionById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<NutritionDTO> updateNutrition(
+            @PathVariable("id") Long id,
             @RequestBody NutritionDTO nutritionDTO
-    ) throws NutritionNotFoundException {
-        return nutritionService.updateNutrition(id, nutritionDTO);
+    ) {
+        return ResponseEntity.ok(nutritionService.updateNutrition(id, nutritionDTO));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public NutritionDTO deleteNutrition(@PathVariable(name = "id") Long id) throws NutritionNotFoundException {
-        return nutritionService.deleteNutrition(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteNutrition(@PathVariable("id") Long id) {
+        nutritionService.deleteNutrition(id);
+        return ResponseEntity.noContent().build();
     }
 }

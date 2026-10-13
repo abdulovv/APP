@@ -33,5 +33,4 @@ build/
 .vscode/
 
 ### Local runtime files ###
-../.env
 logs/

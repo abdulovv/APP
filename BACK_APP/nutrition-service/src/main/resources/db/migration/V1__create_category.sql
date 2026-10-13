@@ -1,7 +1,7 @@
 CREATE TABLE category (
     id   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    type VARCHAR(10) NOT NULL CHECK (type IN ('FOOD', 'DRINK'))
+    name VARCHAR(255) NOT NULL UNIQUE,
+    type VARCHAR(10)  NOT NULL CHECK (type IN ('FOOD', 'DRINK'))
 );
 
 INSERT INTO category (name, type) VALUES

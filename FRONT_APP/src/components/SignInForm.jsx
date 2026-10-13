@@ -1,38 +1,29 @@
-import InputField from "./InputField"
-import { Link } from "react-router-dom" 
-import "../css/components/SignInForm.css"
+import { Link } from 'react-router-dom'
+import InputField from './InputField.jsx'
 
-const SignInForm = ({ onSubmit, isLoading }) => {
+function SignInForm({ onSubmit, isLoading }) {
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const form = new FormData(e.target)
+        onSubmit({
+            uniqueField: form.get('uniqueField'),
+            password: form.get('password'),
+        })
+    }
+
     return (
-        <form className="signInForm" onSubmit={onSubmit}>
-            <p>Welcome!</p>
+        <form className="card authForm" onSubmit={handleSubmit}>
+            <h1 className="cardTitle">Welcome!</h1>
 
-            <InputField
-                label="Email/Phone"
-                type="text"
-                name="uniqueField"
-                placeholder="Enter your email/phone"
-            />
+            <InputField label="Email/Phone" name="uniqueField" placeholder="Enter your email/phone" required />
+            <InputField label="Password" type="password" name="password" placeholder="Enter your password" required />
 
-            <InputField
-                label="Password"
-                type="password"
-                name="password"
-                placeholder="Enter your password"
-            />
-
-            <div className="formLinks">
+            <div className="authLinks">
                 <Link to="/sign-up">Sign Up</Link>
-                <a href="https://google.com" target="_blank" rel="noreferrer">Forgot password ?</a>
             </div>
-           
 
-            <button   
-                className="submitBtn"
-                type="submit"
-                disabled={isLoading}
-            >
-                {isLoading ? "Signing In..." : "Sign In"}
+            <button className="btn" type="submit" disabled={isLoading}>
+                {isLoading ? 'Signing In...' : 'Sign In'}
             </button>
         </form>
     )

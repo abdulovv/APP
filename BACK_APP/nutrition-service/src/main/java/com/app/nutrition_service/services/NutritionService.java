@@ -2,40 +2,35 @@ package com.app.nutrition_service.services;
 
 import com.app.nutrition_service.dto.NutritionDTO;
 import com.app.nutrition_service.entities.Nutrition;
-import com.app.nutrition_service.exceptions.*;
+import com.app.nutrition_service.exceptions.NutritionNotFoundException;
 import com.app.nutrition_service.mappers.NutritionMapper;
 import com.app.nutrition_service.repositories.NutritionRepository;
 import com.app.nutrition_service.services.subservices.DrinkService;
 import com.app.nutrition_service.services.subservices.FoodService;
-import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class NutritionService {
     private final FoodService foodService;
     private final DrinkService drinkService;
-    private final CategoryService categoryService;
     private final NutritionRepository nutritionRepository;
     private final NutritionMapper nutritionMapper;
 
     // ==================== DRINK ====================
-    public ResponseEntity<List<NutritionDTO>> getAllDrinks() throws DrinksNotFoundException {
+    public List<NutritionDTO> getAllDrinks() {
         return drinkService.getAllDrinks();
     }
 
-    public List<NutritionDTO> getDrinksByCategoryName(String categoryName) throws DrinksNotFoundException {
+    public List<NutritionDTO> getDrinksByCategoryName(String categoryName) {
         return drinkService.getDrinksByCategoryName(categoryName);
     }
 
-    public NutritionDTO createDrink(NutritionDTO dto) throws NoNutrientsException {
+    public NutritionDTO createDrink(NutritionDTO dto) {
         return drinkService.createDrink(dto);
     }
 
@@ -44,42 +39,50 @@ public class NutritionService {
         return foodService.getAllFoods();
     }
 
-    public List<NutritionDTO> getFoodByCategoryName(String categoryName) throws FoodNotFoundException {
+    public List<NutritionDTO> getFoodsByCategoryName(String categoryName) {
         return foodService.getFoodsByCategoryName(categoryName);
     }
 
-    public NutritionDTO createFood(NutritionDTO dto) throws NoNutrientsException {
+    public NutritionDTO createFood(NutritionDTO dto) {
         return foodService.createFood(dto);
     }
 
     // ==================== GENERAL ====================
-    @Transactional(rollbackOn = NutritionNotFoundException.class)
-    public NutritionDTO updateNutrition(Long id, NutritionDTO nutritionDTO) throws NutritionNotFoundException {
-        if (nutritionRepository.existsById(id)){
-            Nutrition updatedNutrition = nutritionMapper.toEntity(nutritionDTO);
-            nutritionRepository.save(updatedNutrition);
-        }else {
-            throw new NutritionNotFoundException();
-        }
-
-        return nutritionDTO;
+    @Transactional(readOnly = true)
+    public List<NutritionDTO> getAllNutrition() {
+        return nutritionMapper.toDtoList(nutritionRepository.findAll());
     }
 
-    @Transactional(rollbackOn = NutritionNotFoundException.class)
-    public NutritionDTO deleteNutrition(Long id) throws NutritionNotFoundException {
-        Nutrition nutrition = nutritionRepository.findById(id)
-                .orElseThrow(NutritionNotFoundException::new);
-        nutritionRepository.delete(nutrition);
+    @Transactional(readOnly = true)
+    public NutritionDTO getNutritionById(Long id) {
+        return nutritionMapper.toDto(findNutrition(id));
+    }
+
+    @Transactional(readOnly = true)
+    public List<NutritionDTO> searchNutrition(String query) {
+        return nutritionMapper.toDtoList(
+                nutritionRepository.findByNameContainingIgnoreCaseOrderByNameAsc(query.trim())
+        );
+    }
+
+    @Transactional
+    public NutritionDTO updateNutrition(Long id, NutritionDTO nutritionDTO) {
+        Nutrition nutrition = findNutrition(id);
+        nutritionMapper.updateEntity(nutritionDTO, nutrition);
 
         return nutritionMapper.toDto(nutrition);
     }
 
-    public List<NutritionDTO> getAllNutrition() throws NutritionNotFoundException {
-        List<Nutrition> allNutrition = nutritionRepository.findAll();
-        if (allNutrition.isEmpty()){
+    @Transactional
+    public void deleteNutrition(Long id) {
+        if (!nutritionRepository.existsById(id)) {
             throw new NutritionNotFoundException();
         }
+        nutritionRepository.deleteById(id);
+    }
 
-        return allNutrition.stream().map(nutritionMapper::toDto).toList();
+    private Nutrition findNutrition(Long id) {
+        return nutritionRepository.findById(id)
+                .orElseThrow(NutritionNotFoundException::new);
     }
 }

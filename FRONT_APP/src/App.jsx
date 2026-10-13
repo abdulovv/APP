@@ -1,19 +1,27 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import AppLayout from './components/layout/AppLayout.jsx'
 import SignInPage from './pages/SignInPage.jsx'
-import SignUpPage from './pages/SignUpPage.jsx' 
+import SignUpPage from './pages/SignUpPage.jsx'
+import DiaryPage from './pages/DiaryPage.jsx'
 import ProfilePage from './pages/ProfilePage.jsx'
+import StubPage from './pages/StubPage.jsx'
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/sign-in" element={<SignInPage />} />
-      <Route path="/sign-up" element={<SignUpPage />} />
-      {/* Раньше SignIn/SignUp делали navigate('/home'), а роута /home не было —
-          пользователя мгновенно кидало обратно на /sign-in. Теперь ведём на /profile. */}
-      <Route path="/profile" element={<ProfilePage />} />
-      <Route path="*" element={<Navigate to="/sign-in" replace />} />
-    </Routes>
-  )
+    return (
+        <Routes>
+            <Route path="/sign-in" element={<SignInPage />} />
+            <Route path="/sign-up" element={<SignUpPage />} />
+            
+            <Route element={<AppLayout />}>
+                <Route path="/diary" element={<DiaryPage />} />
+                <Route path="/products" element={<StubPage title="Products" />} />
+                <Route path="/statistics" element={<StubPage title="Statistics" />} />
+                <Route path="/profile" element={<ProfilePage />} />
+            </Route>
+
+            <Route path="*" element={<Navigate to="/sign-in" replace />} />
+        </Routes>
+    )
 }
 
 export default App

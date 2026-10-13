@@ -1,6 +1,6 @@
 CREATE TABLE nutrients (
     id   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     unit VARCHAR(50)
 );
 
@@ -14,4 +14,5 @@ INSERT INTO nutrients (name, unit) VALUES
 ('Калий', 'мг'),
 ('Кальций', 'мг'),
 ('Железо', 'мг'),
-('Витамин C', 'мг');
+('Витамин C', 'мг'),
+('Калорийность', 'ккал');

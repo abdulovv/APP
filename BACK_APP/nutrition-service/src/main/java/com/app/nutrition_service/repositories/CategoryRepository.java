@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    List<Category> findByType(CategoryType type);
+    List<Category> findByTypeOrderByNameAsc(CategoryType type);
+
+    List<Category> findAllByOrderByNameAsc();
 }

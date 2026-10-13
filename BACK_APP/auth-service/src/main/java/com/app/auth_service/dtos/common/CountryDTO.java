@@ -1,6 +1,5 @@
 package com.app.auth_service.dtos.common;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +15,7 @@ public class CountryDTO {
     private Boolean availability;
     private String phoneCode;
     private String currencySymbol;
-    private Float exchangeRate;
+    private Double exchangeRate;
     private Integer minPhoneLength;
     private Integer maxPhoneLength;
-
 }

@@ -2,12 +2,16 @@ CREATE TABLE nutrition (
     id             BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name           VARCHAR(255) NOT NULL,
     portion_name   VARCHAR(255),
-    portion_weight DECIMAL(10,2),
+    portion_weight DECIMAL(10, 2) CHECK (portion_weight > 0),
     category_id    BIGINT,
+    is_active      BOOLEAN NOT NULL DEFAULT TRUE,
     CONSTRAINT fk_nutrition_category
-        FOREIGN KEY (category_id) REFERENCES category(id)
+        FOREIGN KEY (category_id) REFERENCES category (id)
         ON DELETE SET NULL
 );
+
+CREATE INDEX idx_nutrition_category_id ON nutrition (category_id);
+CREATE INDEX idx_nutrition_name_lower ON nutrition (LOWER(name));
 
 INSERT INTO nutrition (name, portion_name, portion_weight, category_id) VALUES
 ('Яблоко', 'шт', 150.00, 1),
