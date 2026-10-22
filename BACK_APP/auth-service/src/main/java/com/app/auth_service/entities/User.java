@@ -37,10 +37,6 @@ public class User {
     private LocalDate birthDate;
 
     @Builder.Default
-    @Column(name = "is_premium", nullable = false)
-    private Boolean isPremium = false;
-
-    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role = Role.USER;

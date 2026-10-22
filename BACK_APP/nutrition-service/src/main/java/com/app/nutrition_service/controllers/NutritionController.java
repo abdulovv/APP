@@ -112,6 +112,18 @@ public class NutritionController {
         return ResponseEntity.ok(nutritionService.updateNutrition(id, nutritionDTO));
     }
 
+    @PatchMapping("/{id}/deactivate")
+    public ResponseEntity<Void> deactivateNutrition(
+            @PathVariable("id") Long id,
+            @RequestHeader("X-User-Role") String role
+    ) {
+        if (!isAdmin(role)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        nutritionService.deactivateNutrition(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNutrition(
             @PathVariable("id") Long id,

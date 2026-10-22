@@ -43,4 +43,13 @@ public class CategoryService {
 
         return category;
     }
+
+    public Category getCategory(CategoryDTO categoryDTO) {
+        if (categoryDTO == null || categoryDTO.getId() == null) {
+            throw new CategoryNotFoundException();
+        }
+
+        return categoryRepository.findById(categoryDTO.getId())
+                .orElseThrow(CategoryNotFoundException::new);
+    }
 }

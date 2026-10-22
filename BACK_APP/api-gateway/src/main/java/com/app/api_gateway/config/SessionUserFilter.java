@@ -48,7 +48,7 @@ public class SessionUserFilter implements GlobalFilter, Ordered {
             }
 
             ServerHttpRequest newRequest = exchange.getRequest()   // берём оригинал
-                    .mutate()                                      // «хочу копию с изменениями»
+                    .mutate()                                      // хочу копию с изменениями
                     .headers(headers -> {
                         headers.remove("X-User-Id");
                         headers.set("X-User-Id", userId.toString());

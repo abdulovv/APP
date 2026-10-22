@@ -20,6 +20,8 @@ public class NutritionService {
     private final DrinkService drinkService;
     private final NutritionRepository nutritionRepository;
     private final NutritionMapper nutritionMapper;
+    private final CategoryService categoryService;
+    private final NutrientService nutrientService;
 
     // ==================== DRINK ====================
     public List<NutritionDTO> getAllDrinks() {
@@ -70,7 +72,15 @@ public class NutritionService {
         Nutrition nutrition = findNutrition(id);
         nutritionMapper.updateEntity(nutritionDTO, nutrition);
 
-        return nutritionMapper.toDto(nutrition);
+        if (nutritionDTO.getCategory() != null) {
+            nutrition.setCategory(categoryService.getCategory(nutritionDTO.getCategory()));
+        }
+
+        if (nutritionDTO.getNutrients() != null && !nutritionDTO.getNutrients().isEmpty()) {
+            nutrientService.replaceNutrients(nutrition, nutritionDTO.getNutrients());
+        }
+
+        return nutritionMapper.toDto(nutritionRepository.saveAndFlush(nutrition));
     }
 
     @Transactional
@@ -79,6 +89,13 @@ public class NutritionService {
             throw new NutritionNotFoundException();
         }
         nutritionRepository.deleteById(id);
+    }
+
+    // Мягкое удаление: продукт скрывается, но записи в diary-service на него не ломаются
+    @Transactional
+    public void deactivateNutrition(Long id) {
+        Nutrition nutrition = findNutrition(id);
+        nutrition.setIsActive(false);
     }
 
     private Nutrition findNutrition(Long id) {

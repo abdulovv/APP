@@ -5,24 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1192637-397c-4bfb-b506-f8d9f442234d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/configuration/AdminInitializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BACK_APP.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/controllers/PageSettingController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/common/PageSettingDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/requests/UpdatePageSettingRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/PageSetting.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/PaymentCard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/Premium.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/PurchaseHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/PurchaseSource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/PurchaseStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/exceptions/PageNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/mappers/PageSettingMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/repositories/PageSettingRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/services/PageSettingService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/resources/db/migration/V3__create_page_settings.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/GatewayRouteConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/GatewayRouteConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/SessionUserFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/SessionUserFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/requests/SignUpRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/requests/SignUpRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/controllers/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/controllers/GlobalExceptionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/responses/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/responses/UserResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/mappers/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/mappers/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/db/migration/V2__create_users.sql" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/db/migration/V2__create_users.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/controllers/NutritionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/controllers/NutritionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/entities/Nutrition.java" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/entities/Nutrition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/dto/NutritionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/dto/NutritionDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/mappers/NutritionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/mappers/NutritionMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/NutrientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/NutrientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/NutritionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/NutritionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/resources/db/migration/V2__create_nutrition.sql" beforeDir="false" afterPath="$PROJECT_DIR$/nutrition-service/src/main/resources/db/migration/V2__create_nutrition.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/layout/AppLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/layout/AppLayout.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/layout/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/layout/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/components/Navbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/components/Navbar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/AdminPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/AdminPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/pages/AdminPage.jsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +49,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Exception" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -73,7 +92,7 @@
       <recent name="com.app.auth_service.entities" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.auth">
+  <component name="RunManager" selected="Compound.app">
     <configuration name="auth" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.app.auth_service.AuthServiceApplication" />
       <module name="auth-service" />

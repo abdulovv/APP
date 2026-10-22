@@ -1,12 +1,7 @@
 package com.app.auth_service.controllers;
 
 import com.app.auth_service.dtos.responses.ErrorResponse;
-import com.app.auth_service.exceptions.CountryNotAvailableException;
-import com.app.auth_service.exceptions.CountryNotFoundException;
-import com.app.auth_service.exceptions.IncorrectPasswordException;
-import com.app.auth_service.exceptions.InvalidCredentialsException;
-import com.app.auth_service.exceptions.UserAlreadyExistsException;
-import com.app.auth_service.exceptions.UserNotFoundException;
+import com.app.auth_service.exceptions.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +17,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage()));
     }
 
-    @ExceptionHandler({UserNotFoundException.class, CountryNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class, CountryNotFoundException.class, PageNotFoundException.class})
     public ResponseEntity<ErrorResponse> handleNotFound(RuntimeException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e.getMessage()));
     }

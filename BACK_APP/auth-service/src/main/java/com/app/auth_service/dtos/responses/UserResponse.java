@@ -10,7 +10,6 @@ public record UserResponse(
         String phoneNumber,
         LocalDate birthDate,
         String countryName,
-        String role,
-        Boolean premium
+        String role
 ) {
 }

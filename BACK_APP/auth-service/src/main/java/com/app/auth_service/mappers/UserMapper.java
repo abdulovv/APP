@@ -10,7 +10,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     @Mapping(target = "countryName", source = "country.name")
-    @Mapping(target = "premium", source = "isPremium")
     UserResponse toResponse(User user);
 
     default User toEntity(SignUpRequest request, Country country, String encodedPassword) {
