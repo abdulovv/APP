@@ -85,3 +85,55 @@
     color: var(--accent);
     font-weight: 600;
 }
+
+/* Разворачивающаяся группа «Admin panel» */
+.navbarGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.navbarGroupToggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbarGroupToggle.current {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.navbarChevron {
+    transition: transform 0.2s;
+}
+
+.navbarChevron.open {
+    transform: rotate(180deg);
+}
+
+.navbarSubLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 12px;
+    border-left: 2px solid var(--divider);
+    margin-left: 12px;
+    animation: navbarSubLinksIn 0.2s ease-out;
+}
+
+.navbarSubLink {
+    padding: 8px 12px;
+    font-size: 15px;
+}
+
+@keyframes navbarSubLinksIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -6,7 +6,7 @@ function SignInForm({ onSubmit, isLoading }) {
         e.preventDefault()
         const form = new FormData(e.target)
         onSubmit({
-            uniqueField: form.get('uniqueField'),
+            login: form.get('login'),
             password: form.get('password'),
         })
     }
@@ -15,7 +15,7 @@ function SignInForm({ onSubmit, isLoading }) {
         <form className="card authForm" onSubmit={handleSubmit}>
             <h1 className="cardTitle">Welcome!</h1>
 
-            <InputField label="Email/Phone" name="uniqueField" placeholder="Enter your email/phone" required />
+            <InputField label="Email/Phone" name="login" placeholder="Enter your email/phone" required />
             <InputField label="Password" type="password" name="password" placeholder="Enter your password" required />
 
             <div className="authLinks">

@@ -1,7 +1,7 @@
 package com.app.diary_service.controllers;
 
 import com.app.diary_service.dtos.requests.MealLogRequest;
-import com.app.diary_service.dtos.responses.MealResponse;
+import com.app.diary_service.dtos.responses.MealLogResponse;
 import com.app.diary_service.services.MealLogService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +17,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/diary/meal-logs")
 public class MealLogController {
-    private static final String USER_ID_HEADER = "X-User-Id";
 
     private final MealLogService mealLogService;
 
     @GetMapping
-    public ResponseEntity<List<MealResponse>> getMealLogs(
-            @RequestHeader(value = USER_ID_HEADER) Long userId,
+    public ResponseEntity<List<MealLogResponse>> getMealLogs(
+            @RequestHeader(GatewayHeaders.USER_ID) Long userId,
             @RequestParam(name = "date", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
@@ -31,8 +30,8 @@ public class MealLogController {
     }
 
     @PostMapping
-    public ResponseEntity<MealResponse> createMealLog(
-            @RequestHeader(value = USER_ID_HEADER) Long userId,
+    public ResponseEntity<MealLogResponse> createMealLog(
+            @RequestHeader(GatewayHeaders.USER_ID) Long userId,
             @Valid @RequestBody MealLogRequest request
     ) {
         return ResponseEntity.status(HttpStatus.CREATED).body(mealLogService.createMealLog(userId, request));
@@ -40,7 +39,7 @@ public class MealLogController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMealLog(
-            @RequestHeader(value = USER_ID_HEADER) Long userId,
+            @RequestHeader(GatewayHeaders.USER_ID) Long userId,
             @PathVariable("id") Long id
     ) {
         mealLogService.deleteMealLog(userId, id);

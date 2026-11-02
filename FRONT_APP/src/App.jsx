@@ -4,8 +4,10 @@ import SignInPage from './pages/SignInPage.jsx'
 import SignUpPage from './pages/SignUpPage.jsx'
 import DiaryPage from './pages/DiaryPage.jsx'
 import ProfilePage from './pages/ProfilePage.jsx'
-import StubPage from './pages/StubPage.jsx'
-import AdminPage from './pages/AdminPage.jsx'
+import ComingSoonPage from './pages/ComingSoonPage.jsx'
+import AdminProductsPage from './pages/AdminProductsPage.jsx'
+import AdminPagesPage from './pages/AdminPagesPage.jsx'
+import PageAvailabilityGuard from './components/PageAvailabilityGuard.jsx'
 
 function App() {
     return (
@@ -15,11 +17,13 @@ function App() {
 
             <Route element={<AppLayout />}>
                 <Route path="/diary" element={<DiaryPage />} />
-                <Route path="/plan" element={<StubPage title="My plan" />} />
-                <Route path="/products" element={<StubPage title="Products" />} />
-                <Route path="/statistics" element={<StubPage title="Statistics" />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/admin" element={<AdminPage />} />
+                <Route path="/plan" element={<PageAvailabilityGuard pageKey="plan"><ComingSoonPage title="My plan" /></PageAvailabilityGuard>} />
+                <Route path="/products" element={<PageAvailabilityGuard pageKey="products"><ComingSoonPage title="Products" /></PageAvailabilityGuard>} />
+                <Route path="/statistics" element={<PageAvailabilityGuard pageKey="statistics"><ComingSoonPage title="Statistics" /></PageAvailabilityGuard>} />
+                <Route path="/profile" element={<PageAvailabilityGuard pageKey="profile"><ProfilePage /></PageAvailabilityGuard>} />
+                <Route path="/admin" element={<Navigate to="/admin/products" replace />} />
+                <Route path="/admin/products" element={<AdminProductsPage />} />
+                <Route path="/admin/pages" element={<AdminPagesPage />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/sign-in" replace />} />

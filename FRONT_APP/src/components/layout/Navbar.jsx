@@ -1,4 +1,5 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import '../../css/components/Navbar.css'
 import { signOut } from '../../api/authApi'
 import { useTheme } from '../../hooks/useTheme.js'
@@ -12,14 +13,20 @@ const LINKS = [
     { to: '/profile', label: 'Profile' },
 ]
 
-const ADMIN_LINK = { to: '/admin', label: 'Admin panel' }
+const ADMIN_LINKS = [
+    { to: '/admin/products', label: 'Products' },
+    { to: '/admin/pages', label: 'Pages' },
+]
 
 function Navbar({ user }) {
     const navigate = useNavigate()
     const [theme, toggleTheme] = useTheme()
 
+    const location = useLocation()
     const isAdmin = user?.role === 'ADMIN'
-    const links = isAdmin ? [...LINKS, ADMIN_LINK] : LINKS
+    const isAdminRoute = location.pathname.startsWith('/admin')
+    // Если открыта админская страница — список сразу развёрнут
+    const [isAdminOpen, setIsAdminOpen] = useState(isAdminRoute)
 
     const handleSignOut = async () => {
         try {
@@ -39,11 +46,34 @@ function Navbar({ user }) {
                 {MAIN_LINK.label}
             </NavLink>
 
-            {links.map((link) => (
+            {LINKS.map((link) => (
                 <NavLink key={link.to} to={link.to} className="navbarLink">
                     {link.label}
                 </NavLink>
             ))}
+
+            {isAdmin && (
+                <div className="navbarGroup">
+                    <button
+                        type="button"
+                        className={isAdminRoute ? 'navbarLink navbarGroupToggle current' : 'navbarLink navbarGroupToggle'}
+                        onClick={() => setIsAdminOpen(!isAdminOpen)}
+                    >
+                        Admin panel
+                        <span className={isAdminOpen ? 'navbarChevron open' : 'navbarChevron'}>▾</span>
+                    </button>
+
+                    {isAdminOpen && (
+                        <div className="navbarSubLinks">
+                            {ADMIN_LINKS.map((link) => (
+                                <NavLink key={link.to} to={link.to} className="navbarLink navbarSubLink">
+                                    {link.label}
+                                </NavLink>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )}
 
             <div className="navbarBottom">
                 <button type="button" className="navbarLink navbarMuted" onClick={toggleTheme}>

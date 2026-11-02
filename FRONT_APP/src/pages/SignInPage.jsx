@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { signIn } from '../api/authApi.js'
-import { useNotice } from '../hooks/useNotice.js'
+import { useNotification } from '../hooks/useNotification.js'
 import Notification from '../components/Notification.jsx'
 import SignInForm from '../components/SignInForm.jsx'
 import '../css/pages/AuthPage.css'
 
 function SignInPage() {
     const navigate = useNavigate()
-    const [notice, showNotice] = useNotice()
+    const [notification, showNotification] = useNotification()
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
@@ -21,7 +21,7 @@ function SignInPage() {
             await signIn(credentials)
             navigate('/diary', { replace: true })
         } catch (error) {
-            showNotice('error', error.message)
+            showNotification('error', error.message)
         } finally {
             setIsLoading(false)
         }
@@ -29,7 +29,7 @@ function SignInPage() {
 
     return (
         <main className="authPage">
-            <Notification notice={notice} />
+            <Notification notification={notification} />
             <div className="authSide" />
             <div className="authMain">
                 <SignInForm onSubmit={handleSubmit} isLoading={isLoading} />

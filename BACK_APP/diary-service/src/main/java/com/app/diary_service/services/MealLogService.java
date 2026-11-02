@@ -1,10 +1,10 @@
 package com.app.diary_service.services;
 
-import com.app.diary_service.dtos.requests.MealItemRequest;
+import com.app.diary_service.dtos.requests.MealLogItemRequest;
 import com.app.diary_service.dtos.requests.MealLogRequest;
-import com.app.diary_service.dtos.responses.MealResponse;
+import com.app.diary_service.dtos.responses.MealLogResponse;
 import com.app.diary_service.entities.MealLog;
-import com.app.diary_service.entities.MealLogsInfo;
+import com.app.diary_service.entities.MealLogItem;
 import com.app.diary_service.exceptions.MealLogNotFoundException;
 import com.app.diary_service.mappers.MealLogMapper;
 import com.app.diary_service.repositories.MealLogRepository;
@@ -23,7 +23,7 @@ public class MealLogService {
     private final MealLogMapper mealLogMapper;
 
     @Transactional(readOnly = true)
-    public List<MealResponse> getMealLogs(Long userId, LocalDate date) {
+    public List<MealLogResponse> getMealLogs(Long userId, LocalDate date) {
         List<MealLog> mealLogs = date == null
                 ? mealLogRepository.findAllByDiaryUserIdOrderByEatenAtDesc(userId)
                 : mealLogRepository.findAllByDiaryUserIdAndEatenAtBetweenOrderByEatenAtAsc(
@@ -36,17 +36,17 @@ public class MealLogService {
     }
 
     @Transactional
-    public MealResponse createMealLog(Long userId, MealLogRequest request) {
+    public MealLogResponse createMealLog(Long userId, MealLogRequest request) {
         MealLog mealLog = MealLog.builder()
                 .diary(diaryService.findDiary(userId))
                 .mealType(request.mealType())
                 .eatenAt(request.eatenAt())
                 .build();
 
-        for (MealItemRequest item : request.items()) {
-            mealLog.getItems().add(MealLogsInfo.builder()
+        for (MealLogItemRequest item : request.items()) {
+            mealLog.getItems().add(MealLogItem.builder()
                     .mealLog(mealLog)
-                    .nutritionId(item.nutritionId())
+                    .productId(item.productId())
                     .weight(item.weight())
                     .build());
         }

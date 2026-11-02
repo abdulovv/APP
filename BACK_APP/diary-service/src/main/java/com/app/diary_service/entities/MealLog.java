@@ -36,7 +36,7 @@ public class MealLog {
 
     @Builder.Default
     @OneToMany(mappedBy = "mealLog", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MealLogsInfo> items = new ArrayList<>();
+    private List<MealLogItem> items = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

@@ -1,7 +1,7 @@
 package com.app.diary_service.services;
 
-import com.app.diary_service.dtos.common.BodyWeightLogDto;
-import com.app.diary_service.dtos.common.DiaryDto;
+import com.app.diary_service.dtos.responses.BodyWeightLogResponse;
+import com.app.diary_service.dtos.responses.DiaryResponse;
 import com.app.diary_service.dtos.requests.BodyWeightLogRequest;
 import com.app.diary_service.dtos.requests.DiaryRequest;
 import com.app.diary_service.entities.BodyWeightLog;
@@ -28,12 +28,12 @@ public class DiaryService {
 
     // ==================== DIARY ====================
     @Transactional(readOnly = true)
-    public DiaryDto getDiary(Long userId) {
-        return diaryMapper.toDto(findDiary(userId));
+    public DiaryResponse getDiary(Long userId) {
+        return diaryMapper.toResponse(findDiary(userId));
     }
 
     @Transactional
-    public DiaryDto createDiary(Long userId, DiaryRequest request) {
+    public DiaryResponse createDiary(Long userId, DiaryRequest request) {
         if (diaryRepository.existsByUserId(userId)) {
             throw new DiaryAlreadyExistsException();
         }
@@ -44,32 +44,32 @@ public class DiaryService {
                 .birthDate(request.birthDate())
                 .build();
 
-        return diaryMapper.toDto(diaryRepository.save(diary));
+        return diaryMapper.toResponse(diaryRepository.save(diary));
     }
 
     @Transactional
-    public DiaryDto updateDiary(Long userId, DiaryRequest request) {
+    public DiaryResponse updateDiary(Long userId, DiaryRequest request) {
         Diary diary = findDiary(userId);
         diary.setHeight(request.height());
         diary.setBirthDate(request.birthDate());
 
-        return diaryMapper.toDto(diary);
+        return diaryMapper.toResponse(diary);
     }
 
     // ==================== BODY WEIGHT ====================
     @Transactional(readOnly = true)
-    public List<BodyWeightLogDto> getBodyWeightLogs(Long userId) {
-        return bodyWeightLogMapper.toDtoList(bodyWeightLogRepository.findAllByDiaryUserIdOrderByCreatedAtDesc(userId));
+    public List<BodyWeightLogResponse> getBodyWeightLogs(Long userId) {
+        return bodyWeightLogMapper.toResponseList(bodyWeightLogRepository.findAllByDiaryUserIdOrderByCreatedAtDesc(userId));
     }
 
     @Transactional
-    public BodyWeightLogDto addBodyWeightLog(Long userId, BodyWeightLogRequest request) {
+    public BodyWeightLogResponse addBodyWeightLog(Long userId, BodyWeightLogRequest request) {
         BodyWeightLog log = BodyWeightLog.builder()
                 .diary(findDiary(userId))
                 .weight(request.weight())
                 .build();
 
-        return bodyWeightLogMapper.toDto(bodyWeightLogRepository.save(log));
+        return bodyWeightLogMapper.toResponse(bodyWeightLogRepository.save(log));
     }
 
     public Diary findDiary(Long userId) {

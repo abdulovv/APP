@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.parent</groupId>
-        <artifactId>back_app</artifactId>
+        <groupId>com.app</groupId>
+        <artifactId>back-app-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 

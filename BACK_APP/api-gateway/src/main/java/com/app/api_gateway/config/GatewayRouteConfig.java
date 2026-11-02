@@ -12,16 +12,20 @@ public class GatewayRouteConfig {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
 
-                .route("auth-service-route", r -> r
-                        .path("/api/auth/**")
-                        .or().path("/api/countries/**")
-                        .or().path("/api/users/**")
-                        .or().path("/api/pages/**")
-                        .uri("lb://auth-service"))
+                .route("account-service-route", r -> r
+                        .path(
+                                "/api/auth/**",
+                                "/api/countries/**",
+                                "/api/users/**",
+                                "/api/pages/**",
+                                "/api/premium/**",
+                                "/api/admin/users/**"
+                        )
+                        .uri("lb://account-service"))
 
-                .route("nutrition-service-route", r -> r
-                        .path("/api/nutrition/**")
-                        .uri("lb://nutrition-service"))
+                .route("product-service-route", r -> r
+                        .path("/api/products/**")
+                        .uri("lb://product-service"))
 
                 .route("diary-service-route", r -> r
                         .path("/api/diary/**")

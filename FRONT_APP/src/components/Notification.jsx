@@ -1,11 +1,11 @@
 import '../css/components/Notification.css'
 
-function Notification({ notice }) {
-    if (!notice) return null
+function Notification({ notification }) {
+    if (!notification) return null
 
     return (
-        <div key={notice.id} className={`notification ${notice.type}`}>
-            {notice.text}
+        <div key={notification.id} className={`notification ${notification.type}`}>
+            {notification.text}
         </div>
     )
 }

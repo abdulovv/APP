@@ -15,6 +15,6 @@ public record MealLogRequest(
         LocalDateTime eatenAt,
 
         @NotEmpty
-        List<@Valid MealItemRequest> items
+        List<@Valid MealLogItemRequest> items
 ) {
 }

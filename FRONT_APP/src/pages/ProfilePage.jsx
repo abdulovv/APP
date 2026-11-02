@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import { getCurrentUser, updateEmail, updateName, updatePassword, updatePhone } from '../api/profileApi.js'
-import { useNotice } from '../hooks/useNotice.js'
+import { useNotification } from '../hooks/useNotification.js'
 import Notification from '../components/Notification.jsx'
 import InputField from '../components/InputField.jsx'
 import '../css/pages/ProfilePage.css'
@@ -41,7 +41,7 @@ function ProfilePage() {
     const [loadError, setLoadError] = useState('')
     const [isEditing, setIsEditing] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
-    const [notice, showNotice] = useNotice()
+    const [notification, showNotification] = useNotification()
     const { setCurrentUser } = useOutletContext()
 
     useEffect(() => {
@@ -73,7 +73,7 @@ function ProfilePage() {
 
         const error = validate(form)
         if (error) {
-            showNotice('warning', error)
+            showNotification('warning', error)
             return
         }
 
@@ -104,9 +104,9 @@ function ProfilePage() {
             setCurrentUser(updatedUser) // чтобы новое имя сразу появилось в навбаре
             setForm(toForm(updatedUser))
             setIsEditing(false)
-            showNotice('success', 'Profile updated.')
+            showNotification('success', 'Profile updated.')
         } catch (error) {
-            showNotice('error', error.message)
+            showNotification('error', error.message)
         } finally {
             setIsSaving(false)
         }
@@ -127,7 +127,7 @@ function ProfilePage() {
 
     return (
         <form className="card profileCard" onSubmit={handleSave}>
-            <Notification notice={notice} />
+            <Notification notification={notification} />
             <h1 className="cardTitle">Profile</h1>
 
             <fieldset className="profileFields" disabled={!isEditing || isSaving}>
