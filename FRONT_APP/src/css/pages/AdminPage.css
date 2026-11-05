@@ -12,8 +12,11 @@
 
 .adminPage h1 {
     margin: 0;
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 500;
     text-align: center;
-    color: var(--accent);
+    color: var(--text);
 }
 
 .adminTop {
@@ -36,8 +39,8 @@
     gap: 8px;
     padding: 12px 16px;
     background: var(--card-bg);
+    border: 1px solid var(--border);
     border-radius: 12px;
-    box-shadow: var(--shadow);
 }
 
 .adminToolbar h2 {
@@ -54,16 +57,16 @@
     min-height: 56px;
     padding: 8px 16px;
     background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
-    box-shadow: var(--shadow);
 }
 
 .searchInput {
     flex: 0 1 280px;
     padding: 8px 12px;
-    border: 2px solid var(--input-border);
+    border: 1px solid var(--input-border);
     border-radius: 8px;
-    background: var(--surface);
+    background: var(--input-bg);
     color: var(--text);
     font: inherit;
 }
@@ -93,7 +96,7 @@
 }
 
 .modeBtn {
-    border: 2px solid var(--divider);
+    border: 1px solid var(--input-border);
     background: var(--surface);
     color: var(--text);
 }
@@ -110,27 +113,27 @@
 .modeBtn.active {
     border-color: var(--accent);
     background: var(--accent-soft);
-    color: var(--accent);
-    font-weight: bold;
+    color: var(--accent-text);
+    font-weight: 600;
 }
 
 .resetBtn {
-    border: 2px solid #e5484d;
+    border: 1px solid var(--danger);
     background: transparent;
-    color: #e5484d;
+    color: var(--danger);
 }
 
 .resetBtn:hover {
-    background: rgba(229, 72, 77, 0.1);
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
 }
 
 .adminTable {
     width: 100%;
     border-collapse: collapse;
     background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: var(--shadow);
 }
 
 .adminTable th,
@@ -142,8 +145,10 @@
 }
 
 .adminTable th {
-    background: var(--accent-soft);
-    color: var(--accent);
+    background: var(--hover);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .adminTable th:first-child,
@@ -157,21 +162,15 @@
 }
 
 .adminTable tbody tr:hover {
-    background: var(--accent-soft);
+    background: var(--hover);
 }
 
 .adminTable tbody tr.selected td {
     background: var(--accent-soft);
-    border-top: 2px solid var(--accent);
-    border-bottom: 2px solid var(--accent);
 }
 
 .adminTable tbody tr.selected td:first-child {
-    border-left: 2px solid var(--accent);
-}
-
-.adminTable tbody tr.selected td:last-child {
-    border-right: 2px solid var(--accent);
+    box-shadow: inset 3px 0 0 var(--accent);
 }
 
 .modalOverlay {
@@ -181,8 +180,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
+    background: rgba(31, 30, 29, 0.45);
+    backdrop-filter: blur(3px);
     animation: fadeIn 0.2s ease-out;
 }
 
@@ -199,6 +198,7 @@
     gap: 16px;
     padding: 24px;
     background: var(--card-bg);
+    border: 1px solid var(--border);
     border-radius: 16px;
     box-shadow: var(--shadow-lg);
     animation: fadeSlideIn 0.25s ease-out;
@@ -206,7 +206,9 @@
 
 .modal h2 {
     margin: 0;
-    color: var(--accent);
+    font-family: var(--font-heading);
+    font-weight: 500;
+    color: var(--text);
 }
 
 .modal .adminTable tbody tr {
@@ -222,25 +224,25 @@
 
 .addBtn {
     padding: 8px 16px;
-    border: 2px solid var(--accent-dark);
+    border: 1px solid transparent;
     border-radius: 8px;
-    background: var(--accent);
+    background: var(--accent-dark);
     color: #fff;
     font: inherit;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
     transition: background 0.15s;
 }
 
 .addBtn:hover {
-    background: var(--accent-light);
+    background: var(--accent-hover);
 }
 
 .dangerBtn {
     padding: 8px 16px;
-    border: 2px solid #e5484d;
+    border: 1px solid var(--danger);
     border-radius: 8px;
-    background: #e5484d;
+    background: var(--danger);
     color: #fff;
     font: inherit;
     cursor: pointer;
@@ -293,7 +295,7 @@
 .nutrientFieldset {
     margin: 0;
     padding: 12px 16px 16px;
-    border: 1.5px solid var(--divider);
+    border: 1px solid var(--divider);
     border-radius: 12px;
 }
 
@@ -323,7 +325,7 @@
 
 .formError {
     margin: 0;
-    color: #e5484d;
+    color: var(--danger);
 }
 
 .filters {
@@ -335,9 +337,9 @@
 
 .filterSelect {
     padding: 8px 10px;
-    border: 2px solid var(--input-border);
+    border: 1px solid var(--input-border);
     border-radius: 8px;
-    background: var(--surface);
+    background: var(--input-bg);
     color: var(--text);
     font: inherit;
     cursor: pointer;
@@ -354,9 +356,9 @@
 
 .successBtn {
     padding: 8px 16px;
-    border: 2px solid #2f9e44;
+    border: 1px solid var(--success);
     border-radius: 8px;
-    background: #2f9e44;
+    background: var(--success);
     color: #fff;
     font: inherit;
     cursor: pointer;
@@ -396,6 +398,7 @@
     width: min(360px, 90vw);
     padding: 20px 24px;
     background: var(--card-bg);
+    border: 1px solid var(--border);
     border-radius: 14px;
     box-shadow: var(--shadow-lg);
     text-align: center;
@@ -440,9 +443,8 @@
     gap: 12px;
     padding: 14px;
     background: var(--card-bg);
-    border: 2px solid transparent;
+    border: 1px solid var(--border);
     border-radius: 14px;
-    box-shadow: var(--shadow);
     transition: border-color 0.2s, opacity 0.2s;
 }
 
@@ -462,7 +464,7 @@
 }
 
 .pageCardTitle {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 17px;
 }
 
@@ -473,13 +475,13 @@
 }
 
 .pageStatus.on {
-    background: rgba(47, 158, 68, 0.15);
-    color: #2f9e44;
+    background: color-mix(in srgb, var(--success) 15%, transparent);
+    color: var(--success);
 }
 
 .pageStatus.off {
-    background: rgba(229, 72, 77, 0.15);
-    color: #e5484d;
+    background: color-mix(in srgb, var(--danger) 15%, transparent);
+    color: var(--danger);
 }
 
 /* Превью: iframe в 4 раза больше рамки и уменьшен в 4 раза — страница выглядит как на большом экране */
@@ -489,7 +491,7 @@
     aspect-ratio: 1280 / 800;
     overflow: hidden;
     border-radius: 8px;
-    border: 1.5px solid var(--divider);
+    border: 1px solid var(--divider);
     background: var(--page-bg);
     transition: filter 0.2s, opacity 0.2s;
 }
@@ -518,8 +520,8 @@
     padding: 8px 16px;
     overflow-x: auto;
     background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
-    box-shadow: var(--shadow);
     animation: fadeSlideIn 0.2s ease-out;
 }
 
@@ -543,10 +545,10 @@
     min-width: 20px;
     padding: 0 6px;
     border-radius: 999px;
-    background: var(--accent);
+    background: var(--accent-dark);
     color: #fff;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 600;
     line-height: 20px;
     text-align: center;
 }
@@ -576,17 +578,17 @@
 
 .activateBtn {
     padding: 8px 16px;
-    border: 2px solid #2f9e44;
+    border: 1px solid var(--success);
     border-radius: 8px;
     background: transparent;
-    color: #2f9e44;
+    color: var(--success);
     font: inherit;
     cursor: pointer;
     transition: background 0.15s;
 }
 
 .activateBtn:hover:not(:disabled) {
-    background: rgba(47, 158, 68, 0.1);
+    background: color-mix(in srgb, var(--success) 12%, transparent);
 }
 
 .activateBtn:disabled {
@@ -614,10 +616,10 @@
     flex-shrink: 0;
     width: 36px;
     height: 36px;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     border-radius: 8px;
     background: transparent;
-    color: #e5484d;
+    color: var(--danger);
     font-size: 26px;
     line-height: 1;
     cursor: pointer;
@@ -625,8 +627,8 @@
 }
 
 .closeBtn:hover:not(:disabled) {
-    border-color: #e5484d;
-    background: rgba(229, 72, 77, 0.1);
+    border-color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
 }
 
 .closeBtn:disabled {
@@ -655,20 +657,20 @@
     flex: 1;
     min-height: 0;
     overflow-y: auto;
+    border: 1px solid var(--border);
     border-radius: 12px;
-    box-shadow: var(--shadow);
 }
 
 .tableScroll .adminTable {
     overflow: visible;
-    box-shadow: none;
+    border: none;
 }
 
 .tableScroll .adminTable th {
     position: sticky;
     top: 0;
     z-index: 1;
-    background: linear-gradient(var(--accent-soft), var(--accent-soft)), var(--surface);
+    background: var(--hover);
 }
 
 .pageReasonInput {

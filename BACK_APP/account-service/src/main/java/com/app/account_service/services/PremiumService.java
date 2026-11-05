@@ -1,11 +1,7 @@
 package com.app.account_service.services;
 
 import com.app.account_service.dtos.requests.GrantPremiumRequest;
-import com.app.account_service.entities.Country;
-import com.app.account_service.entities.PremiumSubscription;
-import com.app.account_service.entities.PremiumTransaction;
-import com.app.account_service.entities.PremiumTransactionSource;
-import com.app.account_service.entities.User;
+import com.app.account_service.entities.*;
 import com.app.account_service.exceptions.UserNotFoundException;
 import com.app.account_service.repositories.PremiumSubscriptionRepository;
 import com.app.account_service.repositories.PremiumTransactionRepository;
@@ -69,6 +65,7 @@ public class PremiumService {
                 .amountLocal(BigDecimal.ZERO)
                 .periodDays(request.days())
                 .source(PremiumTransactionSource.ADMIN)
+                .status(PremiumTransactionStatus.GRANTED)
                 .oldExpiresAt(oldExpiresAt)
                 .newExpiresAt(newExpiresAt)
                 .performedBy(admin)

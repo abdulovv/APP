@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Pattern;
 
 public record UpdatePhoneRequest(
         @NotBlank
-        @Pattern(regexp = "^\\+\\d{7,15}$")
+        @Pattern(regexp = "^\\+\\d{7,15}$", message = "Phone must start with + and contain 7–15 digits")
         String phoneNumber
 ) {
 }

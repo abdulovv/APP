@@ -1,11 +1,16 @@
 .authPage {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     height: 100vh;
     background-color: var(--auth-bg);
 }
 
+/* Пустая левая половина больше не нужна: форма стоит по центру */
+.authSide {
+    display: none;
+}
+
 .authMain {
+    flex: 1;
     display: flex;
     padding: 16px;
     overflow-y: auto;
@@ -17,13 +22,12 @@
 }
 
 .authLinks a {
-    color: var(--accent);
-    font-size: 14.5px;
+    color: var(--accent-text);
+    font-size: 14px;
     text-decoration: none;
 }
 
 .authLinks a:hover {
-    color: var(--accent-light);
     text-decoration: underline;
 }
 
@@ -41,8 +45,8 @@
     appearance: none;
     cursor: pointer;
     background-image:
-        linear-gradient(45deg, transparent 50%, var(--accent) 50%),
-        linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+        linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
+        linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
     background-position:
         calc(100% - 18px) 50%,
         calc(100% - 12px) 50%;
@@ -50,12 +54,18 @@
     background-repeat: no-repeat;
 }
 
-@media (max-width: 800px) {
-    .authPage {
-        grid-template-columns: 1fr;
-    }
 
-    .authSide {
-        display: none;
-    }
+/* Дата рождения: три списка в ряд (день, месяц, год) */
+.dateSelects {
+    display: grid;
+    grid-template-columns: 1fr 1.7fr 1.2fr;
+    gap: 8px;
+}
+
+.dateSelects .selectField {
+    padding-left: 12px;
+    padding-right: 32px;
+    background-position:
+        calc(100% - 16px) 50%,
+        calc(100% - 10px) 50%;
 }

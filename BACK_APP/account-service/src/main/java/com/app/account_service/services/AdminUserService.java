@@ -2,11 +2,15 @@ package com.app.account_service.services;
 
 import com.app.account_service.dtos.responses.AdminUserDetailsResponse;
 import com.app.account_service.dtos.responses.AdminUserListItemResponse;
+import com.app.account_service.dtos.responses.PremiumTransactionResponse;
 import com.app.account_service.entities.PremiumSubscription;
+import com.app.account_service.entities.PremiumTransaction;
 import com.app.account_service.entities.User;
 import com.app.account_service.exceptions.UserNotFoundException;
+import com.app.account_service.mappers.PremiumTransactionMapper;
 import com.app.account_service.mappers.UserMapper;
 import com.app.account_service.repositories.PremiumSubscriptionRepository;
+import com.app.account_service.repositories.PremiumTransactionRepository;
 import com.app.account_service.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -21,11 +25,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminUserService {
     private static final int SEARCH_RESULT_LIMIT = 20;
-
     private final UserRepository userRepository;
     private final PremiumSubscriptionRepository premiumSubscriptionRepository;
     private final PremiumService premiumService;
     private final UserMapper userMapper;
+    private final PremiumTransactionRepository premiumTransactionRepository;
+    private final PremiumTransactionMapper premiumTransactionMapper;
+
 
     @Transactional(readOnly = true)
     public List<AdminUserListItemResponse> searchUsers(String query) {
@@ -51,6 +57,15 @@ public class AdminUserService {
         Instant premiumExpiresAt = subscription != null ? subscription.getExpiresAt() : null;
 
         return userMapper.toAdminDetails(user, premium, premiumStartedAt, premiumExpiresAt);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PremiumTransactionResponse> getPremiumHistory(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFoundException();
+        }
+        List<PremiumTransaction> transactions = premiumTransactionRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
+        return premiumTransactionMapper.toResponseList(transactions);
     }
 
 

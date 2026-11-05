@@ -2,6 +2,7 @@ package com.app.account_service.controllers;
 
 import com.app.account_service.dtos.responses.AdminUserDetailsResponse;
 import com.app.account_service.dtos.responses.AdminUserListItemResponse;
+import com.app.account_service.dtos.responses.PremiumTransactionResponse;
 import com.app.account_service.services.AdminUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,5 +42,16 @@ public class AdminUserController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         return ResponseEntity.ok(adminUserService.getUserDetails(id));
+    }
+
+    @GetMapping("/{id}/premium-history")
+    public ResponseEntity<List<PremiumTransactionResponse>> getPremiumHistory(
+            @PathVariable Long id,
+            @RequestHeader(GatewayHeaders.USER_ROLE) String role
+    ) {
+        if (!GatewayHeaders.isAdmin(role)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        return ResponseEntity.ok(adminUserService.getPremiumHistory(id));
     }
 }

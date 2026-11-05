@@ -15,7 +15,7 @@ CREATE TABLE premium_transactions (
     source          VARCHAR(10)      NOT NULL
                     CHECK (source IN ('PURCHASE', 'ADMIN')),
     status          VARCHAR(10)      NOT NULL DEFAULT 'PAID'
-                    CHECK (status IN ('PAID', 'FAILED', 'REFUNDED')),
+                    CHECK (status IN ('PAID', 'FAILED', 'REFUNDED', 'GRANTED')),
     old_expires_at  TIMESTAMPTZ,
     new_expires_at  TIMESTAMPTZ,
     performed_by    BIGINT,

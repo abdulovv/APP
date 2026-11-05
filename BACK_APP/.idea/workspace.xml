@@ -5,161 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1192637-397c-4bfb-b506-f8d9f442234d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/dtos/responses/PremiumTransactionResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/mappers/PremiumTransactionMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/GatewayRouteConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/GatewayRouteConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/SessionUserFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/AuthServiceApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/configuration/AdminInitializer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/configuration/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/configuration/SessionConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/controllers/AuthController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/controllers/CountryController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/controllers/GlobalExceptionHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/controllers/PageSettingController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/controllers/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/common/CountryDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/common/PageSettingDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/requests/NameFormatter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/requests/SignInRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/requests/SignUpRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/requests/UpdateEmailRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/requests/UpdateNameRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/requests/UpdatePageSettingRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/requests/UpdatePasswordRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/requests/UpdatePhoneRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/responses/AuthResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/responses/ErrorResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/dtos/responses/UserResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/Country.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/PageSetting.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/PaymentCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/Premium.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/PurchaseHistory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/PurchaseSource.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/PurchaseStatus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/Role.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/entities/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/exceptions/CountryNotAvailableException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/exceptions/CountryNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/exceptions/IncorrectPasswordException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/exceptions/InvalidCredentialsException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/exceptions/PageNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/exceptions/UserAlreadyExistsException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/exceptions/UserNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/mappers/CountryMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/mappers/PageSettingMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/mappers/UserMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/repositories/CountryRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/repositories/PageSettingRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/repositories/PaymentCardRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/repositories/PremiumRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/repositories/PurchaseHistoryRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/repositories/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/services/AuthService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/services/CountryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/services/PageSettingService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/app/auth_service/services/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/db/migration/V1__create_countries.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/db/migration/V2__create_users.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/db/migration/V3__create_page_settings.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/db/migration/V4__create_premiums.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/db/migration/V5__create_payments.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/db/migration/V6__create_purchases_history.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/test/java/com/app/auth_service/RegistrationServiceApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/controllers/DiaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/controllers/DiaryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/controllers/MealLogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/controllers/MealLogController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/dtos/common/BodyWeightLogDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/dtos/common/DiaryDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/dtos/common/MealLogDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/dtos/common/MealLogsInfoDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/dtos/requests/MealItemRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/dtos/requests/MealLogRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/dtos/requests/MealLogRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/dtos/responses/DiaryResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/dtos/responses/DiaryResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/dtos/responses/MealLogsInfoResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/dtos/responses/MealResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/entities/MealLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/entities/MealLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/entities/MealLogsInfo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/entities/MealType.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/entities/MealType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/mappers/BodyWeightLogMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/mappers/BodyWeightLogMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/mappers/DiaryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/mappers/DiaryMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/mappers/MealLogMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/mappers/MealLogMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/mappers/MealLogsInfoMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/repositories/MealLogsInfoRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/services/DiaryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/services/DiaryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/services/MealLogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/services/MealLogService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diary-service/src/main/resources/db/migration/V4__create_meal_logs_info.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/NutritionServiceApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/controllers/GlobalExceptionHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/controllers/NutritionController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/dto/CategoryDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/dto/ErrorResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/dto/NutrientDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/dto/NutrientValueDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/dto/NutritionDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/entities/Category.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/entities/CategoryType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/entities/Nutrient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/entities/Nutrition.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/entities/NutritionNutrient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/exceptions/CategoryNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/exceptions/NoNutrientsException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/exceptions/NutrientNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/exceptions/NutritionNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/exceptions/WrongCategoryTypeException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/mappers/CategoryMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/mappers/NutrientMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/mappers/NutritionMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/mappers/NutritionNutrientMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/repositories/CategoryRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/repositories/NutrientRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/repositories/NutritionNutrientRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/repositories/NutritionRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/CategoryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/NutrientService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/NutritionService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/subservices/DrinkService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/java/com/app/nutrition_service/services/subservices/FoodService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/resources/db/migration/V1__create_category.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/resources/db/migration/V2__create_nutrition.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/resources/db/migration/V3__create_nutrients.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/main/resources/db/migration/V4__create_nutrition_nutrients.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nutrition-service/src/test/java/com/app/nutrition_service/NutritionServiceApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/Notification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/Notification.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/SignInForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/SignInForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/layout/AppLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/layout/AppLayout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/controllers/AdminUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/controllers/AdminUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/dtos/requests/UpdatePhoneRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/dtos/requests/UpdatePhoneRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/entities/PremiumTransactionStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/entities/PremiumTransactionStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/services/AdminUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/services/AdminUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/services/PremiumService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/services/PremiumService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/resources/db/migration/V6__create_premium_transactions.sql" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/resources/db/migration/V6__create_premium_transactions.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/app/product_service/ProductServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/app/product_service/ProductServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/InputField.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/InputField.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/SignUpForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/SignUpForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/layout/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/layout/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/components/AppLayout.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/components/AppLayout.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/components/Navbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/components/Navbar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/components/Notification.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/components/Notification.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/AdminPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/AdminPage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/pages/AdminPage.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/AuthPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/AuthPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/DiaryPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/DiaryPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/ProfilePage.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/ProfilePage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/pages/AdminPagesPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/pages/AdminPagesPage.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/pages/ProfilePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/pages/ProfilePage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/pages/SignInPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/pages/SignInPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/pages/SignUpPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/pages/SignUpPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,11 +37,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Exception" />
         <option value="Enum" />
-        <option value="Record" />
         <option value="Class" />
+        <option value="Record" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -188,28 +56,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ApiGatewayApplication.executor": "Run",
-    "Application.AuthServiceApplication.executor": "Run",
-    "Application.DiaryServiceApplication.executor": "Run",
-    "Application.EurekaServerApplication.executor": "Run",
-    "Application.NutritionServiceApplication.executor": "Run",
-    "Application.account.executor": "Run",
-    "Application.auth.executor": "Run",
-    "Application.diary.executor": "Run",
-    "Application.eu.executor": "Run",
-    "Application.gateway.executor": "Run",
-    "Application.nutrition.executor": "Run",
-    "Application.product.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ApiGatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.AuthServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DiaryServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.EurekaServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.NutritionServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.account.executor&quot;: &quot;Run&quot;,
+    &quot;Application.auth.executor&quot;: &quot;Run&quot;,
+    &quot;Application.diary.executor&quot;: &quot;Run&quot;,
+    &quot;Application.eu.executor&quot;: &quot;Run&quot;,
+    &quot;Application.gateway.executor&quot;: &quot;Run&quot;,
+    &quot;Application.nutrition.executor&quot;: &quot;Run&quot;,
+    &quot;Application.product.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.app.auth_service.services" />

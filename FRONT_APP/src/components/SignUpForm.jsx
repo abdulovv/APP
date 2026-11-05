@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import InputField from './InputField.jsx'
 import CountrySelect from './CountrySelect.jsx'
+import BirthDateSelect from './BirthDateSelect.jsx'
 
 const MIN_AGE = 12
 const MAX_AGE = 100
@@ -18,8 +19,6 @@ const EMPTY_FORM = {
 }
 
 const currentYear = new Date().getFullYear()
-const minBirthDate = `${currentYear - MAX_AGE}-01-01`
-const maxBirthDate = `${currentYear - MIN_AGE}-12-31`
 
 function getAge(dateString) {
     const birth = new Date(dateString)
@@ -34,6 +33,7 @@ function getAge(dateString) {
 
 function validateStep(step, form, country) {
     if (step === 1) {
+        if (!form.birthDate) return 'Select your date of birth.'
         const age = getAge(form.birthDate)
         if (age < MIN_AGE) return `You must be at least ${MIN_AGE} years old to register.`
         if (age > MAX_AGE) return `Age cannot be more than ${MAX_AGE} years.`
@@ -119,7 +119,12 @@ function SignUpForm({ onSubmit, onError, isLoading }) {
                 <>
                     <InputField label="First Name" name="firstname" value={form.firstname} onChange={handleChange} placeholder="Enter your first name" required />
                     <InputField label="Last Name" name="lastname" value={form.lastname} onChange={handleChange} placeholder="Enter your last name" required />
-                    <InputField label="Date of Birth" type="date" name="birthDate" value={form.birthDate} onChange={handleChange} min={minBirthDate} max={maxBirthDate} required />
+                    <BirthDateSelect
+                        value={form.birthDate}
+                        onChange={(birthDate) => setForm((prev) => ({ ...prev, birthDate }))}
+                        minYear={currentYear - MAX_AGE}
+                        maxYear={currentYear - MIN_AGE}
+                    />
                 </>
             )}
 

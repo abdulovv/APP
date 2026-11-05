@@ -1,39 +1,384 @@
-.profileCard {
-    max-width: 520px;
-}
-
-.profileFields {
+/* ---------- Каркас страницы ---------- */
+.profilePage {
+    width: 100%;
+    max-width: 760px;
+    align-self: flex-start;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    min-width: 0;
+    gap: 24px;
+}
+
+.appContent > .profilePage {
+    margin: 0 auto;
+}
+
+.profileTitle {
     margin: 0;
-    padding: 0;
-    border: none;
+    font-family: var(--font-heading);
+    font-size: 34px;
+    font-weight: 500;
 }
 
-.profileRow {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.profileDivider {
-    width: 100%;
-    margin: 4px 0;
-    border: none;
-    border-top: 1.5px solid var(--divider);
-}
-
-.profileActions {
-    display: grid;
-    grid-template-columns: 7fr 3fr;
-    gap: 12px;
-    margin-top: 4px;
+.profileSubtitle {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: var(--text-muted);
 }
 
 .profileMessage {
     margin: 0;
-    font-size: 18px;
+    font-size: 16px;
+    color: var(--text-muted);
     text-align: center;
+}
+
+/* ---------- Вкладки ---------- */
+.profileTabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+}
+
+.profileTab {
+    margin-bottom: -1px;
+    padding: 10px 14px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.profileTab:hover {
+    color: var(--text);
+}
+
+.profileTab.active {
+    border-bottom-color: var(--accent);
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* ---------- Блок-карточка и заголовки внутри ---------- */
+.profileSection {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background-color: var(--card-bg);
+}
+
+.profileSectionPadded {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.profileSectionTitle {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.profileHint {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.profileToolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* ---------- Строки «подпись — значение — действие» (вкладка Personal data) ---------- */
+.profileRow {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.profileRow:last-child {
+    border-bottom: none;
+}
+
+.profileRowLabel {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.profileRowValue {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* Раскрытая строка редактирования */
+.profileRowEdit {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--page-bg);
+}
+
+.profileRowEdit:last-child {
+    border-bottom: none;
+}
+
+.profileRowEditFields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.profileRowEditFields .fieldInput {
+    flex: 1 1 220px;
+    width: auto;
+}
+
+/* ---------- Формы ---------- */
+.profileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 560px;
+}
+
+.profileFormGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.profileFormActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Компактные кнопки: .btn.btnSmall — обычная, .linkBtn — текстовая */
+.btnSmall {
+    padding: 9px 16px;
+    font-size: 14px;
+}
+
+.linkBtn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent-text);
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.linkBtn:hover:not(:disabled) {
+    background-color: var(--accent-soft);
+}
+
+.linkBtn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.linkBtn.danger {
+    color: var(--danger);
+}
+
+.linkBtn.danger:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
+/* ---------- Бейджи ---------- */
+.badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background-color: var(--accent-soft);
+    color: var(--accent-text);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge.success {
+    background-color: color-mix(in srgb, var(--success) 15%, transparent);
+    color: var(--success);
+}
+
+.badge.muted {
+    background-color: var(--hover);
+    color: var(--text-muted);
+}
+
+/* ---------- Способы оплаты ---------- */
+.paymentCard {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.paymentCard:last-child {
+    border-bottom: none;
+}
+
+.paymentCardBrand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 48px;
+    height: 32px;
+    border-radius: 6px;
+    background-color: var(--text);
+    color: var(--page-bg);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.paymentCardInfo {
+    flex: 1 1 200px;
+    min-width: 0;
+}
+
+.paymentCardTitle {
+    font-weight: 500;
+}
+
+.paymentCardTitle .badge {
+    margin-left: 8px;
+}
+
+.paymentCardMeta {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.profileEmpty {
+    margin: 0;
+    padding: 24px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* ---------- Премиум ---------- */
+.premiumHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.premiumHeaderTitle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.premiumProgress {
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--track);
+}
+
+.premiumProgressFill {
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--accent);
+}
+
+.historyScroll {
+    overflow-x: auto;
+}
+
+.historyTable {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.historyTable th {
+    padding: 8px 12px 8px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.historyTable td {
+    padding: 14px 12px 14px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.historyTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ---------- Окно «Добавить карту» ---------- */
+.profileModalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(31, 30, 29, 0.45);
+    backdrop-filter: blur(3px);
+}
+
+.profileModal {
+    width: 100%;
+    max-width: 440px;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background-color: var(--card-bg);
+    box-shadow: var(--shadow-lg);
+}
+
+.profileModalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.checkboxLine {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.checkboxLine input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
 }

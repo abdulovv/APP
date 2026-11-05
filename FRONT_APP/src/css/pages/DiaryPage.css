@@ -14,17 +14,17 @@
 }
 
 .mealSection {
-    padding: 14px 16px;
-    border: 1.5px solid var(--divider);
-    border-radius: 8px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
     background-color: var(--surface);
-    box-shadow: var(--shadow);
 }
 
 .mealTitle {
     margin: 0 0 6px;
-    font-size: 18px;
-    font-weight: 600;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .mealEmpty {
@@ -52,5 +52,5 @@
 
 .diaryMeals::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: rgba(255, 165, 0, 0.4);
+    background-color: var(--input-border);
 }
