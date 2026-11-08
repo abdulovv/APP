@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-function StubPage({ title }) {
+function ComingSoonPage({ title }) {
     useEffect(() => {
         document.title = title
     }, [title])
@@ -13,4 +13,4 @@ function StubPage({ title }) {
     )
 }
 
-export default StubPage
+export default ComingSoonPage

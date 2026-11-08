@@ -9,7 +9,6 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 @Configuration
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600)
 public class SessionConfig {
-
     @Bean
     public CookieSerializer cookieSerializer() {
         DefaultCookieSerializer s = new DefaultCookieSerializer();
@@ -17,7 +16,7 @@ public class SessionConfig {
         s.setUseBase64Encoding(false);
         s.setUseHttpOnlyCookie(true);
         s.setSameSite("Lax");
-        s.setUseSecureCookie(false); // без HTTPS
+        s.setUseSecureCookie(false);
         s.setCookiePath("/");
         return s;
     }

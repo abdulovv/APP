@@ -3,7 +3,6 @@ function SearchPanel({ search, onSearchChange, filters, onFiltersChange, categor
         onFiltersChange({ ...filters, [name]: value })
     }
 
-    // Категории в фильтре зависят от выбранного типа
     const categoryOptions = filters.type === 'ALL'
         ? categories
         : categories.filter(c => c.type === filters.type)

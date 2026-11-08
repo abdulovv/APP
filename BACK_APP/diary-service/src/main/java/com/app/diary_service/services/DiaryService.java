@@ -26,7 +26,6 @@ public class DiaryService {
     private final DiaryMapper diaryMapper;
     private final BodyWeightLogMapper bodyWeightLogMapper;
 
-    // ==================== DIARY ====================
     @Transactional(readOnly = true)
     public DiaryResponse getDiary(Long userId) {
         return diaryMapper.toResponse(findDiary(userId));
@@ -56,7 +55,6 @@ public class DiaryService {
         return diaryMapper.toResponse(diary);
     }
 
-    // ==================== BODY WEIGHT ====================
     @Transactional(readOnly = true)
     public List<BodyWeightLogResponse> getBodyWeightLogs(Long userId) {
         return bodyWeightLogMapper.toResponseList(bodyWeightLogRepository.findAllByDiaryUserIdOrderByCreatedAtDesc(userId));

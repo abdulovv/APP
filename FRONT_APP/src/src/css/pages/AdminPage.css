@@ -1,0 +1,694 @@
+.appContent > .adminPage {
+    align-self: flex-start;
+    width: 100%;
+    margin: 0;
+}
+
+.adminPage {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.adminPage h1 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
+    color: var(--text);
+}
+
+.adminTop {
+    position: sticky;
+    top: -24px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: -6px;
+    padding: 6px 0 8px;
+    background: var(--page-bg);
+}
+
+.adminToolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.adminToolbar h2 {
+    width: 100%;
+    margin: 0 0 4px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.contextBar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 56px;
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.searchInput {
+    flex: 0 1 280px;
+    padding: 8px 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text);
+    font: inherit;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.contextInfo {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+    animation: fadeSlideIn 0.25s ease-out;
+}
+
+.modeBtn,
+.resetBtn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font: inherit;
+    cursor: pointer;
+    text-transform: capitalize;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.modeBtn {
+    border: 1px solid var(--input-border);
+    background: var(--surface);
+    color: var(--text);
+}
+
+.modeBtn:hover:not(:disabled) {
+    border-color: var(--accent);
+}
+
+.modeBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.modeBtn.active {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    font-weight: 600;
+}
+
+.resetBtn {
+    border: 1px solid var(--danger);
+    background: transparent;
+    color: var(--danger);
+}
+
+.resetBtn:hover {
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
+.adminTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.adminTable th,
+.adminTable td {
+    padding: 10px 14px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--divider);
+}
+
+.adminTable th {
+    background: var(--hover);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.adminTable th:first-child,
+.adminTable td:first-child {
+    width: 60px;
+    color: var(--text-muted);
+}
+
+.adminTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.adminTable tbody tr:hover {
+    background: var(--hover);
+}
+
+.adminTable tbody tr.selected td {
+    background: var(--accent-soft);
+}
+
+.adminTable tbody tr.selected td:first-child {
+    box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(31, 30, 29, 0.45);
+    backdrop-filter: blur(3px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modalOverlay.modalTop {
+    z-index: 110;
+}
+
+.modal {
+    width: min(800px, 90vw);
+    max-height: 85vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    animation: fadeSlideIn 0.25s ease-out;
+}
+
+.modal h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 500;
+    color: var(--text);
+}
+
+.modal .adminTable tbody tr {
+    cursor: pointer;
+    user-select: none;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.addBtn {
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: var(--accent-dark);
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.addBtn:hover {
+    background: var(--accent-hover);
+}
+
+.dangerBtn {
+    padding: 8px 16px;
+    border: 1px solid var(--danger);
+    border-radius: 8px;
+    background: var(--danger);
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.dangerBtn:hover:not(:disabled) {
+    opacity: 0.85;
+}
+
+.dangerBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.adminTable tbody tr.inactive td {
+    opacity: 0.5;
+}
+
+.modalHint {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+.productForm {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Поля формы скроллятся, кнопки снизу остаются на месте */
+.productFormFields {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 4px 6px 4px 2px;
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.nutrientFieldset {
+    margin: 0;
+    padding: 12px 16px 16px;
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+}
+
+.nutrientFieldset legend {
+    padding: 0 6px;
+    color: var(--text-muted);
+}
+
+.nutrientGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+.checkboxField {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.checkboxField input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+}
+
+.formError {
+    margin: 0;
+    color: var(--danger);
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.filterSelect {
+    padding: 8px 10px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+}
+
+.filterSelect:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.contextBar {
+    flex-wrap: wrap;
+}
+
+.successBtn {
+    padding: 8px 16px;
+    border: 1px solid var(--success);
+    border-radius: 8px;
+    background: var(--success);
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.successBtn:hover:not(:disabled) {
+    opacity: 0.85;
+}
+
+.successBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.formActions {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 12px;
+}
+
+.formActions .btn,
+.formActions .dangerBtn,
+.formActions .resetBtn,
+.formActions .successBtn,
+.formActions .activateBtn {
+    min-width: 150px;
+}
+
+.modalOverlay.confirmOverlay {
+    z-index: 130;
+}
+
+.confirmDialog {
+    position: relative;
+    width: min(360px, 90vw);
+    padding: 20px 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    animation: fadeSlideIn 0.2s ease-out;
+}
+
+.confirmDialog h3 {
+    margin: 0 0 8px;
+    color: var(--text);
+}
+
+.confirmDialog p {
+    margin: 0 0 16px;
+    color: var(--text-muted);
+}
+
+.confirmActions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.confirmActions button {
+    min-width: 80px;
+}
+
+.adminEmpty {
+    margin: 24px 0;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.pagesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.pageCard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: border-color 0.2s, opacity 0.2s;
+}
+
+.pageCard:hover {
+    border-color: var(--accent);
+}
+
+.pageCard.inactive .pagePreview {
+    filter: grayscale(1);
+    opacity: 0.5;
+}
+
+.pageCardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pageCardTitle {
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.pageStatus {
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+}
+
+.pageStatus.on {
+    background: color-mix(in srgb, var(--success) 15%, transparent);
+    color: var(--success);
+}
+
+.pageStatus.off {
+    background: color-mix(in srgb, var(--danger) 15%, transparent);
+    color: var(--danger);
+}
+
+/* Превью: iframe в 4 раза больше рамки и уменьшен в 4 раза — страница выглядит как на большом экране */
+.pagePreview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1280 / 800;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--divider);
+    background: var(--page-bg);
+    transition: filter 0.2s, opacity 0.2s;
+}
+
+.pagePreview iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 400%;
+    height: 400%;
+    border: none;
+    transform: scale(0.25);
+    transform-origin: top left;
+    pointer-events: none;
+}
+
+.pageToggle {
+    width: 100%;
+}
+
+.searchPanel {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    overflow-x: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    animation: fadeSlideIn 0.2s ease-out;
+}
+
+.searchPanel .searchInput {
+    flex: 1 1 220px;
+    min-width: 160px;
+}
+
+.searchPanel .filterSelect,
+.searchPanel .resetBtn {
+    flex: 0 0 auto;
+}
+
+.searchToggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.filterBadge {
+    min-width: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: var(--accent-dark);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: center;
+}
+
+.contextActions {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    animation: fadeSlideIn 0.25s ease-out;
+}
+
+.contextCounter {
+    justify-self: start;
+    color: var(--text-muted);
+}
+
+.contextCenter {
+    display: flex;
+    gap: 8px;
+}
+
+.contextRight {
+    justify-self: end;
+}
+
+.activateBtn {
+    padding: 8px 16px;
+    border: 1px solid var(--success);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--success);
+    font: inherit;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.activateBtn:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--success) 12%, transparent);
+}
+
+.activateBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.resetBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.resetBtn:hover:disabled {
+    background: transparent;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.closeBtn {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--danger);
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.closeBtn:hover:not(:disabled) {
+    border-color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
+.closeBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.confirmClose {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+    font-size: 22px;
+}
+
+.modalBody {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* В окне скроллится только таблица, шапка таблицы прилипает к верху */
+.tableScroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.tableScroll .adminTable {
+    overflow: visible;
+    border: none;
+}
+
+.tableScroll .adminTable th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--hover);
+}
+
+.pageReasonInput {
+    width: 100%;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

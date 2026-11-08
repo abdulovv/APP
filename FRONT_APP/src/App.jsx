@@ -4,10 +4,14 @@ import SignInPage from './pages/SignInPage.jsx'
 import SignUpPage from './pages/SignUpPage.jsx'
 import DiaryPage from './pages/DiaryPage.jsx'
 import ProfilePage from './pages/ProfilePage.jsx'
+import SubscriptionPage from './pages/SubscriptionPage.jsx'
 import ComingSoonPage from './pages/ComingSoonPage.jsx'
+import ProductsPage from './pages/ProductsPage.jsx'
+import CustomProductsPage from './pages/CustomProductsPage.jsx'
 import AdminProductsPage from './pages/AdminProductsPage.jsx'
 import AdminPagesPage from './pages/AdminPagesPage.jsx'
-import PageAvailabilityGuard from './components/PageAvailabilityGuard.jsx'
+import PageAvailabilityGuard from './components/guards/PageAvailabilityGuard.jsx'
+import PremiumGate from './components/guards/PremiumGate.jsx'
 
 function App() {
     return (
@@ -17,8 +21,18 @@ function App() {
 
             <Route element={<AppLayout />}>
                 <Route path="/diary" element={<DiaryPage />} />
-                <Route path="/plan" element={<PageAvailabilityGuard pageKey="plan"><ComingSoonPage title="My plan" /></PageAvailabilityGuard>} />
-                <Route path="/products" element={<PageAvailabilityGuard pageKey="products"><ComingSoonPage title="Products" /></PageAvailabilityGuard>} />
+                <Route path="/plan" element={<PageAvailabilityGuard pageKey="plan"><SubscriptionPage/></PageAvailabilityGuard>} />
+                <Route path="/products" element={<PageAvailabilityGuard pageKey="products"><ProductsPage /></PageAvailabilityGuard>} />
+                <Route
+                    path="/products/custom"
+                    element={
+                        <PageAvailabilityGuard pageKey="products">
+                            <PremiumGate feature="My products" preview={<CustomProductsPage preview />}>
+                                <CustomProductsPage />
+                            </PremiumGate>
+                        </PageAvailabilityGuard>
+                    }
+                />
                 <Route path="/statistics" element={<PageAvailabilityGuard pageKey="statistics"><ComingSoonPage title="Statistics" /></PageAvailabilityGuard>} />
                 <Route path="/profile" element={<PageAvailabilityGuard pageKey="profile"><ProfilePage /></PageAvailabilityGuard>} />
                 <Route path="/admin" element={<Navigate to="/admin/products" replace />} />

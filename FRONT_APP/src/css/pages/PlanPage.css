@@ -1,0 +1,215 @@
+.planPage {
+    width: 100%;
+    max-width: 820px;
+    align-self: flex-start;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.planTitle {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 34px;
+    font-weight: 500;
+}
+
+.planSubtitle {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.planMessage {
+    margin: 0;
+    font-size: 16px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.planTabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+}
+
+.planTab {
+    margin-bottom: -1px;
+    padding: 10px 14px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.planTab:hover {
+    color: var(--text);
+}
+
+.planTab.active {
+    border-bottom-color: var(--accent);
+    color: var(--text);
+    font-weight: 600;
+}
+
+.planSection {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background-color: var(--card-bg);
+}
+
+.planSectionTitle {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.planHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.planHeadTitle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.planBadge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background-color: var(--accent-soft);
+    color: var(--accent-text);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.planBadge.success {
+    background-color: color-mix(in srgb, var(--success) 15%, transparent);
+    color: var(--success);
+}
+
+.planBadge.muted {
+    background-color: var(--hover);
+    color: var(--text-muted);
+}
+
+.planDates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 32px;
+    font-size: 14px;
+}
+
+.planDateLabel {
+    color: var(--text-muted);
+}
+
+.planDateValue {
+    margin-left: 6px;
+    font-weight: 500;
+}
+
+.planBar {
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--track);
+}
+
+.planBarFill {
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--accent);
+}
+
+.planLeft {
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.plansGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.planOption {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background-color: var(--card-bg);
+}
+
+.planOption.best {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.planOptionName {
+    font-weight: 600;
+}
+
+.planPrice {
+    font-family: var(--font-heading);
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.planPrice small {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.planNote {
+    min-height: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.planSave {
+    color: var(--accent-text);
+    font-weight: 500;
+}
+
+.planFeatures {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+}
+
+.planFeatures li::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    vertical-align: middle;
+}

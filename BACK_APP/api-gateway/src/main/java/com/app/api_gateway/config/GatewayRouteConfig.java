@@ -18,8 +18,7 @@ public class GatewayRouteConfig {
                                 "/api/countries/**",
                                 "/api/users/**",
                                 "/api/pages/**",
-                                "/api/premium/**",
-                                "/api/admin/users/**"
+                                "/api/admin/**"
                         )
                         .uri("lb://account-service"))
 

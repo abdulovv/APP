@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { signIn } from '../api/authApi.js'
 import { useNotification } from '../hooks/useNotification.js'
-import Notification from '../components/Notification.jsx'
-import SignInForm from '../components/SignInForm.jsx'
+import Notification from '../components/common/Notification.jsx'
+import SignInForm from '../components/auth/SignInForm.jsx'
 import '../css/pages/AuthPage.css'
 
 function SignInPage() {

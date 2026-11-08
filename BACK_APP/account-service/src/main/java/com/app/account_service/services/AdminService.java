@@ -1,13 +1,11 @@
 package com.app.account_service.services;
 
+import com.app.account_service.dtos.requests.GrantPremiumRequest;
 import com.app.account_service.dtos.responses.AdminUserDetailsResponse;
 import com.app.account_service.dtos.responses.AdminUserListItemResponse;
 import com.app.account_service.dtos.responses.PremiumTransactionResponse;
-import com.app.account_service.entities.PremiumSubscription;
-import com.app.account_service.entities.PremiumTransaction;
-import com.app.account_service.entities.User;
+import com.app.account_service.entities.*;
 import com.app.account_service.exceptions.UserNotFoundException;
-import com.app.account_service.mappers.PremiumTransactionMapper;
 import com.app.account_service.mappers.UserMapper;
 import com.app.account_service.repositories.PremiumSubscriptionRepository;
 import com.app.account_service.repositories.PremiumTransactionRepository;
@@ -17,20 +15,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AdminUserService {
+public class AdminService {
     private static final int SEARCH_RESULT_LIMIT = 20;
     private final UserRepository userRepository;
     private final PremiumSubscriptionRepository premiumSubscriptionRepository;
     private final PremiumService premiumService;
     private final UserMapper userMapper;
     private final PremiumTransactionRepository premiumTransactionRepository;
-    private final PremiumTransactionMapper premiumTransactionMapper;
 
 
     @Transactional(readOnly = true)
@@ -64,9 +63,51 @@ public class AdminUserService {
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException();
         }
-        List<PremiumTransaction> transactions = premiumTransactionRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
-        return premiumTransactionMapper.toResponseList(transactions);
+        return premiumService.getHistory(userId);
     }
 
+    @Transactional
+    public void grantPremium(Long adminId, GrantPremiumRequest request) {
+        User admin = userRepository.findById(adminId).orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findById(request.userId()).orElseThrow(UserNotFoundException::new);
+
+        Instant now = Instant.now();
+        PremiumSubscription subscription = premiumSubscriptionRepository.findByUserId(user.getId()).orElse(null);
+
+        Instant oldExpiresAt = subscription != null ? subscription.getExpiresAt() : null;
+        boolean isActive = subscription != null && subscription.isActiveAt(now);
+        Instant extendFrom = isActive ? oldExpiresAt : now;
+        Instant newExpiresAt = extendFrom.plus(request.days(), ChronoUnit.DAYS);
+
+        if (subscription == null) {
+            subscription = PremiumSubscription.builder()
+                    .user(user)
+                    .expiresAt(newExpiresAt)
+                    .build();
+        } else {
+            if (!isActive) {
+                subscription.setStartedAt(now);
+                subscription.setCancelledAt(null);
+            }
+            subscription.setExpiresAt(newExpiresAt);
+        }
+        premiumSubscriptionRepository.save(subscription);
+
+        Country country = user.getCountry();
+        premiumTransactionRepository.save(PremiumTransaction.builder()
+                .user(user)
+                .country(country)
+                .amountUsd(BigDecimal.ZERO)
+                .currencySymbol(country.getCurrencySymbol())
+                .exchangeRate(country.getExchangeRate())
+                .amountLocal(BigDecimal.ZERO)
+                .periodDays(request.days())
+                .source(PremiumTransactionSource.ADMIN)
+                .status(PremiumTransactionStatus.GRANTED)
+                .oldExpiresAt(oldExpiresAt)
+                .newExpiresAt(newExpiresAt)
+                .performedBy(admin)
+                .build());
+    }
 
 }

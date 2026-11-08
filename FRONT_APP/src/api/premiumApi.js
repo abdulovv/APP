@@ -1,7 +1,8 @@
 import { request } from './http.js'
 
-// GET /premium/history -> история премиума текущего пользователя (эндпоинт ещё нужно написать)
-export const getMyPremiumHistory = () => request('/premium/history')
+export const getMyPremiumHistory = () => request('/users/me/premium/history')
 
-// POST /premium/purchase -> имитация покупки / продления премиума (будет позже)
-// export const purchasePremium = (cardId, months) => ...
+export const purchasePremium = (cardId, months) =>
+    request('/users/me/premium/purchase', { method: 'POST', body: { cardId, months } })
+
+export const cancelPremium = () => request('/users/me/premium/cancel', { method: 'POST' })

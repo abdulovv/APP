@@ -1,28 +1,25 @@
 package com.app.account_service.controllers;
 
+import com.app.account_service.dtos.requests.GrantPremiumRequest;
 import com.app.account_service.dtos.responses.AdminUserDetailsResponse;
 import com.app.account_service.dtos.responses.AdminUserListItemResponse;
 import com.app.account_service.dtos.responses.PremiumTransactionResponse;
-import com.app.account_service.services.AdminUserService;
+import com.app.account_service.services.AdminService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin/users")
-public class AdminUserController {
-    private final AdminUserService adminUserService;
+@RequestMapping("/api/admin")
+public class AdminController {
+    private final AdminService adminService;
 
-    @GetMapping
+    @GetMapping("/users")
     public ResponseEntity<List<AdminUserListItemResponse>> searchUsers(
             @RequestHeader(GatewayHeaders.USER_ROLE) String role,
             @RequestParam(name = "search", required = false) String search
@@ -30,10 +27,10 @@ public class AdminUserController {
         if (!GatewayHeaders.isAdmin(role)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        return ResponseEntity.ok(adminUserService.searchUsers(search));
+        return ResponseEntity.ok(adminService.searchUsers(search));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<AdminUserDetailsResponse> getUserDetails(
             @RequestHeader(GatewayHeaders.USER_ROLE) String role,
             @PathVariable("id") Long id
@@ -41,10 +38,10 @@ public class AdminUserController {
         if (!GatewayHeaders.isAdmin(role)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        return ResponseEntity.ok(adminUserService.getUserDetails(id));
+        return ResponseEntity.ok(adminService.getUserDetails(id));
     }
 
-    @GetMapping("/{id}/premium-history")
+    @GetMapping("/users/{id}/premium-history")
     public ResponseEntity<List<PremiumTransactionResponse>> getPremiumHistory(
             @PathVariable Long id,
             @RequestHeader(GatewayHeaders.USER_ROLE) String role
@@ -52,6 +49,19 @@ public class AdminUserController {
         if (!GatewayHeaders.isAdmin(role)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        return ResponseEntity.ok(adminUserService.getPremiumHistory(id));
+        return ResponseEntity.ok(adminService.getPremiumHistory(id));
+    }
+
+    @PostMapping("/premium/grant")
+    public ResponseEntity<Void> grantPremium(
+            @RequestHeader(GatewayHeaders.USER_ID) Long adminId,
+            @RequestHeader(GatewayHeaders.USER_ROLE) String role,
+            @Valid @RequestBody GrantPremiumRequest request
+    ) {
+        if (!GatewayHeaders.isAdmin(role)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        adminService.grantPremium(adminId, request);
+        return ResponseEntity.ok().build();
     }
 }

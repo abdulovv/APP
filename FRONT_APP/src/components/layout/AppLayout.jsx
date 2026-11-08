@@ -6,22 +6,18 @@ import { getPageSettings } from '../../api/pageSettingsApi.js'
 import '../../css/components/AppLayout.css'
 
 function AppLayout() {
-    // Текущий пользователь нужен навбару (имя, тариф, роль) и странице админки
     const [currentUser, setCurrentUser] = useState(null)
-    // Статусы страниц (включена/выключена + причина) — нужны PageAvailabilityGuard и админке
     const [pageSettings, setPageSettings] = useState([])
 
     useEffect(() => {
         getCurrentUser()
             .then(setCurrentUser)
             .catch(() => {
-                // при 401 http.js сам перекинет на вход, остальное просто не покажем
             })
 
         getPageSettings()
             .then(setPageSettings)
             .catch(() => {
-                // не загрузились — считаем, что все страницы открыты
             })
     }, [])
 

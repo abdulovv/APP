@@ -1,0 +1,221 @@
+.productsPage {
+    width: 100%;
+    max-width: 1100px;
+    align-self: flex-start;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.productsTitle {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 34px;
+    font-weight: 500;
+}
+
+.productsSubtitle {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.productsMessage {
+    margin: 0;
+    padding: 32px 16px;
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.productsCount {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.productsToolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.productsToolbar .fieldInput {
+    width: auto;
+    padding: 9px 12px;
+    font-size: 14px;
+}
+
+.productsSearch {
+    flex: 1 1 240px;
+    min-width: 0;
+}
+
+.productsSelect {
+    flex: 0 1 220px;
+    min-width: 0;
+    padding-right: 36px;
+    appearance: none;
+    cursor: pointer;
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
+        linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+    background-position:
+        calc(100% - 18px) 50%,
+        calc(100% - 12px) 50%;
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
+}
+
+.productsTypeSwitch {
+    display: inline-flex;
+    padding: 3px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background-color: var(--sidebar-bg);
+}
+
+.productsTypeBtn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 7px;
+    background: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.productsTypeBtn:hover {
+    color: var(--text);
+}
+
+.productsTypeBtn.active {
+    background-color: var(--card-bg);
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+
+.productsTypeBtn:focus-visible,
+.productsClear:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.productsClear {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent-text);
+    cursor: pointer;
+}
+
+.productsClear:hover:not(:disabled) {
+    background-color: var(--accent-soft);
+}
+
+.productsClear:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.productsTableWrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background-color: var(--card-bg);
+}
+
+.productsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.productsTable th {
+    position: sticky;
+    top: 0;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--card-bg);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.productsTable td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.productsTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.productsTable tbody tr:hover td {
+    background-color: var(--hover);
+}
+
+.productsName {
+    min-width: 180px;
+    font-weight: 500;
+}
+
+.productsPortion {
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.productsTable .productsNum {
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.productsUnit {
+    margin-left: 4px;
+    font-size: 12px;
+    color: var(--text-muted);
+    opacity: 0.8;
+}
+
+.productsTag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background-color: var(--accent-soft);
+    color: var(--accent-text);
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.productsTag.drink {
+    background-color: color-mix(in srgb, #3b82c4 16%, transparent);
+    color: #2f6fa8;
+}
+
+:root[data-theme='dark'] .productsTag.drink {
+    color: #7fb4e3;
+}
+
+.productsHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+}

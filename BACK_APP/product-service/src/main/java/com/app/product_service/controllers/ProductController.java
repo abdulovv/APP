@@ -32,7 +32,6 @@ public class ProductController {
     private final ProductCategoryService productCategoryService;
     private final NutrientService nutrientService;
 
-    // ==================== DRINKS ====================
     @GetMapping("/drinks")
     public ResponseEntity<List<ProductDto>> getAllDrinks() {
         return ResponseEntity.ok(productService.getProductsByType(ProductCategoryType.DRINK));
@@ -55,7 +54,6 @@ public class ProductController {
                 .body(productService.createProduct(request, ProductCategoryType.DRINK));
     }
 
-    // ==================== FOODS ====================
     @GetMapping("/foods")
     public ResponseEntity<List<ProductDto>> getAllFoods() {
         return ResponseEntity.ok(productService.getProductsByType(ProductCategoryType.FOOD));
@@ -78,7 +76,6 @@ public class ProductController {
                 .body(productService.createProduct(request, ProductCategoryType.FOOD));
     }
 
-    // ==================== DICTIONARIES ====================
     @GetMapping("/categories")
     public ResponseEntity<List<ProductCategoryDto>> getCategories(
             @RequestParam(name = "type", required = false) ProductCategoryType type
@@ -94,7 +91,6 @@ public class ProductController {
         return ResponseEntity.ok(nutrientService.getAllNutrients());
     }
 
-    // ==================== ALL PRODUCTS ====================
     @GetMapping
     public ResponseEntity<List<ProductDto>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());

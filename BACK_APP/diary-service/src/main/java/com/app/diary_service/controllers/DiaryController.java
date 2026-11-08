@@ -17,10 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/diary")
 public class DiaryController {
-
     private final DiaryService diaryService;
 
-    // ==================== DIARY ====================
     @GetMapping("/me")
     public ResponseEntity<DiaryResponse> getDiary(@RequestHeader(GatewayHeaders.USER_ID) Long userId) {
         return ResponseEntity.ok(diaryService.getDiary(userId));
@@ -42,7 +40,6 @@ public class DiaryController {
         return ResponseEntity.ok(diaryService.updateDiary(userId, request));
     }
 
-    // ==================== BODY WEIGHT ====================
     @GetMapping("/weights")
     public ResponseEntity<List<BodyWeightLogResponse>> getBodyWeightLogs(@RequestHeader(GatewayHeaders.USER_ID) Long userId) {
         return ResponseEntity.ok(diaryService.getBodyWeightLogs(userId));

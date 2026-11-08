@@ -1,16 +1,9 @@
 import { request } from './http.js'
 
-// Эндпоинты карт на бэкенде ещё не написаны. Пути ниже — предложение, подгони под свой контроллер.
-// Заполняй по одной функции, когда будет готов соответствующий метод на бэкенде.
+export const getCards = () => request('/users/me/cards')
 
-// GET /payment-cards -> список карт текущего пользователя
-export const getCards = () => request('/payment-cards')
+export const addCard = (card) => request('/users/me/cards', { method: 'POST', body: card })
 
-// POST /payment-cards -> добавить карту (CVC не отправляем и не храним)
-// export const addCard = (card) => ...
+export const removeCard = (id) => request(`/users/me/cards/${id}`, { method: 'DELETE' })
 
-// DELETE /payment-cards/{id} -> удалить карту
-// export const removeCard = (id) => ...
-
-// PATCH /payment-cards/{id}/default -> сделать карту основной
-// export const makeDefaultCard = (id) => ...
+export const makeDefaultCard = (id) => request(`/users/me/cards/${id}/default`, { method: 'PATCH' })

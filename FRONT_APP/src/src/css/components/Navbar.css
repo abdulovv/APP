@@ -1,0 +1,199 @@
+.navbar {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 260px;
+    flex-shrink: 0;
+    padding: 20px 12px;
+    border-right: 1px solid var(--border);
+    background-color: var(--sidebar-bg);
+    overflow-y: auto;
+}
+
+.navbarLogo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 12px 20px;
+    color: var(--text);
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.navbarLogoMark {
+    width: 28px;
+    height: 28px;
+}
+
+.navbarLink {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    font: inherit;
+    font-size: 14px;
+    color: var(--text);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.navbarLink:hover {
+    background-color: var(--hover);
+}
+
+.navbarLink:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+}
+
+.navbarLink.active {
+    background-color: var(--hover);
+    font-weight: 600;
+}
+
+.navbarIcon {
+    flex-shrink: 0;
+}
+
+.navbarDivider {
+    width: calc(100% - 24px);
+    margin: 12px;
+    border: none;
+    border-top: 1px solid var(--border);
+}
+
+/* Всё, что прижато к низу: тема и блок пользователя */
+.navbarBottom {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: auto;
+}
+
+.navbarMuted {
+    color: var(--text-muted);
+}
+
+.navbarUser {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+    padding: 10px 12px;
+    border-top: 1px solid var(--border);
+}
+
+.navbarAvatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--accent-soft);
+    color: var(--accent-text);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.navbarUserInfo {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 16px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.navbarUserName {
+    font-weight: 500;
+}
+
+.navbarUserPlan {
+    color: var(--text-muted);
+}
+
+.navbarUserPlan.premium {
+    color: var(--accent-text);
+}
+
+.navbarSignOut {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.navbarSignOut:hover {
+    background-color: var(--hover);
+    color: var(--text);
+}
+
+/* Разворачивающаяся группа «Admin panel» */
+.navbarGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.navbarGroupToggle.current {
+    font-weight: 600;
+}
+
+.navbarGroupLabel {
+    flex: 1;
+}
+
+.navbarChevron {
+    color: var(--text-muted);
+    transition: transform 0.2s;
+}
+
+.navbarChevron.open {
+    transform: rotate(180deg);
+}
+
+.navbarSubLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-left: 21px;
+    padding-left: 12px;
+    border-left: 1px solid var(--border);
+    animation: navbarSubLinksIn 0.2s ease-out;
+}
+
+.navbarSubLink {
+    color: var(--text-muted);
+}
+
+.navbarSubLink.active {
+    color: var(--text);
+}
+
+@keyframes navbarSubLinksIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

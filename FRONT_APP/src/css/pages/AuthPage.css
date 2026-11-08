@@ -4,7 +4,6 @@
     background-color: var(--auth-bg);
 }
 
-/* Пустая левая половина больше не нужна: форма стоит по центру */
 .authSide {
     display: none;
 }
@@ -54,8 +53,6 @@
     background-repeat: no-repeat;
 }
 
-
-/* Дата рождения: три списка в ряд (день, месяц, год) */
 .dateSelects {
     display: grid;
     grid-template-columns: 1fr 1.7fr 1.2fr;

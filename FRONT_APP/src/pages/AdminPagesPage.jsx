@@ -3,11 +3,9 @@ import { useOutletContext } from 'react-router-dom'
 import '../css/pages/AdminPage.css'
 import { updatePageSetting } from '../api/pageSettingsApi.js'
 import { useNotification } from '../hooks/useNotification.js'
-import Notification from '../components/Notification.jsx'
+import Notification from '../components/common/Notification.jsx'
 import AdminGuard from '../components/admin/AdminGuard.jsx'
 
-// Страницы пользователя: key — как в БД (page_settings.page_key), path — адрес на сайте.
-// Diary — стартовая страница, её не отключаем (строка в page_settings есть, но здесь она не меняется).
 const PAGES = [
     { key: 'diary', path: '/diary', label: 'Diary', alwaysOn: true },
     { key: 'plan', path: '/plan', label: 'My plan' },
@@ -16,8 +14,6 @@ const PAGES = [
     { key: 'profile', path: '/profile', label: 'Profile' },
 ]
 
-// Одна карточка страницы. У каждой своё поле «причина», поэтому вынесли в компонент:
-// так у каждой карточки свой useState.
 function PageCard({ page, setting, onToggle }) {
     const [reason, setReason] = useState(setting?.reason ?? '')
     const [isSaving, setIsSaving] = useState(false)
@@ -70,7 +66,6 @@ function PageCard({ page, setting, onToggle }) {
 }
 
 function AdminPagesPage() {
-    // Статусы уже загружены в AppLayout — берём оттуда и там же обновляем
     const { pageSettings, setPageSettings } = useOutletContext()
     const [notification, showNotification] = useNotification()
 
@@ -81,7 +76,6 @@ function AdminPagesPage() {
     const handleToggle = async (pageKey, isActive, reason) => {
         try {
             await updatePageSetting(pageKey, { isActive, reason })
-            // Обновляем общий список, чтобы PageAvailabilityGuard и карточки сразу увидели изменения
             setPageSettings(pageSettings.map(p =>
                 p.pageKey === pageKey ? { ...p, isActive, reason: reason.trim() || null } : p
             ))
@@ -103,7 +97,6 @@ function AdminPagesPage() {
                         const setting = pageSettings.find(p => p.pageKey === page.key)
                         return (
                             <PageCard
-                                // когда статусы догрузятся, карточка пересоздастся и подхватит причину
                                 key={setting ? page.key : `${page.key}-loading`}
                                 page={page}
                                 setting={setting}

@@ -1,6 +1,5 @@
-// Вкладка «Password»: смена пароля.
 import { useState } from 'react'
-import InputField from '../InputField.jsx'
+import InputField from '../common/InputField.jsx'
 import { updatePassword } from '../../api/profileApi.js'
 
 const EMPTY_FIELDS = {

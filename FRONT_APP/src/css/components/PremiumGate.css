@@ -1,0 +1,90 @@
+.premiumGate {
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    min-height: 100%;
+}
+
+.premiumGatePreview {
+    filter: blur(6px);
+    opacity: 0.55;
+    pointer-events: none;
+    user-select: none;
+}
+
+.premiumGateOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 96px 16px 16px;
+    background-color: color-mix(in srgb, var(--page-bg) 45%, transparent);
+}
+
+.premiumGateDialog {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 32px 28px 28px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background-color: var(--card-bg);
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    animation: premiumGateIn 0.2s ease-out;
+}
+
+.premiumGateIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--accent-soft);
+    color: var(--accent-text);
+}
+
+.premiumGateTitle {
+    margin: 4px 0 0;
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 500;
+    text-wrap: balance;
+}
+
+.premiumGateText {
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-muted);
+}
+
+.premiumGateActions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+@keyframes premiumGateIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .premiumGateDialog {
+        animation: none;
+    }
+}

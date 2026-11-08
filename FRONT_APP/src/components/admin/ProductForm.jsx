@@ -1,8 +1,6 @@
 import { useState } from 'react'
-import InputField from '../InputField.jsx'
+import InputField from '../common/InputField.jsx'
 
-// Превращаем продукт с сервера в состояние формы.
-// Все значения — строки: input всегда отдаёт строку, числа соберём при отправке.
 function toFormState(product) {
     const nutrientValues = {}
     product?.nutrients.forEach(n => {

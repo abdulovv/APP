@@ -69,7 +69,6 @@
     border-top: 1px solid var(--border);
 }
 
-/* Всё, что прижато к низу: тема и блок пользователя */
 .navbarBottom {
     display: flex;
     flex-direction: column;
@@ -145,7 +144,6 @@
     color: var(--text);
 }
 
-/* Разворачивающаяся группа «Admin panel» */
 .navbarGroup {
     display: flex;
     flex-direction: column;
@@ -196,4 +194,13 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.navbarSubLabel {
+    flex: 1;
+}
+
+.navbarLock {
+    color: var(--text-muted);
+    opacity: 0.8;
 }

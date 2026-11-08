@@ -4,7 +4,6 @@ import '../../css/components/Navbar.css'
 import { signOut } from '../../api/authApi'
 import { useTheme } from '../../hooks/useTheme.js'
 
-// Иконки — простые линии (24x24), цвет берут из текста через currentColor
 const ICONS = {
     diary: (
         <>
@@ -58,6 +57,12 @@ const ICONS = {
         </>
     ),
     chevron: <path d="m6 9 6 6 6-6" />,
+    lock: (
+        <>
+            <rect x="4" y="11" width="16" height="10" rx="2" />
+            <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+        </>
+    ),
 }
 
 function Icon({ name, size = 18, className = 'navbarIcon' }) {
@@ -81,27 +86,64 @@ function Icon({ name, size = 18, className = 'navbarIcon' }) {
 
 const LINKS = [
     { to: '/diary', label: 'Diary', icon: 'diary' },
-    { to: '/plan', label: 'My plan', icon: 'plan' },
-    { to: '/products', label: 'Products', icon: 'products' },
+    { to: '/plan', label: 'Subscription', icon: 'plan' },
+    {
+        label: 'Products',
+        icon: 'products',
+        base: '/products',
+        children: [
+            { to: '/products', label: 'Catalog', end: true },
+            { to: '/products/custom', label: 'My products', premium: true },
+        ],
+    },
     { to: '/statistics', label: 'Statistics', icon: 'statistics' },
     { to: '/profile', label: 'Profile', icon: 'profile' },
 ]
 
 const ADMIN_LINKS = [
-    // { to: '/admin/users', label: 'Users' },  // раскомментируй, когда появится страница и маршрут в App.jsx
     { to: '/admin/products', label: 'Products' },
     { to: '/admin/pages', label: 'Pages' },
 ]
+
+function NavGroup({ label, icon, base, links, isPremium }) {
+    const location = useLocation()
+    const isCurrent = location.pathname.startsWith(base)
+    const [isOpen, setIsOpen] = useState(isCurrent)
+
+    return (
+        <div className="navbarGroup">
+            <button
+                type="button"
+                className={isCurrent ? 'navbarLink navbarGroupToggle current' : 'navbarLink navbarGroupToggle'}
+                aria-expanded={isOpen}
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                <Icon name={icon} />
+                <span className="navbarGroupLabel">{label}</span>
+                <Icon name="chevron" size={16} className={isOpen ? 'navbarChevron open' : 'navbarChevron'} />
+            </button>
+
+            {isOpen && (
+                <div className="navbarSubLinks">
+                    {links.map((link) => (
+                        <NavLink key={link.to} to={link.to} end={link.end} className="navbarLink navbarSubLink">
+                            <span className="navbarSubLabel">{link.label}</span>
+                            {link.premium && !isPremium && (
+                                <Icon name="lock" size={14} className="navbarLock" />
+                            )}
+                        </NavLink>
+                    ))}
+                </div>
+            )}
+        </div>
+    )
+}
 
 function Navbar({ user }) {
     const navigate = useNavigate()
     const [theme, toggleTheme] = useTheme()
 
-    const location = useLocation()
     const isAdmin = user?.role === 'ADMIN'
-    const isAdminRoute = location.pathname.startsWith('/admin')
-    // Если открыта админская страница — список сразу развёрнут
-    const [isAdminOpen, setIsAdminOpen] = useState(isAdminRoute)
 
     const handleSignOut = async () => {
         try {
@@ -118,39 +160,29 @@ function Navbar({ user }) {
                 Diary
             </div>
 
-            {LINKS.map((link) => (
-                <NavLink key={link.to} to={link.to} className="navbarLink">
-                    <Icon name={link.icon} />
-                    {link.label}
-                </NavLink>
-            ))}
+            {LINKS.map((link) =>
+                link.children ? (
+                    <NavGroup
+                        key={link.label}
+                        label={link.label}
+                        icon={link.icon}
+                        base={link.base}
+                        links={link.children}
+                        isPremium={Boolean(user?.premium)}
+                    />
+                ) : (
+                    <NavLink key={link.to} to={link.to} className="navbarLink">
+                        <Icon name={link.icon} />
+                        {link.label}
+                    </NavLink>
+                )
+            )}
 
             {isAdmin && (
                 <>
                     <hr className="navbarDivider" />
 
-                    <div className="navbarGroup">
-                        <button
-                            type="button"
-                            className={isAdminRoute ? 'navbarLink navbarGroupToggle current' : 'navbarLink navbarGroupToggle'}
-                            aria-expanded={isAdminOpen}
-                            onClick={() => setIsAdminOpen(!isAdminOpen)}
-                        >
-                            <Icon name="admin" />
-                            <span className="navbarGroupLabel">Admin panel</span>
-                            <Icon name="chevron" size={16} className={isAdminOpen ? 'navbarChevron open' : 'navbarChevron'} />
-                        </button>
-
-                        {isAdminOpen && (
-                            <div className="navbarSubLinks">
-                                {ADMIN_LINKS.map((link) => (
-                                    <NavLink key={link.to} to={link.to} className="navbarLink navbarSubLink">
-                                        {link.label}
-                                    </NavLink>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                    <NavGroup label="Admin panel" icon="admin" base="/admin" links={ADMIN_LINKS} isPremium />
                 </>
             )}
 

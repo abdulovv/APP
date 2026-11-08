@@ -54,7 +54,6 @@ public class SessionAuthenticationFilter implements GlobalFilter, Ordered {
                 return exchange.getResponse().setComplete();
             }
 
-            // берём исходный запрос и делаем копию с нашими заголовками
             ServerHttpRequest withUserHeaders = exchange.getRequest().mutate()
                     .headers(headers -> {
                         headers.set(USER_ID_HEADER, userId.toString());

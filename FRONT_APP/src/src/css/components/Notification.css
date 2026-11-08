@@ -1,0 +1,47 @@
+.notification {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    z-index: 1000;
+    max-width: 90%;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    box-shadow: var(--shadow-lg);
+    animation: notificationShow 3s forwards;
+}
+
+.notification.success {
+    background-color: #2f7a4d;
+}
+
+.notification.error {
+    background-color: #b93a32;
+}
+
+.notification.warning {
+    background-color: #f2c14e;
+    color: #1f1e1d;
+}
+
+.notification.info {
+    background-color: #2f6fb5;
+}
+
+@keyframes notificationShow {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+    15%,
+    85% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+}

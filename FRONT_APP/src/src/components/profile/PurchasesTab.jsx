@@ -13,7 +13,7 @@
 //
 // Получает: user (там user.premium), showNotification(type, text).
 
-function PremiumTab({ user, showNotification }) {
+function PurchasesTab({ user, showNotification }) {
     return (
         <section className="profileSection profileSectionPadded">
             <h2 className="profileSectionTitle">Premium</h2>
@@ -23,4 +23,4 @@ function PremiumTab({ user, showNotification }) {
     )
 }
 
-export default PremiumTab
+export default PurchasesTab

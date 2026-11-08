@@ -25,6 +25,9 @@ public class PremiumSubscription {
     @Column(name = "expires_at", nullable = false)
     private Instant expiresAt;
 
+    @Column(name = "cancelled_at")
+    private Instant cancelledAt;
+
     @OneToOne(optional = false)
     @JoinColumn(
             name = "user_id",

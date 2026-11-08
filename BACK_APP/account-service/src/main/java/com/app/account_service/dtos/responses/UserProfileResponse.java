@@ -1,7 +1,6 @@
 package com.app.account_service.dtos.responses;
 
-import com.app.account_service.entities.PremiumSubscription;
-
+import java.time.Instant;
 import java.time.LocalDate;
 
 public record UserProfileResponse(
@@ -13,6 +12,9 @@ public record UserProfileResponse(
         LocalDate birthDate,
         String countryName,
         String role,
-        Boolean premium
+        Boolean premium,
+        Instant startedAt,
+        Instant expiresAt,
+        Instant cancelledAt
 ) {
 }

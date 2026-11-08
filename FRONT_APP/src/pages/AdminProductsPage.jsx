@@ -11,7 +11,7 @@ import {
     updateProduct,
 } from '../api/productsApi.js'
 import { useNotification } from '../hooks/useNotification.js'
-import Notification from '../components/Notification.jsx'
+import Notification from '../components/common/Notification.jsx'
 import AdminGuard from '../components/admin/AdminGuard.jsx'
 import AdminToolbar from '../components/admin/AdminToolbar.jsx'
 import SearchPanel from '../components/admin/SearchPanel.jsx'
@@ -42,7 +42,6 @@ function AdminProductsPage() {
     const [isCreating, setIsCreating] = useState(false)
     const [isOpenSelected, setIsOpenSelected] = useState(false)
 
-    // { message, action } — что спросить и что сделать при «Yes»
     const [confirm, setConfirm] = useState(null)
     const [isConfirmBusy, setIsConfirmBusy] = useState(false)
 
@@ -58,7 +57,6 @@ function AdminProductsPage() {
         return matchesSearch && matchesType && matchesCategory && matchesStatus
     })
 
-    // Сколько фильтров включено — показываем бейджем на кнопке Search
     const activeFiltersCount =
         (search.trim() ? 1 : 0) +
         (filters.type !== 'ALL' ? 1 : 0) +
@@ -71,7 +69,6 @@ function AdminProductsPage() {
 
     const editingProduct = products.find(p => p.id === editingId)
 
-    // Если выделены только неактивные — вместо Deactivate показываем Activate
     const allSelectedInactive =
         selectedProducts.length > 0 && selectedProducts.every(p => !p.isActive)
 
@@ -101,7 +98,6 @@ function AdminProductsPage() {
         document.title = 'Admin · Products'
         const load = async () => {
             try {
-                // Три запроса параллельно, ждём все
                 const [productsData, categoriesData, nutrientsData] = await Promise.all([
                     getAllProducts(),
                     getProductCategories(),
@@ -146,7 +142,6 @@ function AdminProductsPage() {
 
     const handleActivateSelected = async () => {
         try {
-            // PUT только с isActive: остальные поля null, маппер их пропустит
             await Promise.all(selectedIds.map(id => updateProduct(id, { isActive: true })))
             await loadProducts()
             reset()
@@ -161,7 +156,6 @@ function AdminProductsPage() {
             if (product.isActive) {
                 await deactivateProduct(product.id)
             } else {
-                // PUT только с isActive: остальные поля null, маппер их пропустит
                 await updateProduct(product.id, { isActive: true })
             }
             await loadProducts()
@@ -196,7 +190,6 @@ function AdminProductsPage() {
         }
     }
 
-    // view — таблица только для чтения; edit — клик по строке выделяет её
     const isEditMode = mode === 'edit'
 
     return (

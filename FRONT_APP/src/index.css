@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:wght@500;600&display=swap');
 
 :root {
-    /* Акцент: яркий — для заливок и полосок, тёмный — для кнопок и текста (хороший контраст с белым) */
     --accent: #f28c00;
     --accent-dark: #b45309;
     --accent-hover: #9a4607;
@@ -42,7 +41,6 @@
     color: var(--text);
 }
 
-/* Тёмная тема: переопределяем только переменные, все стили берут цвета из них */
 :root[data-theme='dark'] {
     --accent-text: #f5a524;
     --accent-soft: rgba(242, 140, 0, 0.2);
@@ -72,7 +70,6 @@
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
 
-    /* тёмные системные элементы: выпадающие списки, скроллбары, автозаполнение */
     color-scheme: dark;
 }
 
@@ -165,7 +162,6 @@ body {
     cursor: not-allowed;
 }
 
-/* Поле пароля с кнопкой-глазиком */
 .fieldInputWrap {
     position: relative;
 }

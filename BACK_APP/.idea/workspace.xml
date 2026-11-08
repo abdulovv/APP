@@ -5,29 +5,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1192637-397c-4bfb-b506-f8d9f442234d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/dtos/responses/PremiumTransactionResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/mappers/PremiumTransactionMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/controllers/AdminUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/controllers/AdminUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/dtos/requests/UpdatePhoneRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/dtos/requests/UpdatePhoneRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/entities/PremiumTransactionStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/entities/PremiumTransactionStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/services/AdminUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/services/AdminUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/config/SessionConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/config/SessionConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/controllers/AdminUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/controllers/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/controllers/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/controllers/PremiumController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/controllers/UserProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/controllers/UserProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/dtos/responses/UserProfileResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/dtos/responses/UserProfileResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/entities/PremiumSubscription.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/entities/PremiumSubscription.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/mappers/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/mappers/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/services/AdminUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/services/AdminService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/services/PremiumService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/services/PremiumService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/resources/db/migration/V6__create_premium_transactions.sql" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/resources/db/migration/V6__create_premium_transactions.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/app/product_service/ProductServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/app/product_service/ProductServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/InputField.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/InputField.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/SignUpForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/SignUpForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/services/UserProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/app/account_service/services/UserProfileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/GatewayRouteConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/config/GatewayRouteConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/filters/SessionAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/app/api_gateway/filters/SessionAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/controllers/DiaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/controllers/DiaryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/services/DiaryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/diary-service/src/main/java/com/app/diary_service/services/DiaryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/app/product_service/controllers/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/app/product_service/controllers/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/api/paymentsApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/api/paymentsApi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/api/premiumApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/api/premiumApi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/admin/AdminGuard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/admin/AdminGuard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/admin/AdminOnly.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/admin/AdminOnly.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/admin/Modal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/admin/Modal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/admin/ProductForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/admin/ProductForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/admin/SearchPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/admin/SearchPanel.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/layout/AppLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/layout/AppLayout.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/layout/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/layout/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/components/AppLayout.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/components/AppLayout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/profile/AddCardModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/profile/AddCardModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/profile/PasswordTab.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/profile/PasswordTab.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/profile/PaymentsTab.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/profile/PaymentsTab.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/profile/PersonalTab.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/profile/PersonalTab.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/profile/PremiumTab.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/components/profile/SecurityTab.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/components/profile/SecurityTab.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/components/Navbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/components/Navbar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/components/Notification.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/components/Notification.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/AdminPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/AdminPage.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/AuthPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/AuthPage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/DiaryPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/DiaryPage.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/ProfilePage.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/css/pages/ProfilePage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/hooks/useTheme.js" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/hooks/useTheme.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/main.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/pages/AdminPagesPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/pages/AdminPagesPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/pages/AdminProductsPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/pages/AdminProductsPage.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/pages/ProfilePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/pages/ProfilePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/pages/SignInPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/pages/SignInPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/pages/SignUpPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../FRONT_APP/src/pages/SignUpPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FRONT_APP/src/pages/StubPage.jsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,9 +62,9 @@
       <list>
         <option value="Exception" />
         <option value="Enum" />
-        <option value="Class" />
         <option value="Record" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -80,6 +103,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.app.account_service.services" />
       <recent name="com.app.auth_service.services" />
       <recent name="com.app.auth_service.exceptions" />
       <recent name="com.app.auth_service.entities" />
@@ -149,7 +173,23 @@
     <servers />
   </component>
   <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework.security:spring-security-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="java:io.projectreactor:reactor-core" />
     <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.cloud:spring-cloud-context" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate.validator:hibernate-validator" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:org.flywaydb:flyway-core" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.ws.rs:jakarta.ws.rs-api" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-messaging" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

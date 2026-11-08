@@ -26,7 +26,10 @@ public class UserProfileService {
 
     @Transactional(readOnly = true)
     public UserProfileResponse getProfile(Long userId) {
-        return userMapper.toProfileResponse(findUser(userId), premiumService.isPremiumActive(userId));
+        return userMapper.toProfileResponse(
+                findUser(userId),
+                premiumService.getPremium(userId),
+                premiumService.isPremiumActive(userId));
     }
 
     @Transactional

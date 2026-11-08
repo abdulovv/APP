@@ -6,11 +6,10 @@ const MONTHS = [
     'July', 'August', 'September', 'October', 'November', 'December',
 ]
 
-// '2000-05-20' -> '20-May-2000'
 const formatDate = (isoDate) => {
     if (!isoDate) return '—'
     const [year, month, day] = isoDate.split('-')
-    return `${day}-${MONTHS[Number(month) - 1]}-${year}`
+    return `${Number(day)} ${MONTHS[Number(month) - 1]} ${year}`
 }
 
 const toForm = (user) => ({
@@ -21,7 +20,6 @@ const toForm = (user) => ({
     countryName: user.countryName ?? '',
 })
 
-// Вкладка «Personal data»: имя, email (редактируются), телефон, страна, дата рождения (только просмотр)
 function PersonalTab({ user, setUser, showNotification }) {
     const [form, setForm] = useState(() => toForm(user))
     const [editing, setEditing] = useState(null)
@@ -133,7 +131,6 @@ function PersonalTab({ user, setUser, showNotification }) {
                 <span className="profileRowValue">{user.phoneNumber}</span>
             </div>
 
-            {/* Country: кнопка Change появится, когда будет endpoint на бэкенде */}
             <div className="profileRow">
                 <span className="profileRowLabel">Country</span>
                 <span className="profileRowValue">{user.countryName}</span>

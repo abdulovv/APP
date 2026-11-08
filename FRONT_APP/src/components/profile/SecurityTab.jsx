@@ -1,4 +1,3 @@
-// Вкладка «Security»: смена пароля.
 import { useState } from 'react'
 import InputField from '../InputField.jsx'
 import { updatePassword } from '../../api/profileApi.js'

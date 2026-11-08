@@ -9,7 +9,6 @@ function Modal({ title, hint, onClose, isTop = false, actions, children }) {
 
                 {hint && <p className="modalHint">{hint}</p>}
 
-                {/* Окно само не скроллится — скроллится только содержимое внутри */}
                 <div className="modalBody">{children}</div>
 
                 {actions && <div className="modalActions">{actions}</div>}
