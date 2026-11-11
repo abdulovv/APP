@@ -200,7 +200,6 @@ function Navbar({ user }) {
                         <span className="navbarUserInfo">
                             <span className="navbarUserName">{user.firstname}</span>
                             <span className={user.premium ? 'navbarUserPlan premium' : 'navbarUserPlan'}>
-                                {' · '}
                                 {user.premium ? 'Premium' : 'Free'}
                             </span>
                         </span>

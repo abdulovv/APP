@@ -7,6 +7,8 @@ import BirthDateSelect from './BirthDateSelect.jsx'
 const MIN_AGE = 12
 const MAX_AGE = 100
 const MIN_PASSWORD_LENGTH = 8
+const CODE_LENGTH = 6
+const TOTAL_STEPS = 4
 
 const EMPTY_FORM = {
     firstname: '',
@@ -16,6 +18,7 @@ const EMPTY_FORM = {
     phoneNumber: '',
     password: '',
     confirmPassword: '',
+    code: '',
 }
 
 const currentYear = new Date().getFullYear()
@@ -54,13 +57,20 @@ function validateStep(step, form, country) {
         if (form.password !== form.confirmPassword) return 'Passwords do not match!'
     }
 
+    if (step === 4) {
+        if (!new RegExp(`^\\d{${CODE_LENGTH}}$`).test(form.code)) {
+            return `Enter the ${CODE_LENGTH}-digit code from the email.`
+        }
+    }
+
     return ''
 }
 
-function SignUpForm({ onSubmit, onError, isLoading }) {
+function SignUpForm({ onSubmit, onSendCode, onError, isLoading }) {
     const [step, setStep] = useState(1)
     const [form, setForm] = useState(EMPTY_FORM)
     const [country, setCountry] = useState(null)
+    const [codeSentTo, setCodeSentTo] = useState('')
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -78,6 +88,10 @@ function SignUpForm({ onSubmit, onError, isLoading }) {
             if (!isValid) return
         }
 
+        if (name === 'code' && !new RegExp(`^\\d{0,${CODE_LENGTH}}$`).test(value)) {
+            return
+        }
+
         setForm((prev) => ({ ...prev, [name]: value }))
     }
 
@@ -86,7 +100,7 @@ function SignUpForm({ onSubmit, onError, isLoading }) {
         setForm((prev) => ({ ...prev, phoneNumber: selected.phoneCode }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         const error = validateStep(step, form, country)
@@ -100,6 +114,16 @@ function SignUpForm({ onSubmit, onError, isLoading }) {
             return
         }
 
+        if (step === 3) {
+            if (codeSentTo !== form.email) {
+                const sent = await onSendCode(form.email)
+                if (!sent) return
+                setCodeSentTo(form.email)
+            }
+            setStep(4)
+            return
+        }
+
         onSubmit({
             firstname: form.firstname,
             lastname: form.lastname,
@@ -108,12 +132,13 @@ function SignUpForm({ onSubmit, onError, isLoading }) {
             phoneNumber: form.phoneNumber,
             password: form.password,
             countryId: country.id,
+            code: form.code,
         })
     }
 
     return (
         <form className="card authForm" onSubmit={handleSubmit}>
-            <h1 className="cardTitle">Step {step} of 3</h1>
+            <h1 className="cardTitle">Step {step} of {TOTAL_STEPS}</h1>
 
             {step === 1 && (
                 <>
@@ -152,6 +177,26 @@ function SignUpForm({ onSubmit, onError, isLoading }) {
                 </>
             )}
 
+            {step === 4 && (
+                <>
+                    <p className="authHint">
+                        We sent a {CODE_LENGTH}-digit code to <b>{form.email}</b>. Enter it to finish registration.
+                    </p>
+                    <InputField
+                        label="Verification code"
+                        name="code"
+                        value={form.code}
+                        onChange={handleChange}
+                        placeholder="000000"
+                        inputMode="numeric"
+                        maxLength={CODE_LENGTH}
+                        autoComplete="one-time-code"
+                        autoFocus
+                        required
+                    />
+                </>
+            )}
+
             <div className="authLinks">
                 <Link to="/sign-in">Sign In</Link>
             </div>
@@ -163,7 +208,7 @@ function SignUpForm({ onSubmit, onError, isLoading }) {
                     </button>
                 )}
                 <button className="btn" type="submit" disabled={isLoading}>
-                    {step < 3 ? 'Next' : 'Register'}
+                    {step < 3 ? 'Next' : step === 3 ? 'Send code' : 'Register'}
                 </button>
             </div>
         </form>

@@ -233,3 +233,12 @@ body {
 .btnSecondary:hover:not(:disabled) {
     background-color: var(--hover);
 }
+
+.fieldInput[name='code'] {
+    text-align: center;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.4em;
+    text-indent: 0.4em;
+}

@@ -86,6 +86,14 @@ public class UserProfileController {
         return ResponseEntity.ok(new MessageResponse("Phone updated"));
     }
 
+    @PostMapping("/password/send-code")
+    public ResponseEntity<MessageResponse> sendPasswordCode(
+            @RequestHeader(GatewayHeaders.USER_ID) Long userId
+    ) {
+        userProfileService.sendPasswordCode(userId);
+        return ResponseEntity.ok(new MessageResponse("Code sent"));
+    }
+
     @PatchMapping("/password")
     public ResponseEntity<MessageResponse> updatePassword(
             @RequestHeader(GatewayHeaders.USER_ID) Long userId,

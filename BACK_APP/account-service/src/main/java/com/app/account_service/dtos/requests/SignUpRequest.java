@@ -1,5 +1,6 @@
 package com.app.account_service.dtos.requests;
 
+import com.app.account_service.utils.NameFormatter;
 import com.app.account_service.entities.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -38,7 +39,11 @@ public record SignUpRequest(
         LocalDate birthDate,
 
         @NotNull
-        Long countryId
+        Long countryId,
+
+        @NotBlank
+        @Pattern(regexp = "^\\d{6}$")
+        String code
 ) {
     public SignUpRequest {
         firstname = NameFormatter.capitalize(firstname);

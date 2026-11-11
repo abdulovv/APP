@@ -2,6 +2,7 @@ package com.app.account_service.controllers;
 
 import com.app.account_service.dtos.responses.ErrorResponse;
 import com.app.account_service.exceptions.*;
+import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e.getMessage()));
     }
 
-    @ExceptionHandler({CountryNotAvailableException.class, IncorrectCurrentPasswordException.class, InvalidCardException.class, InvalidPurchaseException.class, InvalidPremiumActionException.class})
+    @ExceptionHandler({CountryNotAvailableException.class, IncorrectCurrentPasswordException.class, InvalidCardException.class, InvalidPurchaseException.class, InvalidPremiumActionException.class, InvalidCodeException.class})
     public ResponseEntity<ErrorResponse> handleBadRequest(RuntimeException e) {
         return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
     }
@@ -44,5 +45,15 @@ public class GlobalExceptionHandler {
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .orElse("Invalid request");
         return ResponseEntity.badRequest().body(new ErrorResponse(message));
+    }
+
+    @ExceptionHandler(CodeAlreadySentException.class)
+    public ResponseEntity<ErrorResponse> handleCodeException(CodeAlreadySentException e){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(TooManyAttemptsException.class)
+    public ResponseEntity<ErrorResponse> handleManyAttemptsException(TooManyAttemptsException e){
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(new ErrorResponse(e.getMessage()));
     }
 }

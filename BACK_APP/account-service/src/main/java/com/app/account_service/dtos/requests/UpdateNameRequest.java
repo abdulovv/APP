@@ -1,5 +1,6 @@
 package com.app.account_service.dtos.requests;
 
+import com.app.account_service.utils.NameFormatter;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 

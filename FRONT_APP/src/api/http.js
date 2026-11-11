@@ -27,7 +27,9 @@ export async function request(path, { method = 'GET', body } = {}) {
     }
 
     if (!response.ok) {
-        throw new Error(data?.message || data?.error || `Request failed: ${response.status}`)
+        const error = new Error(data?.message || data?.error || `Request failed: ${response.status}`)
+        error.status = response.status
+        throw error
     }
     return data
 }

@@ -10,11 +10,11 @@ import com.app.account_service.exceptions.InvalidCardException;
 import com.app.account_service.exceptions.UserNotFoundException;
 import com.app.account_service.repositories.PaymentCardRepository;
 import com.app.account_service.repositories.UserRepository;
+import com.app.account_service.utils.CardUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.YearMonth;
 import java.util.List;
 
 @Service
@@ -26,7 +26,7 @@ public class PaymentCardService {
     @Transactional(readOnly = true)
     public List<PaymentCardResponse> getCards(Long userId) {
         return paymentCardRepository.findAllByUserIdOrderByCreatedAtDesc(userId).stream()
-                .map(this::toResponse)
+                .map(PaymentCardResponse::from)
                 .toList();
     }
 
@@ -34,16 +34,16 @@ public class PaymentCardService {
     public PaymentCardResponse addCard(Long userId, AddCardRequest request) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
 
-        String number = request.cardNumber().replace(" ", "");
-        if (!number.matches("^[0-9]{16}$")) {
+        String number = CardUtils.normalizeNumber(request.cardNumber());
+        if (!CardUtils.isValidNumber(number)) {
             throw new InvalidCardException("Card number must contain 16 digits");
         }
-        if (YearMonth.of(request.expYear(), request.expMonth()).isBefore(YearMonth.now())) {
+        if (CardUtils.isExpired(request.expMonth(), request.expYear())) {
             throw new InvalidCardException("Card has expired");
         }
 
-        String brand = detectBrand(number);
-        String last4 = number.substring(number.length() - 4);
+        String brand = CardUtils.detectBrand(number);
+        String last4 = CardUtils.last4(number);
 
         if (paymentCardRepository.existsByUserIdAndBrandAndLast4AndExpMonthAndExpYear(
                 userId, brand, last4, request.expMonth(), request.expYear())) {
@@ -64,7 +64,7 @@ public class PaymentCardService {
                 .expYear(request.expYear())
                 .isDefault(makeDefault)
                 .build());
-        return toResponse(card);
+        return PaymentCardResponse.from(card);
     }
 
     @Transactional
@@ -102,25 +102,5 @@ public class PaymentCardService {
             old.setIsDefault(false);
             paymentCardRepository.saveAndFlush(old);
         });
-    }
-
-    private PaymentCardResponse toResponse(PaymentCard card) {
-        return new PaymentCardResponse(
-                card.getId(),
-                card.getBrand(),
-                card.getLast4(),
-                card.getHolderName(),
-                card.getExpMonth(),
-                card.getExpYear(),
-                card.getIsDefault()
-        );
-    }
-
-    private static String detectBrand(String number) {
-        if (number.startsWith("4")) return "Visa";
-        if (number.matches("^(5[1-5]|222[1-9]|22[3-9]|2[3-6]|27[01]|2720).*")) return "Mastercard";
-        if (number.startsWith("34") || number.startsWith("37")) return "Amex";
-        if (number.matches("^220[0-4].*")) return "Mir";
-        return "Card";
     }
 }

@@ -1,21 +1,20 @@
 package com.app.account_service.controllers;
 
+import com.app.account_service.dtos.requests.SendCodeRequest;
 import com.app.account_service.dtos.requests.SignInRequest;
 import com.app.account_service.dtos.requests.SignUpRequest;
 import com.app.account_service.dtos.responses.MessageResponse;
 import com.app.account_service.entities.UserRole;
 import com.app.account_service.entities.User;
 import com.app.account_service.services.AuthService;
+import com.app.account_service.services.VerificationCodeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,5 +48,12 @@ public class AuthController {
         HttpSession session = http.getSession(false);
         if (session != null) session.invalidate();
         return ResponseEntity.status(204).build();
+    }
+
+    @PostMapping("/sign-up/send-code")
+    public void sendCode(
+            @Valid @RequestBody SendCodeRequest request
+    ){
+        authService.sendCode(request.email());
     }
 }

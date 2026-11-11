@@ -11,5 +11,8 @@ export const updateEmail = (email) =>
 export const updatePhone = (phoneNumber) =>
     request('/users/me/phone', { method: 'PATCH', body: { phoneNumber } })
 
-export const updatePassword = (currentPassword, newPassword) =>
-    request('/users/me/password', { method: 'PATCH', body: { currentPassword, newPassword } })
+export const sendPasswordCode = () =>
+    request('/users/me/password/send-code', { method: 'POST' })
+
+export const updatePassword = (currentPassword, newPassword, code) =>
+    request('/users/me/password', { method: 'PATCH', body: { currentPassword, newPassword, code } })

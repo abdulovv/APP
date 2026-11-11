@@ -12,16 +12,15 @@ import com.app.account_service.mappers.PremiumTransactionMapper;
 import com.app.account_service.repositories.PremiumSubscriptionRepository;
 import com.app.account_service.repositories.PremiumTransactionRepository;
 import com.app.account_service.repositories.UserRepository;
+import com.app.account_service.utils.CardUtils;
+import com.app.account_service.utils.PremiumPricing;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.Instant;
-import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
-import java.util.Map;
 import java.util.List;
 
 @Service
@@ -32,13 +31,7 @@ public class PremiumService {
     private final PremiumTransactionRepository premiumTransactionRepository;
     private final PremiumTransactionMapper premiumTransactionMapper;
     private final PaymentCardRepository paymentCardRepository;
-
-    private static final int DAYS_PER_MONTH = 30;
-    private static final Map<Integer, BigDecimal> PRICE_PER_MONTH = Map.of(
-            1, new BigDecimal("4.99"),
-            6, new BigDecimal("3.99"),
-            12, new BigDecimal("2.99")
-    );
+    private final EmailService emailService;
 
     @Transactional(readOnly = true)
     public boolean isPremiumActive(Long userId) {
@@ -61,7 +54,7 @@ public class PremiumService {
 
     @Transactional
     public void purchase(Long userId, PurchasePremiumRequest request) {
-        BigDecimal pricePerMonth = PRICE_PER_MONTH.get(request.months());
+        BigDecimal pricePerMonth = PremiumPricing.pricePerMonth(request.months());
         if (pricePerMonth == null) {
             throw new InvalidPurchaseException("Unknown plan");
         }
@@ -69,7 +62,7 @@ public class PremiumService {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         PaymentCard card = paymentCardRepository.findByIdAndUserId(request.cardId(), userId)
                 .orElseThrow(CardNotFoundException::new);
-        if (YearMonth.of(card.getExpYear(), card.getExpMonth()).isBefore(YearMonth.now())) {
+        if (CardUtils.isExpired(card.getExpMonth(), card.getExpYear())) {
             throw new InvalidPurchaseException("Card has expired");
         }
 
@@ -80,7 +73,7 @@ public class PremiumService {
         }
         Instant oldExpiresAt = subscription != null ? subscription.getExpiresAt() : null;
 
-        int days = request.months() * DAYS_PER_MONTH;
+        int days = PremiumPricing.days(request.months());
         Instant newExpiresAt = now.plus(days, ChronoUnit.DAYS);
 
         if (subscription == null) {
@@ -93,12 +86,10 @@ public class PremiumService {
         premiumSubscriptionRepository.save(subscription);
 
         Country country = user.getCountry();
-        BigDecimal amountUsd = pricePerMonth.multiply(BigDecimal.valueOf(request.months()));
-        BigDecimal amountLocal = amountUsd
-                .multiply(BigDecimal.valueOf(country.getExchangeRate()))
-                .setScale(2, RoundingMode.HALF_UP);
+        BigDecimal amountUsd = PremiumPricing.totalUsd(pricePerMonth, request.months());
+        BigDecimal amountLocal = PremiumPricing.toLocal(amountUsd, country.getExchangeRate());
 
-        premiumTransactionRepository.save(PremiumTransaction.builder()
+        PremiumTransaction transaction = premiumTransactionRepository.save(PremiumTransaction.builder()
                 .user(user)
                 .paymentCard(card)
                 .cardBrand(card.getBrand())
@@ -115,6 +106,8 @@ public class PremiumService {
                 .newExpiresAt(newExpiresAt)
                 .performedBy(user)
                 .build());
+
+        emailService.sendReceipt(user.getEmail(), transaction);
     }
 
     @Transactional
@@ -127,5 +120,8 @@ public class PremiumService {
         }
         subscription.setCancelledAt(Instant.now());
         premiumSubscriptionRepository.save(subscription);
+
+        User user = subscription.getUser();
+        emailService.sendSubscriptionCancelled(user.getEmail(), user.getFirstname(), subscription.getExpiresAt());
     }
 }

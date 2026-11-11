@@ -5,16 +5,15 @@ import com.app.product_service.dtos.ProductNutrientDto;
 import com.app.product_service.entities.Nutrient;
 import com.app.product_service.entities.Product;
 import com.app.product_service.entities.ProductNutrient;
-import com.app.product_service.exceptions.InvalidProductNutrientsException;
 import com.app.product_service.exceptions.NutrientNotFoundException;
 import com.app.product_service.mappers.NutrientMapper;
 import com.app.product_service.repositories.NutrientRepository;
+import com.app.product_service.utils.NutrientUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class NutrientService {
     }
 
     public void addNutrientsToProduct(Product product, List<ProductNutrientDto> nutrients) {
-        validateNutrients(nutrients);
+        NutrientUtils.validate(nutrients);
 
         for (ProductNutrientDto nutrientValue : nutrients) {
             product.getNutrients().add(ProductNutrient.builder()
@@ -43,12 +42,9 @@ public class NutrientService {
     }
 
     public void replaceProductNutrients(Product product, List<ProductNutrientDto> nutrients) {
-        validateNutrients(nutrients);
+        NutrientUtils.validate(nutrients);
 
-        Map<Long, BigDecimal> newValuesByNutrientId = new HashMap<>();
-        for (ProductNutrientDto nutrientValue : nutrients) {
-            newValuesByNutrientId.put(nutrientValue.getNutrientId(), nutrientValue.getValue());
-        }
+        Map<Long, BigDecimal> newValuesByNutrientId = NutrientUtils.valuesByNutrientId(nutrients);
 
         Iterator<ProductNutrient> iterator = product.getNutrients().iterator();
         while (iterator.hasNext()) {
@@ -67,17 +63,6 @@ public class NutrientService {
                         .nutrient(findNutrient(nutrientId))
                         .value(value)
                         .build()));
-    }
-
-    private void validateNutrients(List<ProductNutrientDto> nutrients) {
-        if (nutrients == null || nutrients.isEmpty()) {
-            throw new InvalidProductNutrientsException("Product must contain at least one nutrient");
-        }
-        for (ProductNutrientDto nutrientValue : nutrients) {
-            if (nutrientValue.getNutrientId() == null || nutrientValue.getValue() == null) {
-                throw new InvalidProductNutrientsException("Nutrient id and value are required");
-            }
-        }
     }
 
     private Nutrient findNutrient(Long nutrientId) {

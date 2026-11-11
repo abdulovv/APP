@@ -8,6 +8,7 @@ import com.app.diary_service.entities.MealLogItem;
 import com.app.diary_service.exceptions.MealLogNotFoundException;
 import com.app.diary_service.mappers.MealLogMapper;
 import com.app.diary_service.repositories.MealLogRepository;
+import com.app.diary_service.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +29,8 @@ public class MealLogService {
                 ? mealLogRepository.findAllByDiaryUserIdOrderByEatenAtDesc(userId)
                 : mealLogRepository.findAllByDiaryUserIdAndEatenAtBetweenOrderByEatenAtAsc(
                         userId,
-                        date.atStartOfDay(),
-                        date.plusDays(1).atStartOfDay().minusNanos(1)
+                        DateUtils.startOfDay(date),
+                        DateUtils.endOfDay(date)
                 );
 
         return mealLogMapper.toResponseList(mealLogs);

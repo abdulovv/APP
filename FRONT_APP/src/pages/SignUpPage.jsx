@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { signUp } from '../api/authApi.js'
+import { sendSignUpCode, signUp } from '../api/authApi.js'
 import { useNotification } from '../hooks/useNotification.js'
 import Notification from '../components/common/Notification.jsx'
 import SignUpForm from '../components/auth/SignUpForm.jsx'
@@ -14,6 +14,20 @@ function SignUpPage() {
     useEffect(() => {
         document.title = 'Sign Up'
     }, [])
+
+    const handleSendCode = async (email) => {
+        setIsLoading(true)
+        try {
+            await sendSignUpCode(email)
+            showNotification('success', 'We sent a code to your email.')
+            return true
+        } catch (error) {
+            showNotification('error', error.message)
+            return false
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     const handleSubmit = async (user) => {
         setIsLoading(true)
@@ -35,6 +49,7 @@ function SignUpPage() {
             <div className="authMain">
                 <SignUpForm
                     onSubmit={handleSubmit}
+                    onSendCode={handleSendCode}
                     onError={(text) => showNotification('warning', text)}
                     isLoading={isLoading}
                 />

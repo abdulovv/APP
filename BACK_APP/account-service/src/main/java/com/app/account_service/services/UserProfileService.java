@@ -7,6 +7,7 @@ import com.app.account_service.dtos.requests.UpdatePhoneRequest;
 import com.app.account_service.dtos.responses.UserProfileResponse;
 import com.app.account_service.entities.User;
 import com.app.account_service.exceptions.IncorrectCurrentPasswordException;
+import com.app.account_service.exceptions.InvalidCodeException;
 import com.app.account_service.exceptions.UserAlreadyExistsException;
 import com.app.account_service.exceptions.UserNotFoundException;
 import com.app.account_service.mappers.UserMapper;
@@ -23,6 +24,8 @@ public class UserProfileService {
     private final PremiumService premiumService;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final VerificationCodeService verificationCodeService;
+    private final EmailService emailService;
 
     @Transactional(readOnly = true)
     public UserProfileResponse getProfile(Long userId) {
@@ -61,7 +64,22 @@ public class UserProfileService {
         if (!passwordEncoder.matches(request.currentPassword(), user.getPassword())) {
             throw new IncorrectCurrentPasswordException();
         }
+        if (!verificationCodeService.check(passwordCodeKey(userId), request.code())) {
+            throw new InvalidCodeException();
+        }
         user.setPassword(passwordEncoder.encode(request.newPassword()));
+
+        emailService.sendPasswordChanged(user.getEmail(), user.getFirstname());
+    }
+
+    public void sendPasswordCode(Long userId) {
+        User user = findUser(userId);
+        String code = verificationCodeService.generate(passwordCodeKey(userId));
+        emailService.sendCode(user.getEmail(), "Confirm password change", code, VerificationCodeService.Duration());
+    }
+
+    private String passwordCodeKey(Long userId) {
+        return "password:" + userId;
     }
 
     private User findUser(Long userId) {
