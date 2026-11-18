@@ -212,6 +212,11 @@
     color: var(--success);
 }
 
+.badge.danger {
+    background-color: color-mix(in srgb, var(--danger) 15%, transparent);
+    color: var(--danger);
+}
+
 .badge.muted {
     background-color: var(--hover);
     color: var(--text-muted);
@@ -386,4 +391,41 @@
     margin: 0;
     font-size: 14px;
     color: var(--danger);
+}
+
+.purchaseList {
+    margin: 0 -24px -24px;
+    border-top: 1px solid var(--border);
+}
+
+.purchaseRow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.purchaseRow:last-child {
+    border-bottom: none;
+}
+
+.purchaseInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.purchaseTitle {
+    font-weight: 500;
+}
+
+.purchaseMeta {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.purchaseAmount {
+    min-width: 72px;
+    font-weight: 600;
+    text-align: right;
 }

@@ -1,8 +1,10 @@
 package com.app.account_service.repositories;
 
 import com.app.account_service.entities.User;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -23,6 +25,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmailAndIdNot(String email, Long id);
 
     boolean existsByPhoneNumberAndIdNot(String phoneNumber, Long id);
+
+    @Query("select u from User u where u.id = :id")
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    Optional<User> findByIdForUpdate(@Param("id") Long id);
 
     @Query("""
         SELECT u FROM User u

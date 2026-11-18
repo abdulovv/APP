@@ -59,7 +59,7 @@ public class PremiumService {
             throw new InvalidPurchaseException("Unknown plan");
         }
 
-        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByIdForUpdate(userId).orElseThrow(UserNotFoundException::new);
         PaymentCard card = paymentCardRepository.findByIdAndUserId(request.cardId(), userId)
                 .orElseThrow(CardNotFoundException::new);
         if (CardUtils.isExpired(card.getExpMonth(), card.getExpYear())) {
@@ -112,7 +112,8 @@ public class PremiumService {
 
     @Transactional
     public void cancel(Long userId) {
-        PremiumSubscription subscription = premiumSubscriptionRepository.findByUserId(userId)
+        User user = userRepository.findByIdForUpdate(userId).orElseThrow(UserNotFoundException::new);
+        PremiumSubscription subscription = premiumSubscriptionRepository.findByUserId(user.getId())
                 .filter(s -> s.isActiveAt(Instant.now()))
                 .orElseThrow(() -> new InvalidPremiumActionException("You don't have active Premium"));
         if (subscription.getCancelledAt() != null) {
@@ -121,7 +122,6 @@ public class PremiumService {
         subscription.setCancelledAt(Instant.now());
         premiumSubscriptionRepository.save(subscription);
 
-        User user = subscription.getUser();
         emailService.sendSubscriptionCancelled(user.getEmail(), user.getFirstname(), subscription.getExpiresAt());
     }
 }
